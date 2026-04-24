@@ -9,7 +9,7 @@
 7)  https://www.nature.com/articles/nature25979
 8) https://www.mdpi.com/2076-2607/10/10/1963
 9) https://gut.bmj.com/content/69/8/1510                                       #Drugs
-10) https://www.mendeley.com/catalogue/43257a78-2064-3e84-bff8-a49e8a9d870e/   #Exom 75 genes panel
+10) https://onlinelibrary.wiley.com/doi/10.1097/MPG.0000000000003017   #Exom 75 genes panel
 
 **Термины**
 
