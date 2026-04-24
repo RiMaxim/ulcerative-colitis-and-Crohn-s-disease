@@ -10,6 +10,7 @@
 8) https://www.mdpi.com/2076-2607/10/10/1963
 9) https://gut.bmj.com/content/69/8/1510                                       #Drugs
 10) https://onlinelibrary.wiley.com/doi/10.1097/MPG.0000000000003017   #Exom 75 genes panel
+11) https://gut.bmj.com/content/72/1/180 # скорость прохождения еды
 
 **Термины**
 
