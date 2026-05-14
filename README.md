@@ -23,7 +23,7 @@
 
 **Конвейер по обработке**
 
-1) NanoPlot --fastq $1.fastq.gz -o $1.nanoplot -t 60
+1) NanoPlot --fastq $1.fastq.gz -o $1.nanoplot -t $2
 2) porechop-runner.py \
     -i $1.fastq.gz \
     -o $1_porechop.fastq.gz \
@@ -33,12 +33,12 @@
     --extra_end_trim 5 \
     --verbosity 1
 3) gunzip -c $1_porechop.fastq.gz |chopper -q 10 -l 1300 --maxlength 1700 | gzip > $1_porechop_chopper.fastq.gz
-4) NanoPlot --fastq $1_porechop_chopper.fastq.gz -o $1.nanoplot_filtering -t 60
+4) NanoPlot --fastq $1_porechop_chopper.fastq.gz -o $1.nanoplot_filtering -t $2
 5) emu abundance \
     --type map-ont \
     --keep-counts \
     --output-dir ./emu \
-    --threads 60 \
+    --threads $2 \
     $1_porechop_chopper.fastq
 
 **Термины**
