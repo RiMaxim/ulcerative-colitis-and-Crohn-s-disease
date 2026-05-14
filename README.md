@@ -21,6 +21,25 @@
 - er - Exacerbation - cтатус активности заболевания. 1 (обострение) / 0 (ремиссия)
 6) metadata_10k.tsv - таблица метаданных клинических образцов. Содержит те же колонки, что и metadata.tsv, но только для образцов, оставшихся после фильтрации по порогу 10 000 последовательностей в FASTQ-файлах.
 
+**Конвейер по обработке**
+
+1) NanoPlot --fastq $1.fastq.gz -o $1.nanoplot -t 60
+2) porechop-runner.py \
+    -i $1.fastq.gz \
+    -o $1_porechop.fastq.gz \
+    --threads 60 \
+    --adapter_threshold 90 \
+    --end_size 100 \
+    --extra_end_trim 5 \
+    --verbosity 1
+3) gunzip -c $1_porechop.fastq.gz |chopper -q 10 -l 1300 --maxlength 1700 | gzip > $1_porechop_chopper.fastq.gz
+4) NanoPlot --fastq $1_porechop_chopper.fastq.gz -o $1.nanoplot_filtering -t 60
+5) emu abundance \
+    --type map-ont \
+    --keep-counts \
+    --output-dir ./emu \
+    --threads 60 \
+    $1_porechop_chopper.fastq
 
 **Термины**
 
