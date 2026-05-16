@@ -86,8 +86,11 @@ wget https://ftp.ncbi.nih.gov/snp/latest_release/VCF/GCF_000001405.40.gz
 docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
  gatk IndexFeatureFile -I dbsnp157.vcf.gz
 ```
-13) Загрузка InDels в VCF-формате (версия от 2021-05-04 16:17, 20M) и индекс файла.
+13) Загрузка InDels в VCF-формате (версия от 2021-05-04 16:17, 20M и 2021-05-04 16:17, 59M) и индексы файлов. Mills_and_1000G_gold_standard.indels.hg38.vcf.gz — это качественный «золотой стандарт». Используется, когда нужно быть максимально уверенным в валидации. Homo_sapiens_assembly38.known_indels.vcf.gz — это максимально полный справочник. Используется для широкого «маскирования» вариабельных участков.
 ```
 wget https://rcs.bu.edu/examples/bioinformatics/gatk/ref/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
 wget https://rcs.bu.edu/examples/bioinformatics/gatk/ref/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi
+
+wget https://rcs.bu.edu/examples/bioinformatics/gatk/ref/Homo_sapiens_assembly38.known_indels.vcf.gz
+wget https://rcs.bu.edu/examples/bioinformatics/gatk/ref/Homo_sapiens_assembly38.known_indels.vcf.gz.tbi
 ```
