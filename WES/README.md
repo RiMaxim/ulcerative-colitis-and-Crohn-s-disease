@@ -94,3 +94,18 @@ wget https://rcs.bu.edu/examples/bioinformatics/gatk/ref/Mills_and_1000G_gold_st
 wget https://rcs.bu.edu/examples/bioinformatics/gatk/ref/Homo_sapiens_assembly38.known_indels.vcf.gz
 wget https://rcs.bu.edu/examples/bioinformatics/gatk/ref/Homo_sapiens_assembly38.known_indels.vcf.gz.tbi
 ```
+14) Создание индекса fai для генома
+```
+samtools faidx Homo_sapiens_assembly38.fasta
+```
+15) BSQR
+```
+docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
+ gatk BaseRecalibrator \
+ -I ./bam/$1.marked.bam \
+ -R ./reference/Homo_sapiens_assembly38.fasta \
+ --known-sites dbsnp157.vcf.gz \
+ --known-sites Homo_sapiens_assembly38.known_indels.vcf.gz \
+ --known-sites Mills_and_1000G_gold_standard.indels.hg38.vcf.gz \
+ -O ./bam/$1.recal.table
+```
