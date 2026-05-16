@@ -98,7 +98,18 @@ wget https://rcs.bu.edu/examples/bioinformatics/gatk/ref/Homo_sapiens_assembly38
 ```
 samtools faidx Homo_sapiens_assembly38.fasta
 ```
-15) Запуск BaseRecalibrator для перекалибровки базовых качеств (Base Quality Score Recalibration, BQSR).
+15) Конвертация BED-файла в IntervalList (формат GATK).
+```
+docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
+ gatk BedToIntervalList \
+ -I CoreExomePanel.hg38.p12.target.v3.bed \
+ -O CoreExomePanel.hg38.p12.target.v3.interval_list \
+ -R ./reference/Homo_sapiens_assembly38.fasta \
+ --SEQUENCE_DICTIONARY ./reference/Homo_sapiens_assembly38.dict \
+ --DROP_MISSING_CONTIGS true \
+ --SORT true
+```
+16) Запуск BaseRecalibrator для перекалибровки базовых качеств (Base Quality Score Recalibration, BQSR).
 ```
 docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
  gatk BaseRecalibrator \
@@ -107,5 +118,7 @@ docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
  --known-sites dbsnp157.vcf.gz \
  --known-sites Homo_sapiens_assembly38.known_indels.vcf.gz \
  --known-sites Mills_and_1000G_gold_standard.indels.hg38.vcf.gz \
+ -L CoreExomePanel.hg38.p12.target.v3.interval_list \
+ --interval-padding 100 \
  -O ./bam/$1.recal.table
 ```
