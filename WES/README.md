@@ -1,36 +1,83 @@
 **Конвейр по обработке данных**
 
-1) fastqc -t $2
+> $1 - ID входного файла (например Patient1 из файлов Patient1_1.fastq.gz и Patient1_2.fastq.gz)
+> $2 - количество потоков (threads)
 
-java -jar /opt/Trimmomatic-0.39/trimmomatic-0.39.jar \
-PE \
--threads 64 \
--phred33 \
-$1_1.fastq.gz $1_2.fastq.gz \
-$1_R1_paired.fastq.gz $1_R1_unpaired.fastq.gz \
-$1_R2_paired.fastq.gz $1_R2_unpaired.fastq.gz \
-ILLUMINACLIP:/opt/Trimmomatic-0.39/adapters/All_adapters.fa:2:30:10 \
-LEADING:20 \
-TRAILING:20 \
-SLIDINGWINDOW:4:20 \
-MINLEN:50
+1) Проверка качества с помощью FastQC (версия v0.11.5)
 
-SAMPLE_ID=$1
+> fastqc -t $2 $1_1.fastq.gz
 
-RG=$"@RG\tID:${SAMPLE_ID}\tSM:${SAMPLE_ID}\tPL:ILLUMINA\tLB:lib1"
+2) Фильтрация данных с помощью trimmomatic (версия 0.39)
 
-/opt/bwa-mem2-2.2.1_x64-linux/bwa-mem2 mem \
-  -t 64 \
-  -M -Y \
-  -R "$RG" \
-  ./reference/Homo_sapiens_assembly38.fasta.gz \
-  ${SAMPLE_ID}_R1_paired.fastq.gz \
-  ${SAMPLE_ID}_R2_paired.fastq.gz | \
-  samtools sort -@ 64 -o ./bam/${SAMPLE_ID}.bam -
+> java -jar /opt/Trimmomatic-0.39/trimmomatic-0.39.jar \
+> PE \
+> -threads $2 \
+> -phred33 \
+> $1_1.fastq.gz $1_2.fastq.gz \
+> $1_R1_paired.fastq.gz $1_R1_unpaired.fastq.gz \
+> $1_R2_paired.fastq.gz $1_R2_unpaired.fastq.gz \
+> ILLUMINACLIP:/opt/Trimmomatic-0.39/adapters/All_adapters.fa:2:30:10 \
+> LEADING:20 \
+> TRAILING:20 \
+> SLIDINGWINDOW:4:20 \
+> MINLEN:50
 
-samtools indeх ./bam/${SAMPLE_ID}.bam -@ 60
+3) Скачивание эталонного генома человека (сборка GATK Homo_sapiens_assembly38.fasta.gz) и словаря последовательности (Homo_sapiens_assembly38.fasta.gz.dict) для эталонного генома (требуется 1 раз)
 
-./run2.sh ${SAMPLE_ID}
+> wget https://github.com/broadinstitute/gatk/blob/master/src/test/resources/large/Homo_sapiens_assembly38.dict
+> wget https://github.com/broadinstitute/gatk/blob/master/src/test/resources/large/Homo_sapiens_assembly38.fasta.gz
+
+5) Индексация генома с помощью bwa-mem2 (версия 2.2.1) (требуется 1 раз)
+
+> /opt/bwa-mem2-2.2.1_x64-linux/bwa-mem2 index Homo_sapiens_assembly38.fasta.gz
+
+6) Выравнивание парных последовательностей на эталонный геном с формированием группы чтения (RG) и последующей сортировкой необходимой для 10 шага.
+
+> SAMPLE_ID=$1
+> RG=$"@RG\tID:${SAMPLE_ID}\tSM:${SAMPLE_ID}\tPL:ILLUMINA\tLB:lib1"
+
+> /opt/bwa-mem2-2.2.1_x64-linux/bwa-mem2 mem \
+>  -t $2 \
+>  -M -Y \
+>  -R "$RG" \
+>  ./reference/Homo_sapiens_assembly38.fasta.gz \
+>  ${SAMPLE_ID}_R1_paired.fastq.gz \
+>  ${SAMPLE_ID}_R2_paired.fastq.gz | \
+>  samtools sort -@ $2 -o ./bam/${SAMPLE_ID}.bam -
+
+7) Скачивание панели Vazyme VAHTS Target Capture Core Exome Panel (https://www.vazymeglobal.com/product-center/capture-probe/vahts-target-capture-core-exome-panel). Внутри архива — 4 файла. Для работы используется файл CoreExomePanel.hg38.p12.target.v3(1).bed. Перед использованием его необходимо один раз переименовать в CoreExomePanel.hg38.p12.target.v3.bed (для шаге 9).
+
+9) Вычисление глубины покрытия
+
+> samtools depth $1.bam -b CoreExomePanel.hg38.p12.target.v3.bed > $1.bed
+
+> for depth in $(seq 1 1 80); do
+>   cat $1.bed | awk -F'\t' -v d=$depth '{if ($3 >= d) print 1}' | awk 'BEGIN { sum=0 } { sum+=$1 } END {print sum}' >> $1.coverage
+> done
+
+9) Загрузка GATK образа  (требуется 1 раз)
+
+> docker pull broadinstitute/gatk:4.6.2.0
+
+10) Запуск инструмента MarkDuplicates из GATK внутри Docker-контейнера для обнаружения и маркировки ПЦР-дупликатов в BAM-файле.
+
+> docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
+>     gatk MarkDuplicates \
+>     -I ./bam/$1.bam \
+>     -O ./bam/$1.marked.bam \
+>     -M ./bam/$1.metrics.txt \
+>     --CREATE_INDEX true
+
+11) Загрузка SNP в VCF-формате (версия от 2025-01-15 21:27, 28 ГБ)
+
+> wget https://ftp.ncbi.nih.gov/snp/latest_release/VCF/GCF_000001405.40.gz
+
+12) Замена RefSeq ID в первом столбце на формат chr (например, NC_000001.11 → chr1). Добавление информации о длине хромосом в заголовок файла (например, ##contig=<ID=chr1,length=248956422>). Итоговое название файла dbsnp157.vcf.gz
+
+13) Запуск инструмента IndexFeatureFile из GATK внутри Docker-контейнера для создания индекса у VCF-файла с SNP-датасетом dbsnp157. Выходной файл - dbsnp157.vcf.gz.tbi
+
+> docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
+>     gatk IndexFeatureFile -I dbsnp157.vcf.gz
 
 
 
