@@ -86,3 +86,8 @@ wget https://ftp.ncbi.nih.gov/snp/latest_release/VCF/GCF_000001405.40.gz
 docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
  gatk IndexFeatureFile -I dbsnp157.vcf.gz
 ```
+13) Загрузка InDels в VCF-формате (версия от 2021-05-04 16:17, 20M) и индекс файла.
+```
+wget https://rcs.bu.edu/examples/bioinformatics/gatk/ref/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
+wget https://rcs.bu.edu/examples/bioinformatics/gatk/ref/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi
+```
