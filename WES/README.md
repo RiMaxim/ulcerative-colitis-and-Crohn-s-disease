@@ -51,9 +51,14 @@ RG=$"@RG\tID:${SAMPLE_ID}\tSM:${SAMPLE_ID}\tPL:ILLUMINA\tLB:lib1"
 ```
 samtools depth $1.bam -b CoreExomePanel.hg38.p12.target.v3.bed > $1.bed
 
-for depth in $(seq 1 1 80); do
- cat $1.bed | awk -F'\t' -v d=$depth '{if ($3 >= d) print 1}' | awk 'BEGIN { sum=0 } { sum+=$1 } END {print sum/34128352}' >> $1.coverage
-done
+depth=30
+GENOME_SIZE=34128352
+
+awk -v d=$depth -v g=$GENOME_SIZE '
+    $3 >= d { count++ }
+    END { printf "%.2f%%\n", (count/g)*100 }
+' $1.bed
+
 ```
 34128352 - суммарная длина панели
 
