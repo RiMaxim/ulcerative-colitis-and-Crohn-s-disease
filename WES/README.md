@@ -127,11 +127,11 @@ docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
 17) Запуск ApplyBQSR применяет таблицу перекалибровки качеств (созданную на предыдущем шаге $1.recal.table) к BAM файлу (созданный на шаге 9 на$1.marked.bam), исправляя оценки качества каждого основания.
 ```
 docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
-    gatk ApplyBQSR \
-    -I ./bam/$1.marked.bam \
-    -R ./reference/Homo_sapiens_assembly38.fasta \
-    --bqsr-recal-file ./bam/$1.recal.table \
-    --create-output-bam-index true \
-    --add-output-sam-program-record true \
-    -O ./bam/$1.recal.bam
+ gatk ApplyBQSR \
+ -I ./bam/$1.marked.bam \
+ -R ./reference/Homo_sapiens_assembly38.fasta \
+ --bqsr-recal-file ./bam/$1.recal.table \
+ --create-output-bam-index true \
+ --add-output-sam-program-record true \
+ -O ./bam/$1.recal.bam
 ```
