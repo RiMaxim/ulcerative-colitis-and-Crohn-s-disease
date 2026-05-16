@@ -98,7 +98,7 @@ wget https://rcs.bu.edu/examples/bioinformatics/gatk/ref/Homo_sapiens_assembly38
 ```
 samtools faidx Homo_sapiens_assembly38.fasta
 ```
-15) BSQR
+15) Запуск BaseRecalibrator для перекалибровки базовых качеств (Base Quality Score Recalibration, BQSR).
 ```
 docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
  gatk BaseRecalibrator \
