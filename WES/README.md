@@ -10,7 +10,7 @@
 2) Фильтрация данных с помощью trimmomatic (версия 0.39)
 
 > java -jar /opt/Trimmomatic-0.39/trimmomatic-0.39.jar \
-> PE \
+> PE \\
 > -threads $2 \
 > -phred33 \
 > $1_1.fastq.gz $1_2.fastq.gz \
