@@ -52,9 +52,11 @@ RG=$"@RG\tID:${SAMPLE_ID}\tSM:${SAMPLE_ID}\tPL:ILLUMINA\tLB:lib1"
 samtools depth $1.bam -b CoreExomePanel.hg38.p12.target.v3.bed > $1.bed
 
 for depth in $(seq 1 1 80); do
- cat $1.bed | awk -F'\t' -v d=$depth '{if ($3 >= d) print 1}' | awk 'BEGIN { sum=0 } { sum+=$1 } END {print sum}' >> $1.coverage
+ cat $1.bed | awk -F'\t' -v d=$depth '{if ($3 >= d) print 1}' | awk 'BEGIN { sum=0 } { sum+=$1 } END {print sum/34128352}' >> $1.coverage
 done
 ```
+34128352 - суммарная длина панели
+
 8) Загрузка GATK образа  (требуется 1 раз)
 ```
 docker pull broadinstitute/gatk:4.6.2.0
