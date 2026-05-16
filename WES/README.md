@@ -47,9 +47,9 @@
 >  ${SAMPLE_ID}_R2_paired.fastq.gz | \
 >  samtools sort -@ $2 -o ./bam/${SAMPLE_ID}.bam -
 
-7) Скачивание панели Vazyme VAHTS Target Capture Core Exome Panel (https://www.vazymeglobal.com/product-center/capture-probe/vahts-target-capture-core-exome-panel). Внутри архива — 4 файла. Для работы используется файл CoreExomePanel.hg38.p12.target.v3(1).bed. Перед использованием его необходимо один раз переименовать в CoreExomePanel.hg38.p12.target.v3.bed (для шаге 9).
+7) Скачивание панели Vazyme VAHTS Target Capture Core Exome Panel (https://www.vazymeglobal.com/product-center/capture-probe/vahts-target-capture-core-exome-panel). Внутри архива — 4 файла. Для работы используется файл CoreExomePanel.hg38.p12.target.v3(1).bed. Перед использованием его необходимо один раз переименовать в CoreExomePanel.hg38.p12.target.v3.bed (для шаге 8).
 
-9) Вычисление глубины покрытия
+8) Вычисление глубины покрытия
 
 > samtools depth $1.bam -b CoreExomePanel.hg38.p12.target.v3.bed > $1.bed
 
