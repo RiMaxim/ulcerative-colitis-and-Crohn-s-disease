@@ -79,16 +79,3 @@ wget https://ftp.ncbi.nih.gov/snp/latest_release/VCF/GCF_000001405.40.gz
 docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
  gatk IndexFeatureFile -I dbsnp157.vcf.gz
 ```
-
-
-
-
-
-
-
-
-
-
-
-
- 1Help            2Save            3Mark            4Replac          5Copy            6Move            7Search          8Delete          9PullDn         10Quit
