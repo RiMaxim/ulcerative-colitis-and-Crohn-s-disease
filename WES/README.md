@@ -25,6 +25,7 @@
 3) Скачивание эталонного генома человека (сборка GATK Homo_sapiens_assembly38.fasta.gz) и словаря последовательности (Homo_sapiens_assembly38.fasta.gz.dict) для эталонного генома (требуется 1 раз)
 
 > wget https://github.com/broadinstitute/gatk/blob/master/src/test/resources/large/Homo_sapiens_assembly38.dict
+
 > wget https://github.com/broadinstitute/gatk/blob/master/src/test/resources/large/Homo_sapiens_assembly38.fasta.gz
 
 5) Индексация генома с помощью bwa-mem2 (версия 2.2.1) (требуется 1 раз)
