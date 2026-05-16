@@ -9,18 +9,20 @@
 
 2) Фильтрация данных с помощью trimmomatic (версия 0.39)
 
-> java -jar /opt/Trimmomatic-0.39/trimmomatic-0.39.jar \
-> PE \\
-> -threads $2 \
-> -phred33 \
-> $1_1.fastq.gz $1_2.fastq.gz \
-> $1_R1_paired.fastq.gz $1_R1_unpaired.fastq.gz \
-> $1_R2_paired.fastq.gz $1_R2_unpaired.fastq.gz \
-> ILLUMINACLIP:/opt/Trimmomatic-0.39/adapters/All_adapters.fa:2:30:10 \
-> LEADING:20 \
-> TRAILING:20 \
-> SLIDINGWINDOW:4:20 \
-> MINLEN:50
+```
+java -jar /opt/Trimmomatic-0.39/trimmomatic-0.39.jar \
+PE \
+-threads $2 \
+-phred33 \
+$1_1.fastq.gz $1_2.fastq.gz \
+$1_R1_paired.fastq.gz $1_R1_unpaired.fastq.gz \
+$1_R2_paired.fastq.gz $1_R2_unpaired.fastq.gz \
+ILLUMINACLIP:/opt/Trimmomatic-0.39/adapters/All_adapters.fa:2:30:10 \
+LEADING:20 \
+TRAILING:20 \
+SLIDINGWINDOW:4:20 \
+MINLEN:50
+```
 
 3) Скачивание эталонного генома человека (сборка GATK Homo_sapiens_assembly38.fasta.gz) и словаря последовательности (Homo_sapiens_assembly38.fasta.gz.dict) для эталонного генома (требуется 1 раз)
 
