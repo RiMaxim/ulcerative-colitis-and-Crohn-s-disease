@@ -1,4 +1,4 @@
-![Logo](Pipeline.png)
+![Logo](Pip.png)
 **Конвейер по обработке данных**
 
 > $1 - ID входного файла (например Patient1 из файлов Patient1_1.fastq.gz и Patient1_2.fastq.gz)
