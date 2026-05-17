@@ -33,7 +33,7 @@ wget https://rcs.bu.edu/examples/bioinformatics/gatk/ref/Homo_sapiens_assembly38
 ```
 /opt/bwa-mem2-2.2.1_x64-linux/bwa-mem2 index Homo_sapiens_assembly38.fasta
 ```
-5) Выравнивание парных последовательностей на эталонный геном с формированием группы чтения (RG) и последующей сортировкой необходимой для 9 шага.
+5) Выравнивание парных последовательностей на эталонный геном с формированием группы чтения (RG) и последующей сортировкой необходимой для 7 шага.
 ```
 SAMPLE_ID=$1
 RG=$"@RG\tID:${SAMPLE_ID}\tSM:${SAMPLE_ID}\tPL:ILLUMINA\tLB:lib1"
@@ -47,11 +47,24 @@ RG=$"@RG\tID:${SAMPLE_ID}\tSM:${SAMPLE_ID}\tPL:ILLUMINA\tLB:lib1"
  ${SAMPLE_ID}_R2_paired.fastq.gz | \
  samtools sort -@ $2 -o ./bam/${SAMPLE_ID}.bam -
 ```
-6) Скачивание панели Vazyme VAHTS Target Capture Core Exome Panel (https://www.vazymeglobal.com/product-center/capture-probe/vahts-target-capture-core-exome-panel). Внутри архива — 4 файла. Для работы используется файл CoreExomePanel.hg38.p12.target.v3(1).bed. Перед использованием его необходимо один раз переименовать в CoreExomePanel.hg38.p12.target.v3.bed (для шаге 7).
-
-7) Вычисление глубины покрытия
+6) Загрузка GATK образа  (требуется 1 раз)
 ```
-samtools depth $1.bam -b CoreExomePanel.hg38.p12.target.v3.bed > $1.bed
+docker pull broadinstitute/gatk:4.6.2.0
+```
+7) Запуск инструмента MarkDuplicates из GATK внутри Docker-контейнера для обнаружения и маркировки ПЦР-дупликатов в BAM-файле.
+```
+docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
+ gatk MarkDuplicates \
+ -I ./bam/$1.bam \
+ -O ./bam/$1.marked.bam \
+ -M ./bam/$1.metrics.txt \
+ --CREATE_INDEX true
+```
+8) Скачивание панели Vazyme VAHTS Target Capture Core Exome Panel (https://www.vazymeglobal.com/product-center/capture-probe/vahts-target-capture-core-exome-panel). Внутри архива — 4 файла. Для работы используется файл CoreExomePanel.hg38.p12.target.v3(1).bed. Перед использованием его необходимо один раз переименовать в CoreExomePanel.hg38.p12.target.v3.bed (для шаге 9).
+
+9) Вычисление глубины покрытия без дубликатов. 34128352 - суммарная длина панели
+```
+samtools depth $1.bam -b CoreExomePanel.hg38.p12.target.v3.bed --excl-flags 1024 > $1.bed
 
 depth=30
 GENOME_SIZE=34128352
@@ -61,21 +74,6 @@ awk -v d=$depth -v g=$GENOME_SIZE '
     END { printf "%.2f%%\n", (count/g)*100 }
 ' $1.bed
 
-```
-34128352 - суммарная длина панели
-
-8) Загрузка GATK образа  (требуется 1 раз)
-```
-docker pull broadinstitute/gatk:4.6.2.0
-```
-9) Запуск инструмента MarkDuplicates из GATK внутри Docker-контейнера для обнаружения и маркировки ПЦР-дупликатов в BAM-файле.
-```
-docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
- gatk MarkDuplicates \
- -I ./bam/$1.bam \
- -O ./bam/$1.marked.bam \
- -M ./bam/$1.metrics.txt \
- --CREATE_INDEX true
 ```
 10) Загрузка SNP в VCF-формате (версия от 2025-01-15 21:27, 28 ГБ)
 ```
