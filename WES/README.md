@@ -63,14 +63,14 @@ docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
 
 9) Вычисление глубины покрытия без дубликатов. 34128352 - суммарная длина панели
 ```
-samtools depth $1.bam -b CoreExomePanel.hg38.p12.target.v3.bed --excl-flags 1024 > $1.bed
+samtools depth $1.bam -b CoreExomePanel.hg38.p12.target.v3.bed -G 1024 > $1.bed
 
 depth=30
 GENOME_SIZE=34128352
 
 awk -v d=$depth -v g=$GENOME_SIZE '
     $3 >= d { count++ }
-    END { printf "%.2f%%\n", (count/g)*100 }
+    END { printf "%.5f%%\n", (count/g)*100 }
 ' $1.bed
 
 ```
