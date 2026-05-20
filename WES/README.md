@@ -132,3 +132,13 @@ docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
  --add-output-sam-program-record true \
  -O ./bam/$1.recal.bam
 ```
+18) Запуск HaplotypeCaller. Индивидуальный Variant Calling (GATK)
+```
+docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
+ gatk HaplotypeCaller \
+ -R ./reference/Homo_sapiens_assembly38.fasta \
+ -I ./bam/$1.recal.bam \
+ -O ./gvcf/$1.g.vcf.gz \
+ -L CoreExomePanel.hg38.p12.target.v3.interval_list \
+ -ERC GVCF
+```
