@@ -142,3 +142,24 @@ docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
  -L CoreExomePanel.hg38.p12.target.v3.interval_list \
  -ERC GVCF
 ```
+19) Когортный анализ. Создание карты образцов.
+```
+Patient1 ./gvcf/barcode1.g.vcf.gz
+Patient2 ./gvcf/barcode2.g.vcf.gz
+...
+Patient126 ./gvcf/barcode126.g.vcf.gz
+```
+20) Когортный анализ. Запуск GenomicsDBImport для создание базы данных. Ниже пример для хромосомы 1 (повторить для всех хромосом chr1-22, X, Y).
+```
+docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
+ gatk GenomicsDBImport \
+ --genomicsdb-workspace-path ./genomicsdb/chr1_db \
+ -R ./reference/Homo_sapiens_assembly38.fasta \
+ --sample-name-map ./sample_map.txt \
+ -L chr1
+```
+
+
+
+
+
