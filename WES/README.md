@@ -142,7 +142,7 @@ docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
  -L CoreExomePanel.hg38.p12.target.v3.interval_list \
  -ERC GVCF
 ```
-19) Когортный анализ. Создание карты образцов.
+19) Когортный анализ. Создание карты образцов (sample_map.txt). Используется в шаге 20.
 ```
 Patient1 ./gvcf/barcode1.g.vcf.gz
 Patient2 ./gvcf/barcode2.g.vcf.gz
