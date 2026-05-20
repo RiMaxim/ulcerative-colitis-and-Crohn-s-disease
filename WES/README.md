@@ -158,8 +158,62 @@ docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
  --sample-name-map ./sample_map.txt \
  -L chr1
 ```
-
-
-
-
-
+21) Когортный анализ. Запуск GenotypeGVCFs для генотипирования. Ниже пример для хромосомы 1 (повторить для всех хромосом chr1-22, X, Y).
+```
+docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
+ gatk GenotypeGVCFs \
+ -R ./reference/Homo_sapiens_assembly38.fasta \
+ -V gendb://./genomicsdb/chr1_db \
+ -O ./vcf/cohort_chr1.vcf.gz
+```
+22) Когортный анализ. Объединение хромосом в один файл.
+```
+docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
+ gatk MergeVcfs \
+ -I ./vcf/cohort_chr1.vcf.gz \
+ -I ./vcf/cohort_chr2.vcf.gz \
+ -I ./vcf/cohort_chr3.vcf.gz \
+ -I ./vcf/cohort_chr4.vcf.gz \
+ -I ./vcf/cohort_chr5.vcf.gz \
+ -I ./vcf/cohort_chr6.vcf.gz \
+ -I ./vcf/cohort_chr7.vcf.gz \
+ -I ./vcf/cohort_chr8.vcf.gz \
+ -I ./vcf/cohort_chr9.vcf.gz \
+ -I ./vcf/cohort_chr10.vcf.gz \
+ -I ./vcf/cohort_chr11.vcf.gz \
+ -I ./vcf/cohort_chr12.vcf.gz \
+ -I ./vcf/cohort_chr13.vcf.gz \
+ -I ./vcf/cohort_chr14.vcf.gz \
+ -I ./vcf/cohort_chr15.vcf.gz \
+ -I ./vcf/cohort_chr16.vcf.gz \
+ -I ./vcf/cohort_chr17.vcf.gz \
+ -I ./vcf/cohort_chr18.vcf.gz \
+ -I ./vcf/cohort_chr19.vcf.gz \
+ -I ./vcf/cohort_chr20.vcf.gz \
+ -I ./vcf/cohort_chr21.vcf.gz \
+ -I ./vcf/cohort_chr22.vcf.gz \
+ -I ./vcf/cohort_chrX.vcf.gz \
+ -I ./vcf/cohort_chrY.vcf.gz \
+ -O ./vcf/cohort_raw.vcf.gz
+```
+23) Фильтрация.
+```
+docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
+ gatk VariantFiltration \
+ -R ./reference/Homo_sapiens_assembly38.fasta \
+ -V ./vcf/cohort_raw.vcf.gz \
+ -filter "QD < 2.0 || FS > 60.0 || MQ < 40.0 || MQRankSum < -12.5 || ReadPosRankSum < -8.0" \
+ --filter-name "GATK_Filter" \
+ -O ./vcf/cohort_filtered.vcf.gz
+```
+24) Аннотация с помощью Ensembl VEP. 
+```
+docker run --rm -v $(pwd):/opt/vep/.vep ensemblorg/ensembl-vep \
+ vep -i /data/vcf/cohort_filtered.vcf.gz \
+ -o /data/vcf/cohort_annotated.vcf.gz \
+ --assembly GRCh38 --cache --offline --vcf --force_overwrite \
+ --everything
+```
+25) Подготовка клинических данных
+26) Конвертация VCF в формат PLINK
+27) Запуск статистического теста (Логистическая регрессия)
