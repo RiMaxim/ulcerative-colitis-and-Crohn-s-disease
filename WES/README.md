@@ -182,6 +182,8 @@ for chr in "${CHRS[@]}"; do
     echo "Finished ${CHR_NAME}."
     echo ""
 done
+
+# docker run --rm -v $(pwd):/data -w /data alpine rm -rf ./genomicsdb
 ```
 22) Когортный анализ. Объединение хромосом в один файл.
 ```
