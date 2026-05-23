@@ -305,7 +305,7 @@ bcftools index -t "${PREFIX}.ready_for_vep.vcf.gz"
 echo "=== 6. Cleaning up temporary files ==="
 rm -f "${PREFIX}.norm.vcf" "${PREFIX}.sorted.vcf" "${PREFIX}.PASS.vcf" "${PREFIX}.PASS.DP20.vcf"
 ```
-25) Установка программ для анноации 
+25) Установка программ для аннотации.
 ```
 echo "=== 1. Deployment of VEP execution environment ==="
 docker pull ensemblorg/ensembl-vep:release_115.2
