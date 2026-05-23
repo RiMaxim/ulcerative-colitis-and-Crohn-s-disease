@@ -305,15 +305,18 @@ bcftools index -t "${PREFIX}.ready_for_vep.vcf.gz"
 echo "=== 6. Cleaning up temporary files ==="
 rm -f "${PREFIX}.norm.vcf" "${PREFIX}.sorted.vcf" "${PREFIX}.PASS.vcf" "${PREFIX}.PASS.DP20.vcf"
 ```
-25) Скачиваем базовый кэш Ensembl v115.2 (Человек, GRCh38) c https://hub.docker.com/r/ensemblorg/ensembl-vep 
+25) Установка программ для анноации 
 ```
-mkdir -p annotation
-mkdir -p annotation/vep_cache annotation/vep_plugins annotation/vep_data
+echo "=== 1. Deployment of VEP execution environment ==="
+docker pull ensemblorg/ensembl-vep:release_115.2
 
-docker run --rm -it \
-  -v $(pwd)/annotation/vep_cache:/opt/vep/.vep \
-  ensemblorg/ensembl-vep:release_115.2 \
-  perl /opt/vep/src/ensembl-vep/INSTALL.pl --AUTO c --SPECIES homo_sapiens --ASSEMBLY GRCh38 --DESTDIR /opt/vep/.vep
+echo "=== 2. Acquisition of pre-indexed VEP cache for GRCh38 ==="
+wget https://ftp.ensembl.org/pub/release-115/variation/indexed_vep_cache/homo_sapiens_vep_115_GRCh38.tar.gz
+
+echo "=== 3. Download the ClinVar Database (Medical Classifications) ==="
+wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz
+wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz.tbi
+
 ```
 25) Подготовка клинических данных
 26) Конвертация VCF в формат PLINK
