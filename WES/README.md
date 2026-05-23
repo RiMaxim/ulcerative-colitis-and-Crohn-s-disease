@@ -160,6 +160,8 @@ docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
 ```
 21) Когортный анализ. Запуск GenotypeGVCFs для генотипирования. Ниже пример для хромосомы 1 (повторить для всех хромосом chr1-22, X, Y).
 ```
+mkdir -p genomicsdb
+
 CHRS=( {1..22} X Y )
 
 for chr in "${CHRS[@]}"; do
