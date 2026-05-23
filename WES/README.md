@@ -179,13 +179,13 @@ done
 ```
 21) Когортный анализ. Запуск GenotypeGVCFs для генотипирования. Ниже пример для хромосомы 1 (повторить для всех хромосом chr1-22, X, Y).
 ```
-mkdir -p vcf_output
+mkdir -p vcf
 CHRS=( {1..22} X Y )
 
 for chr in "${CHRS[@]}"; do
     CHR_NAME="chr${chr}"
     DB_PATH="./genomicsdb/${CHR_NAME}_db"
-    OUT_VCF="./vcf_output/cohort_${CHR_NAME}.vcf.gz"
+    OUT_VCF="./vcf/cohort_${CHR_NAME}.vcf.gz"
     
     echo "========================================"
     echo "Starting import for ${CHR_NAME}..."
