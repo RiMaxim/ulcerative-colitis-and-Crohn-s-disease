@@ -155,7 +155,7 @@ docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
  gatk GenomicsDBImport \
  --genomicsdb-workspace-path ./genomicsdb/chr1_db \
  -R ./reference/Homo_sapiens_assembly38.fasta \
- --sample-name-map ./sample_map.txt \
+ --sample-name-map sample_map.txt \
  -L chr1
 ```
 21) Когортный анализ. Запуск GenotypeGVCFs для генотипирования. Ниже пример для хромосомы 1 (повторить для всех хромосом chr1-22, X, Y).
