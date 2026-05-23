@@ -272,7 +272,32 @@ rm -f ./vcf/cohort_indels_filtered.vcf.gz ./vcf/cohort_indels_filtered.vcf.gz.tb
 
 #bcftools view -H -v snps -f PASS ./vcf/cohort_filtered.vcf.gz | wc -l
 ```
-25) Аннотация с помощью Ensembl VEP. 
+24) Финальная фильтрация
+```
+REF="./reference/Homo_sapiens_assembly38.fasta"
+INPUT_VCF="./vcf/cohort_filtered.vcf.gz"
+PREFIX="./vcf/cohort"
+
+echo "=== 1. Normalization and multiallelic splitting ==="
+bcftools norm -f "$REF" -m -both -O v "$INPUT_VCF" > "${PREFIX}.norm.vcf"
+
+echo "=== 2. VCF Sorting ==="
+bcftools sort "${PREFIX}.norm.vcf" > "${PREFIX}.sorted.vcf"
+
+echo "=== 3. Filtration: PASS only ==="
+bcftools view -i 'FILTER="PASS"' "${PREFIX}.sorted.vcf" > "${PREFIX}.PASS.vcf"
+
+echo "=== 4. Filtration by Call Rate: DP >= 20x in at least 70% of samples ==="
+bcftools view -i 'COUNT(FMT/DP>=20)/N_SAMPLES >= 0.7' "${PREFIX}.PASS.vcf" > "${PREFIX}.PASS.filtered.vcf"
+
+echo "=== 5. Final sorting and compression to .gz ==="
+bcftools sort "${PREFIX}.PASS.DP20.vcf" -O z > "${PREFIX}.ready_for_vep.vcf.gz"
+bcftools index -t "${PREFIX}.ready_for_vep.vcf.gz"
+
+echo "=== 6. Cleaning up temporary files ==="
+rm -f "${PREFIX}.norm.vcf" "${PREFIX}.sorted.vcf" "${PREFIX}.PASS.vcf" "${PREFIX}.PASS.DP20.vcf" "${PREFIX}.ready.vcf"
+```
+26) Аннотация с помощью Ensembl VEP. 
 ```
 docker run --rm -v $(pwd):/opt/vep/.vep ensemblorg/ensembl-vep \
  vep -i /data/vcf/cohort_filtered.vcf.gz \
