@@ -197,9 +197,34 @@ done
 ```
 22) Когортный анализ. Объединение хромосом в один файл.
 ```
-bcftools concat -a -O z ./vcf/cohort_chr*.vcf.gz > ./vcf/cohort_raw.vcf.gz
-bcftools index -t ./vcf/cohort_raw.vcf.gz
-bcftools view -H -v snps ./vcf/cohort_raw.vcf.gz | wc -l
+docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
+ gatk MergeVcfs \
+ -I ./vcf/cohort_chr1.vcf.gz \
+ -I ./vcf/cohort_chr2.vcf.gz \
+ -I ./vcf/cohort_chr3.vcf.gz \
+ -I ./vcf/cohort_chr4.vcf.gz \
+ -I ./vcf/cohort_chr5.vcf.gz \
+ -I ./vcf/cohort_chr6.vcf.gz \
+ -I ./vcf/cohort_chr7.vcf.gz \
+ -I ./vcf/cohort_chr8.vcf.gz \
+ -I ./vcf/cohort_chr9.vcf.gz \
+ -I ./vcf/cohort_chr10.vcf.gz \
+ -I ./vcf/cohort_chr11.vcf.gz \
+ -I ./vcf/cohort_chr12.vcf.gz \
+ -I ./vcf/cohort_chr13.vcf.gz \
+ -I ./vcf/cohort_chr14.vcf.gz \
+ -I ./vcf/cohort_chr15.vcf.gz \
+ -I ./vcf/cohort_chr16.vcf.gz \
+ -I ./vcf/cohort_chr17.vcf.gz \
+ -I ./vcf/cohort_chr18.vcf.gz \
+ -I ./vcf/cohort_chr19.vcf.gz \
+ -I ./vcf/cohort_chr20.vcf.gz \
+ -I ./vcf/cohort_chr21.vcf.gz \
+ -I ./vcf/cohort_chr22.vcf.gz \
+ -I ./vcf/cohort_chrX.vcf.gz \
+ -I ./vcf/cohort_chrY.vcf.gz \
+ -O ./vcf/cohort_raw.vcf.gz
+
 ```
 23) Разделение исходного VCF на SNPs и Indels. Фильтрация и последующее объединение.
 ```
