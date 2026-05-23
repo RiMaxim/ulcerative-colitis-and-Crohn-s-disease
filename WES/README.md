@@ -215,6 +215,8 @@ docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
  gatk MergeVcfs \
  $INPUT_ARGS \
  -O ./vcf/cohort_raw.vcf.gz
+
+#bcftools view -H -v snps ./vcf/cohort_raw.vcf.gz | wc -l
 ```
 23) Разделение исходного VCF на SNPs и Indels. Фильтрация и последующее объединение.
 ```
@@ -259,6 +261,8 @@ rm -f ./vcf/cohort_snps.vcf.gz ./vcf/cohort_snps.vcf.gz.tbi
 rm -f ./vcf/cohort_indels.vcf.gz ./vcf/cohort_indels.vcf.gz.tbi
 rm -f ./vcf/cohort_snps_filtered.vcf.gz ./vcf/cohort_snps_filtered.vcf.gz.tbi
 rm -f ./vcf/cohort_indels_filtered.vcf.gz ./vcf/cohort_indels_filtered.vcf.gz.tbi
+
+#bcftools view -H -v snps -f PASS ./vcf/cohort_filtered.vcf.gz | wc -l
 ```
 25) Аннотация с помощью Ensembl VEP. 
 ```
