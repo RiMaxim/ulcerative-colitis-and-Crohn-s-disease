@@ -288,14 +288,14 @@ echo "=== 3. Filtration: PASS only ==="
 bcftools view -i 'FILTER="PASS"' "${PREFIX}.sorted.vcf" > "${PREFIX}.PASS.vcf"
 
 echo "=== 4. Filtration by Call Rate: DP >= 20x in at least 70% of samples ==="
-bcftools view -i 'COUNT(FMT/DP>=20)/N_SAMPLES >= 0.7' "${PREFIX}.PASS.vcf" > "${PREFIX}.PASS.filtered.vcf"
+bcftools view -i 'COUNT(FMT/DP>=20)/N_SAMPLES >= 0.7' "${PREFIX}.PASS.vcf" > "${PREFIX}.PASS.DP20.vcf"
 
 echo "=== 5. Final sorting and compression to .gz ==="
 bcftools sort "${PREFIX}.PASS.DP20.vcf" -O z > "${PREFIX}.ready_for_vep.vcf.gz"
 bcftools index -t "${PREFIX}.ready_for_vep.vcf.gz"
 
 echo "=== 6. Cleaning up temporary files ==="
-rm -f "${PREFIX}.norm.vcf" "${PREFIX}.sorted.vcf" "${PREFIX}.PASS.vcf" "${PREFIX}.PASS.DP20.vcf" "${PREFIX}.ready.vcf"
+rm -f "${PREFIX}.norm.vcf" "${PREFIX}.sorted.vcf" "${PREFIX}.PASS.vcf" "${PREFIX}.PASS.DP20.vcf"
 ```
 26) Аннотация с помощью Ensembl VEP. 
 ```
