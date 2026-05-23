@@ -239,16 +239,24 @@ docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
  gatk VariantFiltration \
  -R ./reference/Homo_sapiens_assembly38.fasta \
  -V ./vcf/cohort_snps.vcf.gz \
- --filter-expression "QD < 2.0 || FS > 60.0 || MQ < 40.0 || MQRankSum < -12.5 || ReadPosRankSum < -8.0" \
- --filter-name "SNP_Filter" \
+ --filter-expression "QUAL < 30.00" --filter-name "HDFLT_QUAL" \
+ --filter-expression "QD < 2.00" --filter-name "HDFLT_QD" \
+ --filter-expression "FS > 60.00" --filter-name "HDFLT_FS" \
+ --filter-expression "SOR > 3.00" --filter-name "HDFLT_SOR" \
+ --filter-expression "MQ < 40.00" --filter-name "HDFLT_MQ" \
+ --filter-expression "MQRankSum < -12.50" --filter-name "HDFLT_MQRankSum" \
+ --filter-expression "ReadPosRankSum < -8.00" --filter-name "HDFLT_ReadPosRankSum" \
  -O ./vcf/cohort_snps_filtered.vcf.gz
 
 docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
  gatk VariantFiltration \
  -R ./reference/Homo_sapiens_assembly38.fasta \
  -V ./vcf/cohort_indels.vcf.gz \
- --filter-expression "QD < 2.0 || FS > 200.0 || ReadPosRankSum < -20.0" \
- --filter-name "INDEL_Filter" \
+--filter-expression "QUAL < 30.00" --filter-name "HDFLT_INDEL_QUAL" \
+--filter-expression "QD < 2.00" --filter-name "HDFLT_INDEL_QD" \
+--filter-expression "FS > 200.00" --filter-name "HDFLT_INDEL_FS" \
+--filter-expression "SOR > 10.00" --filter-name "HDFLT_INDEL_SOR" \
+--filter-expression "ReadPosRankSum < -20.00" --filter-name "HDFLT_INDEL_ReadPosRankSum" \
  -O ./vcf/cohort_indels_filtered.vcf.gz
 
 docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
