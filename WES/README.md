@@ -197,29 +197,9 @@ done
 ```
 22) Когортный анализ. Объединение хромосом в один файл.
 ```
-CHRS=( {1..22} X Y )
-INPUT_ARGS=""
-
-for chr in "${CHRS[@]}"; do
-    FILE="./vcf/cohort_chr${chr}.vcf.gz"
-    
-    if [ -f "$FILE" ]; then
-        echo "Add in the list: $FILE"
-        INPUT_ARGS="$INPUT_ARGS -I $FILE"
-    else
-        echo "File is absent: $FILE"
-    fi
-done
-
-docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
- gatk MergeVcfs \
- $INPUT_ARGS \
- -O ./vcf/cohort_raw.vcf.gz
-
-docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
- gatk IndexFeatureFile -I cohort_raw.vcf.gz
-
-#bcftools view -H -v snps ./vcf/cohort_raw.vcf.gz | wc -l
+bcftools concat -a -O z ./vcf/cohort_chr*.vcf.gz > ./vcf/cohort_raw.vcf.gz
+bcftools index -t ./vcf/cohort_raw.vcf.gz
+bcftools view -H -v snps ./vcf/cohort_raw.vcf.gz | wc -l
 ```
 23) Разделение исходного VCF на SNPs и Indels. Фильтрация и последующее объединение.
 ```
