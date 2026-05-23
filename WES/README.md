@@ -151,15 +151,6 @@ Patient126 ./gvcf/barcode126.g.vcf.gz
 ```
 20) Когортный анализ. Запуск GenomicsDBImport для создание базы данных. Ниже пример для хромосомы 1 (повторить для всех хромосом chr1-22, X, Y).
 ```
-docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
- gatk GenomicsDBImport \
- --genomicsdb-workspace-path ./genomicsdb/chr1_db \
- -R ./reference/Homo_sapiens_assembly38.fasta \
- --sample-name-map sample_map.txt \
- -L chr1
-```
-21) Когортный анализ. Запуск GenotypeGVCFs для генотипирования. Ниже пример для хромосомы 1 (повторить для всех хромосом chr1-22, X, Y).
-```
 mkdir -p genomicsdb
 
 CHRS=( {1..22} X Y )
@@ -175,7 +166,7 @@ for chr in "${CHRS[@]}"; do
     rm -rf "$WORKSPACE"
 
     docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
-        gatk --java-options "-Xmx4g" GenomicsDBImport \
+        gatk GenomicsDBImport \
         --genomicsdb-workspace-path "$WORKSPACE" \
         -R ./reference/Homo_sapiens_assembly38.fasta \
         --sample-name-map sample_map.txt \
@@ -184,8 +175,28 @@ for chr in "${CHRS[@]}"; do
     echo "Finished ${CHR_NAME}."
     echo ""
 done
-
 # docker run --rm -v $(pwd):/data -w /data alpine rm -rf ./genomicsdb
+```
+21) Когортный анализ. Запуск GenotypeGVCFs для генотипирования. Ниже пример для хромосомы 1 (повторить для всех хромосом chr1-22, X, Y).
+```
+mkdir -p vcf_output
+CHRS=( {1..22} X Y )
+
+for chr in "${CHRS[@]}"; do
+    CHR_NAME="chr${chr}"
+    DB_PATH="./genomicsdb/${CHR_NAME}_db"
+    OUT_VCF="./vcf_output/cohort_${CHR_NAME}.vcf.gz"
+    
+    echo "========================================"
+    echo "Starting import for ${CHR_NAME}..."
+    echo "========================================"
+
+    docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
+        gatk GenotypeGVCFs \
+        -R ./reference/Homo_sapiens_assembly38.fasta \
+        -V "gendb://$DB_PATH" \
+        -O "$OUT_VCF"
+done
 ```
 22) Когортный анализ. Объединение хромосом в один файл.
 ```
