@@ -305,7 +305,7 @@ bcftools index -t "${PREFIX}.ready_for_vep.vcf.gz"
 echo "=== 6. Cleaning up temporary files ==="
 rm -f "${PREFIX}.norm.vcf" "${PREFIX}.sorted.vcf" "${PREFIX}.PASS.vcf" "${PREFIX}.PASS.DP20.vcf"
 ```
-25) Скачиваем базовый кэш Ensembl v115.2 (Человек, GRCh38) 
+25) Скачиваем базовый кэш Ensembl v115.2 (Человек, GRCh38) c https://hub.docker.com/r/ensemblorg/ensembl-vep 
 ```
 mkdir -p annotation
 mkdir -p annotation/vep_cache annotation/vep_plugins annotation/vep_data
