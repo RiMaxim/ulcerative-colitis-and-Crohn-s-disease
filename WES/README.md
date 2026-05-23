@@ -305,13 +305,15 @@ bcftools index -t "${PREFIX}.ready_for_vep.vcf.gz"
 echo "=== 6. Cleaning up temporary files ==="
 rm -f "${PREFIX}.norm.vcf" "${PREFIX}.sorted.vcf" "${PREFIX}.PASS.vcf" "${PREFIX}.PASS.DP20.vcf"
 ```
-26) Аннотация с помощью Ensembl VEP. 
+25) Скачиваем базовый кэш Ensembl v115.2 (Человек, GRCh38) 
 ```
-docker run --rm -v $(pwd):/opt/vep/.vep ensemblorg/ensembl-vep \
- vep -i /data/vcf/cohort_filtered.vcf.gz \
- -o /data/vcf/cohort_annotated.vcf.gz \
- --assembly GRCh38 --cache --offline --vcf --force_overwrite \
- --everything
+mkdir -p annotation
+mkdir -p annotation/vep_cache annotation/vep_plugins annotation/vep_data
+
+docker run --rm -it \
+  -v $(pwd)/annotation/vep_cache:/opt/vep/.vep \
+  ensemblorg/ensembl-vep:release_115.2 \
+  perl /opt/vep/src/ensembl-vep/INSTALL.pl --AUTO c --SPECIES homo_sapiens --ASSEMBLY GRCh38 --DESTDIR /opt/vep/.vep
 ```
 25) Подготовка клинических данных
 26) Конвертация VCF в формат PLINK
