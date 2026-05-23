@@ -197,45 +197,36 @@ done
 ```
 22) Когортный анализ. Объединение хромосом в один файл.
 ```
+CHRS=( {1..22} X Y )
+INPUT_ARGS=""
+
+for chr in "${CHRS[@]}"; do
+    FILE="./vcf/cohort_chr${chr}.vcf.gz"
+    
+    if [ -f "$FILE" ]; then
+        echo "Add in the list: $FILE"
+        INPUT_ARGS="$INPUT_ARGS -I $FILE"
+    else
+        echo "File is absent: $FILE"
+    fi
+done
+
 docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
  gatk MergeVcfs \
- -I ./vcf/cohort_chr1.vcf.gz \
- -I ./vcf/cohort_chr2.vcf.gz \
- -I ./vcf/cohort_chr3.vcf.gz \
- -I ./vcf/cohort_chr4.vcf.gz \
- -I ./vcf/cohort_chr5.vcf.gz \
- -I ./vcf/cohort_chr6.vcf.gz \
- -I ./vcf/cohort_chr7.vcf.gz \
- -I ./vcf/cohort_chr8.vcf.gz \
- -I ./vcf/cohort_chr9.vcf.gz \
- -I ./vcf/cohort_chr10.vcf.gz \
- -I ./vcf/cohort_chr11.vcf.gz \
- -I ./vcf/cohort_chr12.vcf.gz \
- -I ./vcf/cohort_chr13.vcf.gz \
- -I ./vcf/cohort_chr14.vcf.gz \
- -I ./vcf/cohort_chr15.vcf.gz \
- -I ./vcf/cohort_chr16.vcf.gz \
- -I ./vcf/cohort_chr17.vcf.gz \
- -I ./vcf/cohort_chr18.vcf.gz \
- -I ./vcf/cohort_chr19.vcf.gz \
- -I ./vcf/cohort_chr20.vcf.gz \
- -I ./vcf/cohort_chr21.vcf.gz \
- -I ./vcf/cohort_chr22.vcf.gz \
- -I ./vcf/cohort_chrX.vcf.gz \
- -I ./vcf/cohort_chrY.vcf.gz \
+ $INPUT_ARGS \
  -O ./vcf/cohort_raw.vcf.gz
 ```
 23) Разделение исходного VCF на SNPs и Indels. Фильтрация и последующее объединение.
 ```
 docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
-gatk SelectVariants \
+ gatk SelectVariants \
  -R ./reference/Homo_sapiens_assembly38.fasta \
  -V  ./vcf/cohort_raw.vcf.gz \
  -select-type SNP \
  -O ./vcf/cohort_snps.vcf.gz
 
 docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
-gatk SelectVariants \
+ gatk SelectVariants \
  -R ./reference/Homo_sapiens_assembly38.fasta \
  -V  ./vcf/cohort_raw.vcf.gz \
  -select-type INDEL \
@@ -243,7 +234,7 @@ gatk SelectVariants \
  -O ./vcf/cohort_indels.vcf.gz
 
 docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
-gatk VariantFiltration \
+ gatk VariantFiltration \
  -R ./reference/Homo_sapiens_assembly38.fasta \
  -V ./vcf/cohort_snps.vcf.gz \
  --filter-expression "QD < 2.0 || FS > 60.0 || MQ < 40.0 || MQRankSum < -12.5 || ReadPosRankSum < -8.0" \
@@ -251,7 +242,7 @@ gatk VariantFiltration \
  -O ./vcf/cohort_snps_filtered.vcf.gz
 
 docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
-gatk VariantFiltration \
+ gatk VariantFiltration \
  -R ./reference/Homo_sapiens_assembly38.fasta \
  -V ./vcf/cohort_indels.vcf.gz \
  --filter-expression "QD < 2.0 || FS > 200.0 || ReadPosRankSum < -20.0" \
@@ -259,7 +250,7 @@ gatk VariantFiltration \
  -O ./vcf/cohort_indels_filtered.vcf.gz
 
 docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
-gatk MergeVcfs \
+ gatk MergeVcfs \
  -I ./vcf/cohort_snps_filtered.vcf.gz \
  -I ./vcf/cohort_indels_filtered.vcf.gz \
  -O ./vcf/cohort_filtered.vcf.gz
