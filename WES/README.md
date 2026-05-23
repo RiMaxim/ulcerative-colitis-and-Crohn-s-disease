@@ -160,11 +160,28 @@ docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
 ```
 21) Когортный анализ. Запуск GenotypeGVCFs для генотипирования. Ниже пример для хромосомы 1 (повторить для всех хромосом chr1-22, X, Y).
 ```
-docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
- gatk GenotypeGVCFs \
- -R ./reference/Homo_sapiens_assembly38.fasta \
- -V gendb://./genomicsdb/chr1_db \
- -O ./vcf/cohort_chr1.vcf.gz
+CHRS=( {1..22} X Y )
+
+for chr in "${CHRS[@]}"; do
+    CHR_NAME="chr${chr}"
+    WORKSPACE="./genomicsdb/${CHR_NAME}_db"
+    
+    echo "========================================"
+    echo "Starting import for ${CHR_NAME}..."
+    echo "========================================"
+
+    rm -rf "$WORKSPACE"
+
+    docker run --rm -v $(pwd):/data -w /data broadinstitute/gatk:4.6.2.0 \
+        gatk --java-options "-Xmx4g" GenomicsDBImport \
+        --genomicsdb-workspace-path "$WORKSPACE" \
+        -R ./reference/Homo_sapiens_assembly38.fasta \
+        --sample-name-map sample_map.txt \
+        -L "$CHR_NAME"
+        
+    echo "Finished ${CHR_NAME}."
+    echo ""
+done
 ```
 22) Когортный анализ. Объединение хромосом в один файл.
 ```
