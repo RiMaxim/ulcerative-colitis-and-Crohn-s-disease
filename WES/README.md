@@ -338,8 +338,6 @@ wget https://s3.amazonaws.com/bcbio_nextgen/human_ancestor.fa.gz.gzi
 wget https://personal.broadinstitute.org/konradk/loftee_data/GRCh38/gerp_conservation_scores.homo_sapiens.GRCh38.bw
 wget https://personal.broadinstitute.org/konradk/loftee_data/GRCh38/loftee.sql.gz
 
-echo "=== 7. LOEUF  ==="
-
 ```
 25) Подготовка клинических данных
 26) Конвертация VCF в формат PLINK
