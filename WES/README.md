@@ -337,8 +337,10 @@ wget https://s3.amazonaws.com/bcbio_nextgen/human_ancestor.fa.gz.fai
 wget https://s3.amazonaws.com/bcbio_nextgen/human_ancestor.fa.gz.gzi
 wget https://personal.broadinstitute.org/konradk/loftee_data/GRCh38/gerp_conservation_scores.homo_sapiens.GRCh38.bw
 wget https://personal.broadinstitute.org/konradk/loftee_data/GRCh38/loftee.sql.gz
-
 ```
-25) Подготовка клинических данных
-26) Конвертация VCF в формат PLINK
-27) Запуск статистического теста (Логистическая регрессия)
+26) Аннотация с помощью VEP.
+```
+```
+27) Подготовка клинических данных
+28) Конвертация VCF в формат PLINK
+29) Запуск статистического теста (Логистическая регрессия)
