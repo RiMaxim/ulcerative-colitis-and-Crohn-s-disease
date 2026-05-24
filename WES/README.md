@@ -335,7 +335,7 @@ echo "=== 6. Loss-Of-Function Transcript Effect Estimator  ==="
 wget https://s3.amazonaws.com/bcbio_nextgen/human_ancestor.fa.gz
 wget https://s3.amazonaws.com/bcbio_nextgen/human_ancestor.fa.gz.fai
 wget https://s3.amazonaws.com/bcbio_nextgen/human_ancestor.fa.gz.gzi
-wget -c https://ftp.ensembl.org/pub/current_compara/conservation_scores/92_mammals.gerp_conservation_score/gerp_conservation_scores.homo_sapiens.GRCh38.bw
+wget -c https://ftp.ensembl.org/pub/current_compara/conservation_scores/92_mammals.gerp_conservation_score/gerp_conservation_scores.homo_sapiens.GRCh38.bw #2025-06-14 03:33,8.9G
 wget https://personal.broadinstitute.org/konradk/loftee_data/GRCh38/loftee.sql.gz
 ```
 26) Аннотация с помощью VEP.
