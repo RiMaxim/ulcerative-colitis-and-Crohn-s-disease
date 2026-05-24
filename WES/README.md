@@ -324,9 +324,12 @@ Regisrtaion https://basespace.illumina.com/
 wget "https://launch.basespace.illumina.com/CLI/latest/amd64-linux/bs"
 ./bs auth
 ./bs list project
-./bs list datasets XXX
-./bs contents dataset -i YYY
-./bs download file -i ZZZ)
+./bs list datasets 66029966
+./bs contents dataset -i ds.20a701bc58ab45b59de2576db79ac8d0
+./bs download file -i 16534036123 #spliceai_scores.raw.indel.hg38.vcf.gz
+./bs download file -i 16534036125 #spliceai_scores.raw.indel.hg38.vcf.gz.tbi
+./bs download file -i 16534036127 #spliceai_scores.raw.snv.hg38.vcf.gz
+./bs download file -i 16534036128 #spliceai_scores.raw.snv.hg38.vcf.gz.tbi
 
 echo "=== 6.  ==="
 
