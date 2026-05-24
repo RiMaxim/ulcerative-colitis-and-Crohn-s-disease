@@ -319,7 +319,14 @@ wget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar_20260517.vcf.gz
 
 echo "=== 4. dbNSFP (https://www.dbnsfp.org/download) ==="
 
-echo "=== 5.  ==="
+echo "=== 5. SpliceAI (https://basespace.illumina.com/) ==="
+Regisrtaion https://basespace.illumina.com/
+wget "https://launch.basespace.illumina.com/CLI/latest/amd64-linux/bs"
+./bs auth
+./bs list project
+./bs list datasets XXX
+./bs contents dataset -i YYY
+./bs download file -i ZZZ)
 
 echo "=== 6.  ==="
 
