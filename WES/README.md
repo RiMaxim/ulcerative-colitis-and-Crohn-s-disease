@@ -336,7 +336,7 @@ wget https://s3.amazonaws.com/bcbio_nextgen/human_ancestor.fa.gz
 wget https://s3.amazonaws.com/bcbio_nextgen/human_ancestor.fa.gz.fai
 wget https://s3.amazonaws.com/bcbio_nextgen/human_ancestor.fa.gz.gzi
 wget https://personal.broadinstitute.org/konradk/loftee_data/GRCh38/gerp_conservation_scores.homo_sapiens.GRCh38.bw
-wget https://raw.githubusercontent.com/konradjk/loftee/master/loftee.sql
+wget https://personal.broadinstitute.org/konradk/loftee_data/GRCh38/loftee.sql.gz
 
 echo "=== 7. LOEUF  ==="
 
