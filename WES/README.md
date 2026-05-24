@@ -331,7 +331,12 @@ wget "https://launch.basespace.illumina.com/CLI/latest/amd64-linux/bs"
 
 echo "=== 5. dbNSFP (https://www.dbnsfp.org/download) ==="
 
-echo "=== 6. LOFTEE  ==="
+echo "=== 6. Loss-Of-Function Transcript Effect Estimator  ==="
+wget https://s3.amazonaws.com/bcbio_nextgen/human_ancestor.fa.gz
+wget https://s3.amazonaws.com/bcbio_nextgen/human_ancestor.fa.gz.fai
+wget https://s3.amazonaws.com/bcbio_nextgen/human_ancestor.fa.gz.gzi
+wget https://personal.broadinstitute.org/konradk/loftee_data/GRCh38/gerp_conservation_scores.homo_sapiens.GRCh38.bw
+wget https://raw.githubusercontent.com/konradjk/loftee/master/loftee.sql
 
 echo "=== 7. LOEUF  ==="
 
