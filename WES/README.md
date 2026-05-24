@@ -317,9 +317,7 @@ echo "=== 3. ClinVar Database (Medical Classifications) (2026-05-18 11:24, 183M;
 wget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar_20260517.vcf.gz
 wget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar_20260517.vcf.gz.tbi
 
-echo "=== 4. dbNSFP (https://www.dbnsfp.org/download) ==="
-
-echo "=== 5. SpliceAI (https://basespace.illumina.com/) ==="
+echo "=== 4. SpliceAI (https://basespace.illumina.com/) ==="
 Regisrtaion https://basespace.illumina.com/
 wget "https://launch.basespace.illumina.com/CLI/latest/amd64-linux/bs"
 ./bs auth
@@ -331,7 +329,11 @@ wget "https://launch.basespace.illumina.com/CLI/latest/amd64-linux/bs"
 ./bs download file -i 16534036127 #spliceai_scores.raw.snv.hg38.vcf.gz
 ./bs download file -i 16534036128 #spliceai_scores.raw.snv.hg38.vcf.gz.tbi
 
-echo "=== 6.  ==="
+echo "=== 5. dbNSFP (https://www.dbnsfp.org/download) ==="
+
+echo "=== 6. LOFTEE  ==="
+
+echo "=== 7. LOEUF  ==="
 
 ```
 25) Подготовка клинических данных
