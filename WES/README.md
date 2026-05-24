@@ -314,8 +314,8 @@ echo "=== 2. Acquisition of pre-indexed VEP cache for GRCh38 ==="
 wget https://ftp.ensembl.org/pub/release-115/variation/indexed_vep_cache/homo_sapiens_vep_115_GRCh38.tar.gz
 
 echo "=== 3. Download the ClinVar Database (Medical Classifications) ==="
-wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz
-wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz.tbi
+wget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar_20260517.vcf.gz
+wget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar_20260517.vcf.gz.tbi
 
 ```
 25) Подготовка клинических данных
