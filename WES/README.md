@@ -331,6 +331,7 @@ wget "https://launch.basespace.illumina.com/CLI/latest/amd64-linux/bs"
 
 echo "=== 5. dbNSFP (https://www.dbnsfp.org/download) ==="
 
+
 echo "=== 6. Loss-Of-Function Transcript Effect Estimator  ==="
 wget https://s3.amazonaws.com/bcbio_nextgen/human_ancestor.fa.gz
 wget https://s3.amazonaws.com/bcbio_nextgen/human_ancestor.fa.gz.fai
