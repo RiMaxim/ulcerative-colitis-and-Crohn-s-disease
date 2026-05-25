@@ -332,6 +332,7 @@ wget "https://launch.basespace.illumina.com/CLI/latest/amd64-linux/bs"
 ./bs download file -i 16534036128 #spliceai_scores.raw.snv.hg38.vcf.gz.tbi
 
 echo "=== 5. dbNSFP (https://www.dbnsfp.org/download) ==="
+
 wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr1.gz
 wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr2.gz
 wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr3.gz
@@ -360,22 +361,39 @@ wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chrY.gz
 zcat dbNSFP4.9a_variant.chr*.gz | bgzip -c > dbNSFP4.9a_grch38.gz
 tabix -s 1 -b 2 -e 2 dbNSFP4.9a_grch38.gz
 
-echo "=== 6. Loss-Of-Function Transcript Effect Estimator  ==="
-wget https://s3.amazonaws.com/bcbio_nextgen/human_ancestor.fa.gz
-wget https://s3.amazonaws.com/bcbio_nextgen/human_ancestor.fa.gz.fai
-wget https://s3.amazonaws.com/bcbio_nextgen/human_ancestor.fa.gz.gzi
-wget -c https://ftp.ensembl.org/pub/current_compara/conservation_scores/92_mammals.gerp_conservation_score/gerp_conservation_scores.homo_sapiens.GRCh38.bw #2025-06-14 03:33,8.9G
-wget https://personal.broadinstitute.org/konradk/loftee_data/GRCh38/loftee.sql.gz
 ```
 26) Аннотация с помощью VEP.
 ```
 mkdir -p annotation/vep_plugins
 git clone https://github.com/Ensembl/VEP_plugins.git annotation/vep_plugins
 
-git clone https://github.com/konradjk/loftee.git annotation/loftee
-git clone https://github.com/Congenica/maxentscan.git annotation/maxent
+mkdir -p annotation/vep_data/clinvar
+mkdir -p annotation/vep_data/dbNSFP
+mkdir -p annotation/vep_data/dbsnp
+mkdir -p annotation/vep_data/spliceai
 
+copy files from steps 11-12 and 25.
 
+docker run -it --rm -v $(pwd):$(pwd) -w $(pwd) ensemblorg/ensembl-vep:release_115.2 \
+vep \
+--input_file ./vcf/cohort.ready_for_vep.vcf.gz \
+--output_file cohort.annotated.vep.vcf.gz \
+--vcf \
+--compress_output bgzip \
+--assembly GRCh38 \
+--species homo_sapiens \
+--cache \
+--offline \
+--dir_cache annotation/vep_cache \
+--dir_plugins annotation/vep_plugins \
+--fasta reference/Homo_sapiens_assembly38.fasta \
+--everything \
+--fork $2 \
+--force_overwrite \
+--custom annotation/vep_data/clinvar/clinvar_20260517.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNDN \
+--custom annotation/vep_data/dbsnp/dbsnp157.vcf.gz,dbSNP,vcf,exact,0,ID \
+--plugin dbNSFP,annotation/vep_data/dbNSFP/dbNSFP4.9a_grch38.gz,REVEL_score,CADD_phred,AlphaMissense_score \
+--plugin SpliceAI,snv=annotation/vep_data/spliceai/spliceai_scores.raw.snv.hg38.vcf.gz,indel=annotation/vep_data/spliceai/spliceai_scores.raw.indel.hg38.vcf.gz
 ```
 27) Подготовка клинических данных
 28) Конвертация VCF в формат PLINK
