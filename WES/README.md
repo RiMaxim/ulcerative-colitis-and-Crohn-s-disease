@@ -367,6 +367,13 @@ wget https://personal.broadinstitute.org/konradk/loftee_data/GRCh38/loftee.sql.g
 ```
 26) Аннотация с помощью VEP.
 ```
+mkdir -p annotation/vep_plugins
+git clone https://github.com/Ensembl/VEP_plugins.git annotation/vep_plugins
+
+git clone https://github.com/konradjk/loftee.git annotation/loftee
+git clone https://github.com/Congenica/maxentscan.git annotation/maxent
+
+
 ```
 27) Подготовка клинических данных
 28) Конвертация VCF в формат PLINK
