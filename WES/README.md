@@ -286,24 +286,26 @@ REF="./reference/Homo_sapiens_assembly38.fasta"
 INPUT_VCF="./vcf/cohort_filtered.vcf.gz"
 PREFIX="./vcf/cohort"
 
-echo "=== 1. Normalization and multiallelic splitting ==="
-bcftools norm -f "$REF" -m -both -O v "$INPUT_VCF" > "${PREFIX}.norm.vcf"
+echo "=== 1. Normalize + split multiallelic + compress ==="
+bcftools norm -f "$REF" -m -both -Oz -o "${PREFIX}.norm.vcf.gz" "$INPUT_VCF"
 
-echo "=== 2. VCF Sorting ==="
-bcftools sort "${PREFIX}.norm.vcf" > "${PREFIX}.sorted.vcf"
+bcftools index -t "${PREFIX}.norm.vcf.gz"
 
-echo "=== 3. Filtration: PASS only ==="
-bcftools view -i 'FILTER="PASS"' "${PREFIX}.sorted.vcf" > "${PREFIX}.PASS.vcf"
+echo "=== 2. PASS filter (safe version) ==="
+bcftools view -f PASS -Oz -o "${PREFIX}.PASS.vcf.gz" "${PREFIX}.norm.vcf.gz"
+bcftools index -t "${PREFIX}.PASS.vcf.gz"
 
-echo "=== 4. Filtration by Call Rate: DP >= 20x in at least 70% of samples ==="
-bcftools view -i 'COUNT(FMT/DP>=20)/N_SAMPLES >= 0.7' "${PREFIX}.PASS.vcf" > "${PREFIX}.PASS.DP20.vcf"
+echo "=== 3. DP filter ==="
+bcftools view \
+-i 'COUNT(FMT/DP>=20)/N_SAMPLES>=0.7' \
+-Oz -o "${PREFIX}.PASS.DP20.vcf.gz" \
+"${PREFIX}.PASS.vcf.gz"
 
-echo "=== 5. Final sorting and compression to .gz ==="
-bcftools sort "${PREFIX}.PASS.DP20.vcf" -O z > "${PREFIX}.ready_for_vep.vcf.gz"
-bcftools index -t "${PREFIX}.ready_for_vep.vcf.gz"
+bcftools index -t "${PREFIX}.PASS.DP20.vcf.gz"
 
-echo "=== 6. Cleaning up temporary files ==="
-rm -f "${PREFIX}.norm.vcf" "${PREFIX}.sorted.vcf" "${PREFIX}.PASS.vcf" "${PREFIX}.PASS.DP20.vcf"
+echo "=== 4. Final VEP-ready file ==="
+mv "${PREFIX}.PASS.DP20.vcf.gz" "${PREFIX}.ready_for_vep.vcf.gz"
+mv "${PREFIX}.PASS.DP20.vcf.gz.tbi" "${PREFIX}.ready_for_vep.vcf.gz.tbi"
 ```
 25) Установка программ для аннотации.
 ```
