@@ -330,7 +330,33 @@ wget "https://launch.basespace.illumina.com/CLI/latest/amd64-linux/bs"
 ./bs download file -i 16534036128 #spliceai_scores.raw.snv.hg38.vcf.gz.tbi
 
 echo "=== 5. dbNSFP (https://www.dbnsfp.org/download) ==="
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr1.gz
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr2.gz
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr3.gz
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr4.gz
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr5.gz
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr6.gz
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr7.gz
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr8.gz
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr9.gz
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr10.gz
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr11.gz
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr12.gz
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr13.gz
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr14.gz
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr15.gz
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr16.gz
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr17.gz
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr18.gz
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr19.gz
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr20.gz
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr21.gz
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chr22.gz
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chrX.gz
+wget https://zenodo.org/records/14419644/files/dbNSFP4.9a_variant.chrY.gz
 
+zcat dbNSFP4.9a_variant.chr*.gz | bgzip -c > dbNSFP4.9a_grch38.gz
+tabix -s 1 -b 2 -e 2 dbNSFP4.9a_grch38.gz
 
 echo "=== 6. Loss-Of-Function Transcript Effect Estimator  ==="
 wget https://s3.amazonaws.com/bcbio_nextgen/human_ancestor.fa.gz
