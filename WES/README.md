@@ -374,7 +374,7 @@ mkdir -p annotation/vep_data/spliceai
 
 copy files from steps 11-12 and 25.
 
-docker run -it --rm -v $(pwd):$(pwd) -w $(pwd) ensemblorg/ensembl-vep:release_115.2 \
+docker run -it --rm -u $(id -u):$(id -g) -v $(pwd):$(pwd) -w $(pwd) ensemblorg/ensembl-vep:release_115.2 \
 vep \
 --input_file ./vcf/cohort.ready_for_vep.vcf.gz \
 --output_file cohort.annotated.vep.vcf.gz \
@@ -388,7 +388,7 @@ vep \
 --dir_plugins annotation/vep_plugins \
 --fasta reference/Homo_sapiens_assembly38.fasta \
 --everything \
---fork $2 \
+--fork 8 \
 --force_overwrite \
 --custom annotation/vep_data/clinvar/clinvar_20260517.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNDN \
 --custom annotation/vep_data/dbsnp/dbsnp157.vcf.gz,dbSNP,vcf,exact,0,ID \
