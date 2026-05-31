@@ -533,7 +533,7 @@ comm -23 pheno_ids.txt vcf_ids.txt
 ```
 29) Фильтрация по полям с аннотацией.
 ```
-bcftools +split-vep cohort.annotated.vep.vcf.gz -f '%CHROM\t%POS\t%REF\t%ALT\t%SYMBOL\t%Consequence\t%gnomAD_exomes_AF\t%REVEL_score\t%CADD_phred\t%ClinVar_CLNSIG\n' -d > step1.tsv
+bcftools +split-vep cohort.annotated.vep.vcf.gz -f '%CHROM\t%POS\t%REF\t%ALT\t%SYMBOL\t%Consequence\t%gnomAD_exomes_AF\t%REVEL_score\t%CADD_phred\t%ClinVar_CLNSIG\n' -d > tmp.tsv
 
 awk -F'\t' '
 BEGIN{OFS="\t"}
@@ -558,8 +558,10 @@ BEGIN{OFS="\t"}
     print
   }
 }
-' step1.tsv > rare_damaging.tsv
+' tmp.tsv > tmp2.tsv
 
-bcftools view -R rare_damaging.tsv cohort.annotated.vep.vcf.gz -Oz -o final.vcf.gz
+bcftools view -R tmp2.tsv cohort.annotated.vep.vcf.gz -Oz -o final.vcf.gz
+
+rm tmp.tsv tmp2.tsv
 ```
 30) dfgdgf
