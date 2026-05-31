@@ -522,7 +522,7 @@ barcode_94	CD	F	49
 barcode_95	UC	M	25
 ```
 Проверяем соответствие образцов:
-```bash
+```
 cut -f1 phenotype.tsv | tail -n +2 | sort > pheno_ids.txt
 bcftools query -l cohort.annotated.vep.vcf.gz | sort > vcf_ids.txt
 comm -23 pheno_ids.txt vcf_ids.txt
