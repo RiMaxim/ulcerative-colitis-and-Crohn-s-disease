@@ -398,7 +398,11 @@ vep \
 #Доступные поля bcftools +split-vep cohort.annotated.vep.vcf.gz -l
 #Количество образцов bcftools query -l cohort.annotated.vep.vcf.gz | wc -l
 ```
-27) Подготовка клинических данных
+27) Индексация cohort.annotated.vep.vcf.gz
+```
+tabix -s 1 -b 2 -e 2 cohort.annotated.vep.vcf.gz
+```
+28) Подготовка клинических данных
 ```
 IID	Group	Sex	Age
 240125_new_exome_sample1	CD	M	34
@@ -527,4 +531,35 @@ cut -f1 phenotype.tsv | tail -n +2 | sort > pheno_ids.txt
 bcftools query -l cohort.annotated.vep.vcf.gz | sort > vcf_ids.txt
 comm -23 pheno_ids.txt vcf_ids.txt
 ```
-31) Запуск статистического теста (Логистическая регрессия)
+29) Фильтрация по полям с аннотацией.
+```
+bcftools +split-vep cohort.annotated.vep.vcf.gz -f '%CHROM\t%POS\t%REF\t%ALT\t%SYMBOL\t%Consequence\t%gnomAD_exomes_AF\t%REVEL_score\t%CADD_phred\t%ClinVar_CLNSIG\n' -d > step1.tsv
+
+awk -F'\t' '
+BEGIN{OFS="\t"}
+{
+  key=$1":"$2":"$3":"$4
+  if(seen[key]++) next
+
+  af = ($7=="" || $7==".") ? 0 : $7
+  revel = ($8=="" || $8==".") ? 0 : $8
+  cadd = ($9=="" || $9==".") ? 0 : $9
+  clin = $10
+
+  lof = ($6 ~ /stop_gained|frameshift|splice_acceptor|splice_donor|start_lost|stop_lost/)
+
+  missense = ($6 ~ /missense_variant/ && revel >= 0.5 && cadd >= 20)
+
+  splice = ($0 ~ /SpliceAI_pred_DS_AG/ || $0 ~ /SpliceAI_pred_DS_AL/ || $0 ~ /SpliceAI_pred_DS_DG/ || $0 ~ /SpliceAI_pred_DS_DL/)
+
+  clinvar = (clin ~ /Pathogenic|Likely_pathogenic/)
+
+  if(af < 0.01 && (lof || missense || splice || clinvar)) {
+    print
+  }
+}
+' step1.tsv > rare_damaging.tsv
+
+bcftools view -R rare_damaging.tsv cohort.annotated.vep.vcf.gz -Oz -o final.vcf.gz
+```
+30) dfgdgf
