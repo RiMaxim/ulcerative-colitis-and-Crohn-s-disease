@@ -399,9 +399,6 @@ vep \
 #Количество образцов bcftools query -l cohort.annotated.vep.vcf.gz | wc -l
 ```
 27) Подготовка клинических данных
-
-<details>
-<summary>Нажмите, чтобы показать список образцов</summary>
 ```
 IID	Group	Sex	Age
 240125_new_exome_sample1	CD	M	34
@@ -524,7 +521,5 @@ barcode_93	CD	F	26
 barcode_94	CD	F	49
 barcode_95	UC	M	25
 ```
-</details>
-
 29) Конвертация VCF в формат PLINK
 30) Запуск статистического теста (Логистическая регрессия)
