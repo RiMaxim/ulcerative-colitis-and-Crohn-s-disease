@@ -394,6 +394,8 @@ vep \
 --custom annotation/vep_data/dbsnp/dbsnp157.vcf.gz,dbSNP,vcf,exact,0,ID \
 --plugin dbNSFP,annotation/vep_data/dbNSFP/dbNSFP4.9a_grch38.gz,REVEL_score,CADD_phred,AlphaMissense_score,MPC_score,Polyphen2_HDIV_score,gnomAD_exomes_AF,gnomAD_exomes_NFE_AF \
 --plugin SpliceAI,snv=annotation/vep_data/spliceai/spliceai_scores.raw.snv.hg38.vcf.gz,indel=annotation/vep_data/spliceai/spliceai_scores.raw.indel.hg38.vcf.gz
+
+#Посмотреть доступные поля bcftools +split-vep cohort.annotated.vep.vcf.gz -l
 ```
 27) Подготовка клинических данных
 28) Конвертация VCF в формат PLINK
