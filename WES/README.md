@@ -395,8 +395,134 @@ vep \
 --plugin dbNSFP,annotation/vep_data/dbNSFP/dbNSFP4.9a_grch38.gz,REVEL_score,CADD_phred,AlphaMissense_score,MPC_score,Polyphen2_HDIV_score,gnomAD_exomes_AF,gnomAD_exomes_NFE_AF \
 --plugin SpliceAI,snv=annotation/vep_data/spliceai/spliceai_scores.raw.snv.hg38.vcf.gz,indel=annotation/vep_data/spliceai/spliceai_scores.raw.indel.hg38.vcf.gz
 
-#Посмотреть доступные поля bcftools +split-vep cohort.annotated.vep.vcf.gz -l
+#Доступные поля bcftools +split-vep cohort.annotated.vep.vcf.gz -l
+#Количество образцов bcftools query -l cohort.annotated.vep.vcf.gz | wc -l
 ```
 27) Подготовка клинических данных
-28) Конвертация VCF в формат PLINK
-29) Запуск статистического теста (Логистическая регрессия)
+<details>
+<summary>Нажмите, чтобы показать список образцов</summary>
+```
+IID	Group	Sex	Age
+240125_new_exome_sample1	CD	M	34
+240125_new_exome_sample10	UC	M	34
+240125_new_exome_sample11	UC	F	70
+240125_new_exome_sample12	CD	M	45
+240125_new_exome_sample13	Control	F	52
+240125_new_exome_sample14	UC	F	27
+240125_new_exome_sample15	UC	F	41
+240125_new_exome_sample16	CD	M	53
+240125_new_exome_sample17	CD	M	45
+240125_new_exome_sample18	Control	F	20
+240125_new_exome_sample19	UC	F	50
+240125_new_exome_sample2	Control	M	22
+240125_new_exome_sample20	UC	M	59
+240125_new_exome_sample21	Control	F	42
+240125_new_exome_sample3	UC	F	27
+240125_new_exome_sample4	UC	M	58
+240125_new_exome_sample5	CD	M	31
+240125_new_exome_sample6	CD	M	45
+240125_new_exome_sample7	UC	F	19
+240125_new_exome_sample8	UC	F	43
+240125_new_exome_sample9	CD	M	25
+barcode1	Control	M	47
+barcode13	CD	M	30
+barcode14	Control	F	55
+barcode15	CD	F	44
+barcode16	CD	F	32
+barcode2	CD	F	26
+barcode3	CD	F	33
+barcode4	UC	M	27
+barcode41	UC	M	26
+barcode42	CD	F	56
+barcode43	UC	F	24
+barcode44	UC	M	36
+barcode45	Control	F	73
+barcode46	UC	M	50
+barcode47	UC	F	20
+barcode48	CD	M	20
+barcode57	UC	F	70
+barcode58	CD	M	43
+barcode59	UC	M	38
+barcode60	UC	M	55
+barcode61	CD	F	24
+barcode62	CD	F	29
+barcode63	CD	M	45
+barcode64	CD	M	46
+barcode65	UC	F	20
+barcode66	UC	F	30
+barcode67	CD	M	60
+barcode68	CD	F	28
+barcode69	CD	F	30
+barcode70	CD	F	23
+barcode71	CD	F	37
+barcode72	CD	M	22
+barcode73	CD	M	42
+barcode74	UC	M	35
+barcode75	CD	F	19
+barcode76	UC	F	51
+barcode77	CD	M	38
+barcode78	Control	M	47
+barcode79	UC	M	60
+barcode80	CD	F	31
+barcode81	UC	M	58
+barcode82	CD	M	38
+barcode83	UC	M	36
+barcode84	CD	M	40
+barcode85	CD	F	21
+barcode86	CD	F	56
+barcode87	UC	M	42
+barcode88	UC	F	31
+barcode89	Control	F	22
+barcode90	CD	M	21
+barcode91	CD	M	57
+barcode92	CD	M	44
+barcode_1	Control	F	38
+barcode_13	UC	M	46
+barcode_14	CD	M	24
+barcode_15	UC	M	65
+barcode_16	CD	M	24
+barcode_2	CD	M	61
+barcode_3	UC	M	56
+barcode_4	UC	F	37
+barcode_41	CD	F	42
+barcode_42	UC	F	45
+barcode_43	CD	M	32
+barcode_44	CD	M	20
+barcode_45	UC	F	24
+barcode_46	UC	F	42
+barcode_47	CD	F	38
+barcode_48	CD	F	36
+barcode_57	CD	F	27
+barcode_58	Control	F	21
+barcode_59	UC	M	37
+barcode_60	UC	F	38
+barcode_61	Control	M	39
+barcode_62	Control	F	44
+barcode_63	Control	M	18
+barcode_64	Control	M	18
+barcode_65	UC	M	42
+barcode_66	CD	F	57
+barcode_67	UC	M	30
+barcode_68	UC	F	67
+barcode_69	CD	F	38
+barcode_70	CD	F	57
+barcode_71	CD	M	62
+barcode_72	CD	F	21
+barcode_73	UC	F	32
+barcode_74	UC	M	43
+barcode_75	CD	M	59
+barcode_76	CD	F	51
+barcode_77	UC	M	29
+barcode_78	UC	M	67
+barcode_79	UC	F	43
+barcode_89	CD	M	36
+barcode_90	CD	F	33
+barcode_91	UC	M	42
+barcode_92	UC	F	38
+barcode_93	CD	F	26
+barcode_94	CD	F	49
+barcode_95	UC	M	25
+```
+</details>
+29) Конвертация VCF в формат PLINK
+30) Запуск статистического теста (Логистическая регрессия)
