@@ -410,25 +410,20 @@ echo -e "CHROM\tPOS\tREF\tALT\tSYMBOL\tConsequence\tCADD_phred\tREVEL_score\tgno
 bcftools +split-vep cohort.annotated.vep.vcf.gz \
 -f '%CHROM\t%POS\t%REF\t%ALT\t%SYMBOL\t%Consequence\t%CADD_phred\t%REVEL_score\t%gnomAD_exomes_AF\t%SpliceAI_pred_DS_AG\t%SpliceAI_pred_DS_AL\t%SpliceAI_pred_DS_DG\t%SpliceAI_pred_DS_DL\t%ClinVar_CLNSIG\n' \
 -d
-
-) > variants.tsv
-
+) > tmp.tsv
 
 awk -F'\t' '
 BEGIN{OFS="\t"}
 
 NR==1{
-    print $0
+    print
     next
 }
 
 {
-    key=$1":"$2":"$3":"$4
-    if(seen[key]++) next
-
     consequence=$6
     cadd=$7
-    revel=$8
+    revel_raw=$8
     af=$9
 
     ds_ag=$10
@@ -438,26 +433,71 @@ NR==1{
 
     clin=$14
 
+    # MAX REVEL
+    revel=0
+
+    if(revel_raw!="." && revel_raw!=""){
+        n=split(revel_raw,a,"&")
+
+        for(i=1;i<=n;i++){
+            if(a[i]!="." && a[i]!="" && a[i]+0>revel){
+                revel=a[i]+0
+            }
+        }
+    }
+
+    # CADD
+    if(cadd=="." || cadd=="")
+        cadd=0
+
+    # AF
+    af_ok=(af!="." && af!="" && af+0<0.01)
+
     # LOF
-    lof = (consequence ~ /frameshift_variant|stop_gained|stop_lost|start_lost|splice_acceptor_variant|splice_donor_variant/)
+    lof=0
+    if(consequence ~ /frameshift_variant/) lof=1
+    if(consequence ~ /stop_gained/) lof=1
+    if(consequence ~ /stop_lost/) lof=1
+    if(consequence ~ /start_lost/) lof=1
+    if(consequence ~ /splice_acceptor_variant/) lof=1
+    if(consequence ~ /splice_donor_variant/) lof=1
 
-    # MISSENSE (SAFE ONE-LINE)
-    missense = (consequence ~ /missense_variant/ && cadd!="." && cadd!="" && revel!="." && revel!="" && revel>=0.5 && cadd>=20)
+    # MISSENSE
+    missense=0
+    if(consequence ~ /missense_variant/ && revel>=0.5 && cadd>=20)
+        missense=1
 
-    # SPLICE (SAFE ONE-LINE)
-    splice = ((ds_ag!="." && ds_ag>=0.5) || (ds_al!="." && ds_al>=0.5) || (ds_dg!="." && ds_dg>=0.5) || (ds_dl!="." && ds_dl>=0.5))
+    # SPLICEAI
+    splice=0
+    if(ds_ag!="." && ds_ag+0>=0.5) splice=1
+    if(ds_al!="." && ds_al+0>=0.5) splice=1
+    if(ds_dg!="." && ds_dg+0>=0.5) splice=1
+    if(ds_dl!="." && ds_dl+0>=0.5) splice=1
 
     # CLINVAR
-    clinvar = (clin ~ /Pathogenic|Likely_pathogenic/)
-
-    # AF FILTER (STRICT)
-    af_ok = (af!="." && af!="" && af < 0.01)
+    clinvar=0
+    if(clin ~ /Pathogenic/) clinvar=1
+    if(clin ~ /Likely_pathogenic/) clinvar=1
 
     if(af_ok && (lof || missense || splice || clinvar)){
         print
     }
 }
-' variants.tsv > rare_damaging.tsv
+' tmp.tsv > tmp2.tsv
+
+awk -F'\t' '
+BEGIN{OFS="\t"}
+
+NR==1{
+    print
+    next
+}
+
+!seen[$1":"$2":"$3":"$4]++
+' tmp2.tsv > rare_damaging.unique.tsv
+
+rm tmp.tsv tmp2.tsv
+
 ```
 Проверка вариантов и генов
 ```
