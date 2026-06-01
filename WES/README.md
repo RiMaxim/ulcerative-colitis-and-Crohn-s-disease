@@ -404,49 +404,73 @@ tabix -s 1 -b 2 -e 2 cohort.annotated.vep.vcf.gz
 ```
 28) Фильтрация по полям с аннотацией.
 ```
-bcftools +split-vep cohort.annotated.vep.vcf.gz -f '%CHROM\t%POS\t%REF\t%ALT\t%SYMBOL\t%Consequence\t%CSQ\n' -d > tmp.tsv
+(
+echo -e "CHROM\tPOS\tREF\tALT\tSYMBOL\tConsequence\tCADD_phred\tREVEL_score\tgnomAD_exomes_AF\tSpliceAI_DS_AG\tSpliceAI_DS_AL\tSpliceAI_DS_DG\tSpliceAI_DS_DL\tClinVar_CLNSIG"
+
+bcftools +split-vep cohort.annotated.vep.vcf.gz \
+-f '%CHROM\t%POS\t%REF\t%ALT\t%SYMBOL\t%Consequence\t%CADD_phred\t%REVEL_score\t%gnomAD_exomes_AF\t%SpliceAI_pred_DS_AG\t%SpliceAI_pred_DS_AL\t%SpliceAI_pred_DS_DG\t%SpliceAI_pred_DS_DL\t%ClinVar_CLNSIG\n' \
+-d
+) > variants.tsv
+
 
 awk -F'\t' '
 BEGIN{OFS="\t"}
 
+NR==1{
+    print
+    next
+}
+
 {
-  key=$1":"$2":"$3":"$4
-  if(seen[key]++) next
+    key=$1":"$2":"$3":"$4
+    if(seen[key]++) next
 
-  split($7, csq, ",")
+    consequence=$6
 
-  for(i in csq) {
+    af=$9
+    revel=$8
+    cadd=$7
 
-    n = split(csq[i], a, "|")
+    ds_ag=$10
+    ds_al=$11
+    ds_dg=$12
+    ds_dl=$13
 
-    consequence = a[6]
-    symbol = a[4]
+    clin=$14
 
-    af = a[58]   # gnomAD_exomes_AF (CSQ index)
-    revel = a[83]
-    cadd = a[82]
-    clin = a[98]
+    if(af=="" || af==".") af=0
+    if(cadd=="" || cadd==".") cadd=0
 
-    if(af=="") af=0
-    if(revel=="") revel=0
-    if(cadd=="") cadd=0
+    if(revel=="" || revel=="."){
+        revel=0
+    } else {
+        max_revel=0
+        n=split(revel,tmp,"&")
+        for(i=1;i<=n;i++){
+            if(tmp[i]!="." && tmp[i]>max_revel)
+                max_revel=tmp[i]
+        }
+        revel=max_revel
+    }
 
-    lof = (consequence ~ /stop_gained|frameshift|splice_acceptor|splice_donor|start_lost|stop_lost/)
+    if(ds_ag=="" || ds_ag==".") ds_ag=0
+    if(ds_al=="" || ds_al==".") ds_al=0
+    if(ds_dg=="" || ds_dg==".") ds_dg=0
+    if(ds_dl=="" || ds_dl==".") ds_dl=0
+
+    lof = (consequence ~ /frameshift_variant|stop_gained|stop_lost|start_lost|splice_acceptor_variant|splice_donor_variant/)
+
     missense = (consequence ~ /missense_variant/ && revel >= 0.5 && cadd >= 20)
-    splice = (a[89]>=0.5 || a[90]>=0.5 || a[91]>=0.5 || a[92]>=0.5)
+
+    splice = (ds_ag >= 0.5 || ds_al >= 0.5 || ds_dg >= 0.5 || ds_dl >= 0.5)
 
     clinvar = (clin ~ /Pathogenic|Likely_pathogenic/)
 
-    if(af < 0.01 && (lof || missense || splice || clinvar)) {
-      print $1,$2,$3,$4,symbol,consequence,af,revel,cadd,clin
-    }
-  }
+    if(af < 0.01 && (lof || missense || splice || clinvar))
+        print
 }
-' tmp.tsv > tmp2.tsv
+' variants.tsv > rare_damaging.tsv
 
-bcftools view -R tmp2.tsv cohort.annotated.vep.vcf.gz -Oz -o final.vcf.gz
-
-rm tmp.tsv tmp2.tsv
 ```
 29) Подготовка клинических данных
 ```
