@@ -410,7 +410,9 @@ echo -e "CHROM\tPOS\tREF\tALT\tSYMBOL\tConsequence\tCADD_phred\tREVEL_score\tgno
 bcftools +split-vep cohort.annotated.vep.vcf.gz \
 -f '%CHROM\t%POS\t%REF\t%ALT\t%SYMBOL\t%Consequence\t%CADD_phred\t%REVEL_score\t%gnomAD_exomes_AF\t%SpliceAI_pred_DS_AG\t%SpliceAI_pred_DS_AL\t%SpliceAI_pred_DS_DG\t%SpliceAI_pred_DS_DL\t%ClinVar_CLNSIG\n' \
 -d
+
 ) > variants.tsv
+
 
 awk -F'\t' '
 BEGIN{OFS="\t"}
@@ -456,8 +458,13 @@ NR==1{
     }
 }
 ' variants.tsv > rare_damaging.tsv
-
 ```
+Проверка вариантов и генов
+```
+tail -n +2 rare_damaging.tsv | cut -f1-4 | sort -u | wc -l
+tail -n +2 rare_damaging.tsv | cut -f5 | sort -u | wc -l
+cut -f5 rare_damaging.tsv | sort | uniq -c | sort -nr | head
+
 29) Подготовка клинических данных
 ```
 IID	Group	Sex	Age
