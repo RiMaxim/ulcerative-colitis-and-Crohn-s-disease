@@ -412,12 +412,11 @@ bcftools +split-vep cohort.annotated.vep.vcf.gz \
 -d
 ) > variants.tsv
 
-
 awk -F'\t' '
 BEGIN{OFS="\t"}
 
 NR==1{
-    print
+    print $0
     next
 }
 
@@ -426,10 +425,9 @@ NR==1{
     if(seen[key]++) next
 
     consequence=$6
-
-    af=$9
-    revel=$8
     cadd=$7
+    revel=$8
+    af=$9
 
     ds_ag=$10
     ds_al=$11
@@ -438,36 +436,24 @@ NR==1{
 
     clin=$14
 
-    if(af=="" || af==".") af=0
-    if(cadd=="" || cadd==".") cadd=0
-
-    if(revel=="" || revel=="."){
-        revel=0
-    } else {
-        max_revel=0
-        n=split(revel,tmp,"&")
-        for(i=1;i<=n;i++){
-            if(tmp[i]!="." && tmp[i]>max_revel)
-                max_revel=tmp[i]
-        }
-        revel=max_revel
-    }
-
-    if(ds_ag=="" || ds_ag==".") ds_ag=0
-    if(ds_al=="" || ds_al==".") ds_al=0
-    if(ds_dg=="" || ds_dg==".") ds_dg=0
-    if(ds_dl=="" || ds_dl==".") ds_dl=0
-
+    # LOF
     lof = (consequence ~ /frameshift_variant|stop_gained|stop_lost|start_lost|splice_acceptor_variant|splice_donor_variant/)
 
-    missense = (consequence ~ /missense_variant/ && revel >= 0.5 && cadd >= 20)
+    # MISSENSE (SAFE ONE-LINE)
+    missense = (consequence ~ /missense_variant/ && cadd!="." && cadd!="" && revel!="." && revel!="" && revel>=0.5 && cadd>=20)
 
-    splice = (ds_ag >= 0.5 || ds_al >= 0.5 || ds_dg >= 0.5 || ds_dl >= 0.5)
+    # SPLICE (SAFE ONE-LINE)
+    splice = ((ds_ag!="." && ds_ag>=0.5) || (ds_al!="." && ds_al>=0.5) || (ds_dg!="." && ds_dg>=0.5) || (ds_dl!="." && ds_dl>=0.5))
 
+    # CLINVAR
     clinvar = (clin ~ /Pathogenic|Likely_pathogenic/)
 
-    if(af < 0.01 && (lof || missense || splice || clinvar))
+    # AF FILTER (STRICT)
+    af_ok = (af!="." && af!="" && af < 0.01)
+
+    if(af_ok && (lof || missense || splice || clinvar)){
         print
+    }
 }
 ' variants.tsv > rare_damaging.tsv
 
