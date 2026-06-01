@@ -464,7 +464,7 @@ NR==1{
 tail -n +2 rare_damaging.tsv | cut -f1-4 | sort -u | wc -l
 tail -n +2 rare_damaging.tsv | cut -f5 | sort -u | wc -l
 cut -f5 rare_damaging.tsv | sort | uniq -c | sort -nr | head
-
+```
 29) Подготовка клинических данных
 ```
 IID	Group	Sex	Age
