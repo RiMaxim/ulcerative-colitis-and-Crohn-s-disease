@@ -501,9 +501,9 @@ rm tmp.tsv tmp2.tsv
 ```
 Проверка вариантов и генов
 ```
-tail -n +2 rare_damaging.tsv | cut -f1-4 | sort -u | wc -l
-tail -n +2 rare_damaging.tsv | cut -f5 | sort -u | wc -l
-cut -f5 rare_damaging.tsv | sort | uniq -c | sort -nr | head
+tail -n +2 rare_damaging.unique.tsv | cut -f1-4 | sort -u | wc -l
+tail -n +2 rare_damaging.unique.tsv | cut -f5 | sort -u | wc -l
+cut -f5 rare_damaging.unique.tsv | sort | uniq -c | sort -nr | head
 ```
 29) Подготовка клинических данных
 ```
