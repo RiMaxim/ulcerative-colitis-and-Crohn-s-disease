@@ -404,108 +404,42 @@ tabix -s 1 -b 2 -e 2 cohort.annotated.vep.vcf.gz
 ```
 28) Фильтрация по полям с аннотацией.
 ```
-(
-echo -e "CHROM\tPOS\tREF\tALT\tSYMBOL\tConsequence\tCADD_phred\tREVEL_score\tgnomAD_exomes_AF\tSpliceAI_DS_AG\tSpliceAI_DS_AL\tSpliceAI_DS_DG\tSpliceAI_DS_DL\tClinVar_CLNSIG"
+echo "=== 1. Проверить все поля CSQ ==="
+bcftools +split-vep cohort.annotated.vep.vcf.gz -l
 
-bcftools +split-vep cohort.annotated.vep.vcf.gz \
--f '%CHROM\t%POS\t%REF\t%ALT\t%SYMBOL\t%Consequence\t%CADD_phred\t%REVEL_score\t%gnomAD_exomes_AF\t%SpliceAI_pred_DS_AG\t%SpliceAI_pred_DS_AL\t%SpliceAI_pred_DS_DG\t%SpliceAI_pred_DS_DL\t%ClinVar_CLNSIG\n' \
--d
-) > tmp.tsv
+echo "=== 2. CANONICAL ==="
+bcftools +split-vep cohort.annotated.vep.vcf.gz -c CANONICAL:String -i 'CANONICAL="YES"' -Oz -o cohort.canonical.vcf.gz && bcftools index -f cohort.canonical.vcf.gz
+bcftools index -n cohort.canonical.vcf.gz
 
-awk -F'\t' '
-BEGIN{OFS="\t"}
+echo "=== 3. MAX_AF ==="
+bcftools +split-vep cohort.canonical.vcf.gz -c MAX_AF:Float -i '(MAX_AF < 0.01 || MAX_AF=".")' -Oz -o cohort.rare.vcf.gz && bcftools index -f cohort.rare.vcf.gz
+bcftools index -n cohort.rare.vcf.gz
 
-NR==1{
-    print
-    next
-}
+echo "=== 4. LoF ==="
+bcftools +split-vep cohort.rare.vcf.gz -c IMPACT:String,Consequence:String -i 'IMPACT="HIGH" && Consequence !~ "missense"' -Oz -o cohort.LoF.vcf.gz && bcftools index -f cohort.LoF.vcf.gz && bcftools index -n cohort.LoF.vcf.gz
+bcftools filter -e 'INFO/CSQ ~ "missense"' cohort.LoF.vcf.gz -Oz -o cohort.LoF.clean.vcf.gz && mv cohort.LoF.clean.vcf.gz cohort.LoF.vcf.gz && bcftools index -f cohort.LoF.vcf.gz
+bcftools index -n cohort.LoF.vcf.gz
+bcftools query -f '%INFO/CSQ\n' cohort.LoF.vcf.gz | awk -F'|' '{print $2}' | tr '&' '\n' | sort | uniq -c | sort -nr
+bcftools query -f '%INFO/CSQ\n' cohort.LoF.vcf.gz | awk -F'|' '{print $2}' | sort | uniq -c | sort -nr
 
-{
-    consequence=$6
-    cadd=$7
-    revel_raw=$8
-    af=$9
+echo "=== 5. Missense ==="
+bcftools +split-vep cohort.rare.vcf.gz -c IMPACT:String,Consequence:String -i 'Consequence ~ "missense_variant" && IMPACT != "HIGH"' -Oz -o cohort.missense.vcf.gz && bcftools index -f cohort.missense.vcf.gz && bcftools index -n cohort.missense.vcf.gz
+bcftools filter -e 'INFO/CSQ ~ "stop_gained" || INFO/CSQ ~ "splice_donor" || INFO/CSQ ~ "splice_acceptor" || INFO/CSQ ~ "start_lost"' cohort.missense.vcf.gz -Oz -o cohort.missense.clean.vcf.gz && mv cohort.missense.clean.vcf.gz cohort.missense.vcf.gz && bcftools index -f cohort.missense.vcf.gz
+bcftools index -n cohort.missense.vcf.gz
+bcftools query -f '%INFO/CSQ\n' cohort.missense.vcf.gz | awk -F'|' '{print $2}' | tr '&' '\n' | sort | uniq -c | sort -nr
+bcftools query -f '%INFO/CSQ\n' cohort.missense.vcf.gz | awk -F'|' '{print $2}' | sort | uniq -c | sort -nr
 
-    ds_ag=$10
-    ds_al=$11
-    ds_dg=$12
-    ds_dl=$13
-
-    clin=$14
-
-    # MAX REVEL
-    revel=0
-
-    if(revel_raw!="." && revel_raw!=""){
-        n=split(revel_raw,a,"&")
-
-        for(i=1;i<=n;i++){
-            if(a[i]!="." && a[i]!="" && a[i]+0>revel){
-                revel=a[i]+0
-            }
-        }
-    }
-
-    # CADD
-    if(cadd=="." || cadd=="")
-        cadd=0
-
-    # AF
-    af_ok=(af!="." && af!="" && af+0<0.01)
-
-    # LOF
-    lof=0
-    if(consequence ~ /frameshift_variant/) lof=1
-    if(consequence ~ /stop_gained/) lof=1
-    if(consequence ~ /stop_lost/) lof=1
-    if(consequence ~ /start_lost/) lof=1
-    if(consequence ~ /splice_acceptor_variant/) lof=1
-    if(consequence ~ /splice_donor_variant/) lof=1
-
-    # MISSENSE
-    missense=0
-    if(consequence ~ /missense_variant/ && revel>=0.5 && cadd>=20)
-        missense=1
-
-    # SPLICEAI
-    splice=0
-    if(ds_ag!="." && ds_ag+0>=0.5) splice=1
-    if(ds_al!="." && ds_al+0>=0.5) splice=1
-    if(ds_dg!="." && ds_dg+0>=0.5) splice=1
-    if(ds_dl!="." && ds_dl+0>=0.5) splice=1
-
-    # CLINVAR
-    clinvar=0
-    if(clin ~ /Pathogenic/) clinvar=1
-    if(clin ~ /Likely_pathogenic/) clinvar=1
-
-    if(af_ok && (lof || missense || splice || clinvar)){
-        print
-    }
-}
-' tmp.tsv > tmp2.tsv
-
-awk -F'\t' '
-BEGIN{OFS="\t"}
-
-NR==1{
-    print
-    next
-}
-
-!seen[$1":"$2":"$3":"$4]++
-' tmp2.tsv > rare_damaging.unique.tsv
-
-rm tmp.tsv tmp2.tsv
-
+echo "=== 6. Missense Pred ==="
+bcftools +split-vep cohort.missense.vcf.gz -s worst -c REVEL_score:Float,AlphaMissense_score:Float,ClinVar_CLNSIG:String -i 'REVEL_score >= 0.5 || AlphaMissense_score >= 0.56 || ClinVar_CLNSIG ~ "Pathogenic|Likely_pathogenic"' -Oz -o cohort.missense.pred.vcf.gz && bcftools index -f cohort.missense.pred.vcf.gz
+bcftools index -n cohort.missense.pred.vcf.gz
 ```
-Проверка вариантов и генов
+29) Получить список генов и варианты.
 ```
-tail -n +2 rare_damaging.unique.tsv | cut -f1-4 | sort -u | wc -l
-tail -n +2 rare_damaging.unique.tsv | cut -f5 | sort -u | wc -l
-cut -f5 rare_damaging.unique.tsv | sort | uniq -c | sort -nr | head
+bcftools +split-vep cohort.missense.pred.vcf.gz -s worst -f '%SYMBOL\t%CHROM:%POS\n' | awk -F'\t' '{split($1, a, ","); for(i in a) if(a[i] != "" && a[i] != ".") {print a[i], $2; break}}' | awk '{genes[$1] = genes[$1] " " $2} END {for (g in genes) print g genes[g]}' > genes_missense.set
+
+bcftools +split-vep cohort.LoF.vcf.gz -s worst -f '%SYMBOL\t%CHROM:%POS\n' | awk -F'\t' '{split($1, a, ","); for(i in a) if(a[i] != "" && a[i] != ".") {print a[i], $2; break}}' | awk '{genes[$1] = genes[$1] " " $2} END {for (g in genes) print g genes[g]}' > genes_LoF.set
 ```
-29) Подготовка клинических данных
+30) Подготовка клинических данных
 ```
 IID	Group	Sex	Age
 240125_new_exome_sample1	CD	M	34
@@ -634,4 +568,4 @@ cut -f1 phenotype.tsv | tail -n +2 | sort > pheno_ids.txt
 bcftools query -l cohort.annotated.vep.vcf.gz | sort > vcf_ids.txt
 comm -23 pheno_ids.txt vcf_ids.txt
 ```
-30) dfgdgf
+31) dfgdgf
