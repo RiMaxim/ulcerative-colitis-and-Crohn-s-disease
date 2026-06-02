@@ -432,6 +432,12 @@ bcftools query -f '%INFO/CSQ\n' cohort.missense.vcf.gz | awk -F'|' '{print $2}' 
 echo "=== 6. Missense Pred ==="
 bcftools +split-vep cohort.missense.vcf.gz -s worst -c REVEL_score:Float,AlphaMissense_score:Float,ClinVar_CLNSIG:String -i 'REVEL_score >= 0.5 || AlphaMissense_score >= 0.56 || ClinVar_CLNSIG ~ "Pathogenic|Likely_pathogenic"' -Oz -o cohort.missense.pred.vcf.gz && bcftools index -f cohort.missense.pred.vcf.gz
 bcftools index -n cohort.missense.pred.vcf.gz
+
+echo "=== 7. Merge LoF and  Missense Pred ==="
+bcftools concat -a cohort.LoF.vcf.gz cohort.missense.pred.vcf.gz -Oz -o cohort.burden.vcf.gz
+bcftools index -f cohort.burden.vcf.gz
+bcftools index -n cohort.burden.vcf.gz
+
 ```
 29) Получить список генов и варианты.
 ```
