@@ -635,7 +635,14 @@ fam <- read.table(File.Fam, header = FALSE, stringsAsFactors = FALSE)
 colnames(fam) <- c("FID", "IID", "Father", "Mother", "Sex_Plink", "Pheno_Plink")
 
 metadata_sorted <- metadata[match(fam$IID, metadata$IID), ]
-samples_to_include <- !is.na(metadata_sorted$Phenotype)
+
+samples_to_include <- !is.na(metadata_sorted$Phenotype) & 
+  !is.na(metadata_sorted$Age) & 
+  !is.na(metadata_sorted$Sex)
+
+metadata_final <- metadata_sorted[samples_to_include, ]
+
+valid_sample_ids <- metadata_final$IID
 
 #######
 SSD.INFO <- Open_SSD(File.SSD, File.Info)
