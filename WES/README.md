@@ -579,6 +579,7 @@ metadata_file <- "./metadata_WES.txt"
 bcftools_path <- "./miniforge3/bin/bcftools"
 plink_path    <- "./miniforge3/bin/plink"
 
+#####
 cmd_id <- paste0(bcftools_path, " annotate --set-id '%CHROM\\_%POS\\_%REF\\_%ALT' ", vcf_in, " -Oz -o ", vcf_fixed)
 system(cmd_id)
 cmd_index <- paste0(bcftools_path, " index -f ", vcf_fixed)
@@ -587,9 +588,11 @@ system(cmd_index)
 cmd_plink <- paste0(plink_path, " --vcf ", vcf_fixed, " --make-bed --out ", plink_prefix, " --allow-extra-chr --double-id")
 system(cmd_plink)
 
+#####
 cmd_raw_csq <- paste0(bcftools_path, " query -f '%CHROM\\_%POS\\_%REF\\_%ALT\\t%INFO/CSQ\\n' ", vcf_fixed, " > raw_csq.tmp")
 system(cmd_raw_csq)
 
+#####
 raw_data <- read.table("raw_csq.tmp", header = FALSE, stringsAsFactors = FALSE, sep = "\t")
 colnames(raw_data) <- c("Variant_ID", "CSQ_String")
 
@@ -609,5 +612,17 @@ setid_final <- setid_final[!is.na(setid_final$Gene) & setid_final$Gene != "" & s
 rownames(setid_final) <- NULL
 write.table(setid_final, file = "./cohort_burden.SetID", row.names = FALSE, col.names = FALSE, quote = FALSE, sep = "\t")
 file.remove("raw_csq.tmp")
+
+#####
+File.Bed  <- paste0(plink_prefix, ".bed")
+File.Bim  <- paste0(plink_prefix, ".bim")
+File.Fam  <- paste0(plink_prefix, ".fam")
+File.SetID <- "./cohort_burden.SetID"
+File.SSD  <- "./cohort_burden.SSD"
+File.Info <- "./cohort_burden.SSD.info"
+
+Generate_SSD_SetID(File.Bed, File.Bim, File.Fam, File.SetID, File.SSD, File.Info)
+
+#####
 
 ```
