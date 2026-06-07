@@ -638,5 +638,83 @@ metadata_sorted <- metadata[match(fam$IID, metadata$IID), ]
 samples_to_include <- !is.na(metadata_sorted$Phenotype)
 
 #######
+SSD.INFO <- Open_SSD(File.SSD, File.Info)
+
+obj_uc <- SKAT_Null_Model(Phenotype ~ Age + Sex, data = metadata_sorted, out_type = "D", Adjustment = TRUE)
+
+burden_uc_results <- SKAT.SSD.All(SSD.INFO, obj_uc, method = "Burden")
+skato_uc_results  <- SKAT.SSD.All(SSD.INFO, obj_uc, method = "SKATO")
+
+res_table_uc <- data.frame(
+  Gene      = burden_uc_results$results$SetID,
+  N_Markers = burden_uc_results$results$N.Marker.All,
+  P_Burden  = burden_uc_results$results$P.value,
+  P_SKATO   = skato_uc_results$results$P.value,
+  stringsAsFactors = FALSE
+)
+
+#####
+res_table_uc$Cases_With_Mut    <- 0
+res_table_uc$Total_Cases       <- sum(metadata_sorted$Phenotype == 1, na.rm = TRUE)
+res_table_uc$Controls_With_Mut <- 0
+res_table_uc$Total_Controls    <- sum(metadata_sorted$Phenotype == 0, na.rm = TRUE)
+res_table_uc$P_Fisher          <- NA
+
+cat("Считаем частоты мутаций для группы UC...\n")
+for (i in 1:nrow(res_table_uc)) {
+  gene_name <- res_table_uc$Gene[i]
+  set_index <- match(gene_name, SSD.INFO$SetInfo$SetID)
+  
+  if (!is.na(set_index) && set_index > 0) {
+    genotypes <- Get_Genotypes_SSD(SSD.INFO, set_index)
+    genotypes <- genotypes[samples_to_include, , drop = FALSE]
+    phenotypes_subset <- metadata_sorted$Phenotype[samples_to_include]
+    
+    has_mut <- rowSums(genotypes > 0, na.rm = TRUE) > 0
+    tbl <- table(factor(has_mut, levels = c(TRUE, FALSE)), 
+                 factor(phenotypes_subset, levels = c(1, 0)))
+    
+    # Защита на случай, если таблица сопряженности пустая
+    if (nrow(tbl) == 2 && ncol(tbl) == 2) {
+      res_table_uc$Cases_With_Mut[i]    <- tbl[1, 1]
+      res_table_uc$Controls_With_Mut[i] <- tbl[1, 2]
+      res_table_uc$P_Fisher[i]          <- fisher.test(tbl)$p.value
+    }
+  }
+}
+
+res_table_uc$FDR_Burden <- p.adjust(res_table_uc$P_Burden, method = "BH")
+res_table_uc$FDR_SKATO  <- p.adjust(res_table_uc$P_SKATO, method = "BH")
+res_table_uc$FDR_Fisher <- p.adjust(res_table_uc$P_Fisher, method = "BH")
+
+res_table_uc <- res_table_uc[order(res_table_uc$P_SKATO), ]
+write.csv(res_table_uc, "./statistics_UC_vs_Control.csv", row.names = FALSE)
+
+Close_SSD()
+
+######
+plot_data <- res_table_uc[!is.na(res_table_uc$P_SKATO), ]
+plot_data <- plot_data[order(plot_data$P_SKATO), ]
+
+n_genes <- nrow(plot_data)
+plot_data$Observed_logP <- -log10(plot_data$P_SKATO)
+plot_data$Expected_logP <- -log10((1:n_genes) / (n_genes + 1))
+plot_data$Index         <- 1:n_genes
+
+# QQ-plot
+qq_uc <- ggplot(plot_data, aes(x = Expected_logP, y = Observed_logP)) +
+  geom_point(color = "darkgreen", alpha = 0.6) +
+  geom_abline(intercept = 0, slope = 1, color = "red", linetype = "dashed") +
+  labs(title = "QQ-Plot (UC vs Control)", x = "Expected", y = "Observed") + theme_minimal()
+ggsave("./plot_QQ_UC_vs_Control.png", plot = qq_uc, width = 5, height = 5)
+
+# Manhattan-plot
+manhattan_uc <- ggplot(plot_data, aes(x = Index, y = Observed_logP)) +
+  geom_point(aes(color = Observed_logP > -log10(0.05)), alpha = 0.7) +
+  geom_hline(yintercept = -log10(0.05), color = "orange", linetype = "dotted") +
+  scale_color_manual(values = c("black", "red")) +
+  labs(title = "Manhattan Plot (UC vs Control)", x = "Gene Index", y = "-log10(P-value)") + 
+  theme_minimal() + theme(legend.position = "none")
+ggsave("./plot_Manhattan_UC_vs_Control.png", plot = manhattan_uc, width = 8, height = 4)
 
 ```
