@@ -437,15 +437,8 @@ echo "=== 7. Merge LoF and  Missense Pred ==="
 bcftools concat -a cohort.LoF.vcf.gz cohort.missense.pred.vcf.gz -Oz -o cohort.burden.vcf.gz
 bcftools index -f cohort.burden.vcf.gz
 bcftools index -n cohort.burden.vcf.gz
-
 ```
-29) Получить список генов и варианты.
-```
-bcftools +split-vep cohort.missense.pred.vcf.gz -s worst -f '%SYMBOL\t%CHROM:%POS\n' | awk -F'\t' '{split($1, a, ","); for(i in a) if(a[i] != "" && a[i] != ".") {print a[i], $2; break}}' | awk '{genes[$1] = genes[$1] " " $2} END {for (g in genes) print g genes[g]}' > genes_missense.set
-
-bcftools +split-vep cohort.LoF.vcf.gz -s worst -f '%SYMBOL\t%CHROM:%POS\n' | awk -F'\t' '{split($1, a, ","); for(i in a) if(a[i] != "" && a[i] != ".") {print a[i], $2; break}}' | awk '{genes[$1] = genes[$1] " " $2} END {for (g in genes) print g genes[g]}' > genes_LoF.set
-```
-30) Подготовка клинических данных
+29) Подготовка клинических данных
 ```
 IID	Group	Sex	Age
 240125_new_exome_sample1	CD	M	34
@@ -574,4 +567,47 @@ cut -f1 phenotype.tsv | tail -n +2 | sort > pheno_ids.txt
 bcftools query -l cohort.annotated.vep.vcf.gz | sort > vcf_ids.txt
 comm -23 pheno_ids.txt vcf_ids.txt
 ```
-31) dfgdgf
+30) Burden analysis. Входные файлы - cohort.burden.vcf.gz (шаг 28) и metadata_WES.txt (шаг 29)
+```
+library(SKAT)
+library(ggplot2)
+
+vcf_in        <- "./cohort.burden.vcf.gz"
+vcf_fixed     <- "./cohort.burden.id_fixed.vcf.gz"
+plink_prefix  <- "./cohort_burden_plink"
+metadata_file <- "./metadata_WES.txt"
+bcftools_path <- "./miniforge3/bin/bcftools"
+plink_path    <- "./miniforge3/bin/plink"
+
+cmd_id <- paste0(bcftools_path, " annotate --set-id '%CHROM\\_%POS\\_%REF\\_%ALT' ", vcf_in, " -Oz -o ", vcf_fixed)
+system(cmd_id)
+cmd_index <- paste0(bcftools_path, " index -f ", vcf_fixed)
+system(cmd_index)
+
+cmd_plink <- paste0(plink_path, " --vcf ", vcf_fixed, " --make-bed --out ", plink_prefix, " --allow-extra-chr --double-id")
+system(cmd_plink)
+
+cmd_raw_csq <- paste0(bcftools_path, " query -f '%CHROM\\_%POS\\_%REF\\_%ALT\\t%INFO/CSQ\\n' ", vcf_fixed, " > raw_csq.tmp")
+system(cmd_raw_csq)
+
+raw_data <- read.table("raw_csq.tmp", header = FALSE, stringsAsFactors = FALSE, sep = "\t")
+colnames(raw_data) <- c("Variant_ID", "CSQ_String")
+
+extract_gene_name <- function(csq_str) {
+  first_transcript <- strsplit(csq_str, ",")[[1]][1]
+  fields <- strsplit(first_transcript, "\\|")[[1]]
+  gene_symbol <- fields[4] 
+  if (is.na(gene_symbol) || gene_symbol == "" || gene_symbol == "-") {
+    gene_symbol <- fields[5]
+  }
+  return(gene_symbol)
+}
+
+genes_list <- sapply(raw_data$CSQ_String, extract_gene_name)
+setid_final <- data.frame(Gene = genes_list, Variant_ID = raw_data$Variant_ID, stringsAsFactors = FALSE)
+setid_final <- setid_final[!is.na(setid_final$Gene) & setid_final$Gene != "" & setid_final$Gene != "-", ]
+rownames(setid_final) <- NULL
+write.table(setid_final, file = "./cohort_burden.SetID", row.names = FALSE, col.names = FALSE, quote = FALSE, sep = "\t")
+file.remove("raw_csq.tmp")
+
+```
