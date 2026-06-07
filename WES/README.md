@@ -624,5 +624,19 @@ File.Info <- "./cohort_burden.SSD.info"
 Generate_SSD_SetID(File.Bed, File.Bim, File.Fam, File.SetID, File.SSD, File.Info)
 
 #####
+metadata <- read.table(metadata_file, header = TRUE, sep = "\t", stringsAsFactors = FALSE)
+
+metadata <- metadata[metadata$Group %in% c("UC", "Control"), ]
+metadata$Phenotype <- ifelse(metadata$Group == "Control", 0, 1)
+metadata$Sex <- as.factor(metadata$Sex)
+metadata$Age <- as.numeric(metadata$Age)
+
+fam <- read.table(File.Fam, header = FALSE, stringsAsFactors = FALSE)
+colnames(fam) <- c("FID", "IID", "Father", "Mother", "Sex_Plink", "Pheno_Plink")
+
+metadata_sorted <- metadata[match(fam$IID, metadata$IID), ]
+samples_to_include <- !is.na(metadata_sorted$Phenotype)
+
+#######
 
 ```
