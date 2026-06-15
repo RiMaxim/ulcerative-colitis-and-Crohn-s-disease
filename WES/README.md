@@ -412,7 +412,7 @@ bcftools +split-vep cohort.annotated.vep.vcf.gz -c CANONICAL:String -i 'CANONICA
 bcftools index -n cohort.canonical.vcf.gz
 
 echo "=== 3. MAX_AF ==="
-bcftools +split-vep cohort.canonical.vcf.gz -c MAX_AF:Float -i '(MAX_AF < 0.01 || MAX_AF=".")' -Oz -o cohort.rare.vcf.gz && bcftools index -f cohort.rare.vcf.gz
+bcftools +split-vep cohort.canonical.vcf.gz -c MAX_AF:Float -i '(MAX_AF < 0.01)' -Oz -o cohort.rare.vcf.gz && bcftools index -f cohort.rare.vcf.gz
 bcftools index -n cohort.rare.vcf.gz
 
 echo "=== 4. LoF ==="
@@ -571,157 +571,188 @@ comm -23 pheno_ids.txt vcf_ids.txt
 ```
 library(SKAT)
 library(ggplot2)
+library(reshape2)
 
 vcf_in        <- "./cohort.burden.vcf.gz"
 vcf_fixed     <- "./cohort.burden.id_fixed.vcf.gz"
-plink_prefix  <- "./cohort_burden_plink"
+plink_prefix  <- ".cohort_burden_plink"
 metadata_file <- "./metadata_WES.txt"
 bcftools_path <- "./miniforge3/bin/bcftools"
-plink_path    <- "./miniforge3/bin/plink"
+plink_path <- "./miniforge3/bin/plink"
 
-#####
 cmd_id <- paste0(bcftools_path, " annotate --set-id '%CHROM\\_%POS\\_%REF\\_%ALT' ", vcf_in, " -Oz -o ", vcf_fixed)
 system(cmd_id)
 cmd_index <- paste0(bcftools_path, " index -f ", vcf_fixed)
 system(cmd_index)
-
 cmd_plink <- paste0(plink_path, " --vcf ", vcf_fixed, " --make-bed --out ", plink_prefix, " --allow-extra-chr --double-id")
 system(cmd_plink)
 
-#####
+###
+
 cmd_raw_csq <- paste0(bcftools_path, " query -f '%CHROM\\_%POS\\_%REF\\_%ALT\\t%INFO/CSQ\\n' ", vcf_fixed, " > raw_csq.tmp")
 system(cmd_raw_csq)
 
-#####
 raw_data <- read.table("raw_csq.tmp", header = FALSE, stringsAsFactors = FALSE, sep = "\t")
 colnames(raw_data) <- c("Variant_ID", "CSQ_String")
 
 extract_gene_name <- function(csq_str) {
+  if (is.na(csq_str) || csq_str == "") return(NA)
   first_transcript <- strsplit(csq_str, ",")[[1]][1]
   fields <- strsplit(first_transcript, "\\|")[[1]]
-  gene_symbol <- fields[4] 
-  if (is.na(gene_symbol) || gene_symbol == "" || gene_symbol == "-") {
-    gene_symbol <- fields[5]
+  if (length(fields) >= 4) {
+    gene_symbol <- fields[4]
+    if (is.na(gene_symbol) || gene_symbol == "" || gene_symbol == "-") {
+      if (length(fields) >= 5) gene_symbol <- fields[5] else gene_symbol <- NA
+    }
+    return(gene_symbol)
   }
-  return(gene_symbol)
+  return(NA)
 }
+
 
 genes_list <- sapply(raw_data$CSQ_String, extract_gene_name)
 setid_final <- data.frame(Gene = genes_list, Variant_ID = raw_data$Variant_ID, stringsAsFactors = FALSE)
 setid_final <- setid_final[!is.na(setid_final$Gene) & setid_final$Gene != "" & setid_final$Gene != "-", ]
-rownames(setid_final) <- NULL
+cat(sprintf("Найдено %d уникальных генов\n", length(unique(setid_final$Gene))))
 write.table(setid_final, file = "./cohort_burden.SetID", row.names = FALSE, col.names = FALSE, quote = FALSE, sep = "\t")
 file.remove("raw_csq.tmp")
 
-#####
+###
+
 File.Bed  <- paste0(plink_prefix, ".bed")
 File.Bim  <- paste0(plink_prefix, ".bim")
 File.Fam  <- paste0(plink_prefix, ".fam")
-File.SetID <- "./cohort_burden.SetID"
-File.SSD  <- "./cohort_burden.SSD"
-File.Info <- "./cohort_burden.SSD.info"
+File.SetID <- "Desktop/WORK/gut/2_stage/R/cohort_burden.SetID"
+File.SSD  <- "Desktop/WORK/gut/2_stage/R/cohort_burden.SSD"
+File.Info <- "Desktop/WORK/gut/2_stage/R/cohort_burden.SSD.info"
 
 Generate_SSD_SetID(File.Bed, File.Bim, File.Fam, File.SetID, File.SSD, File.Info)
 
-#####
-metadata <- read.table(metadata_file, header = TRUE, sep = "\t", stringsAsFactors = FALSE)
+###
 
+metadata <- read.table(metadata_file, header = TRUE, sep = "\t", stringsAsFactors = FALSE)
 metadata <- metadata[metadata$Group %in% c("UC", "Control"), ]
 metadata$Phenotype <- ifelse(metadata$Group == "Control", 0, 1)
-metadata$Sex <- as.factor(metadata$Sex)
-metadata$Age <- as.numeric(metadata$Age)
 
 fam <- read.table(File.Fam, header = FALSE, stringsAsFactors = FALSE)
 colnames(fam) <- c("FID", "IID", "Father", "Mother", "Sex_Plink", "Pheno_Plink")
 
 metadata_sorted <- metadata[match(fam$IID, metadata$IID), ]
+samples_to_include <- !is.na(metadata_sorted$Phenotype)
 
-samples_to_include <- !is.na(metadata_sorted$Phenotype) & 
-  !is.na(metadata_sorted$Age) & 
-  !is.na(metadata_sorted$Sex)
+n_uc <- sum(metadata_sorted$Phenotype == 1 & samples_to_include, na.rm = TRUE)
+n_control <- sum(metadata_sorted$Phenotype == 0 & samples_to_include, na.rm = TRUE)
 
-metadata_final <- metadata_sorted[samples_to_include, ]
+cat(sprintf("  - UC: %d\n", n_uc))
+cat(sprintf("  - Control: %d\n", n_control))
 
-valid_sample_ids <- metadata_final$IID
+###
 
-#######
 SSD.INFO <- Open_SSD(File.SSD, File.Info)
 
-obj_uc <- SKAT_Null_Model(Phenotype ~ Age + Sex, data = metadata_sorted, out_type = "D", Adjustment = TRUE)
+obj_uc <- SKAT_Null_Model(Phenotype ~ 1, 
+                          data = metadata_sorted, 
+                          out_type = "D", 
+                          Adjustment = TRUE)
 
-burden_uc_results <- SKAT.SSD.All(SSD.INFO, obj_uc, method = "Burden")
-skato_uc_results  <- SKAT.SSD.All(SSD.INFO, obj_uc, method = "SKATO")
+n_genes <- nrow(SSD.INFO$SetInfo)
+gene_names <- SSD.INFO$SetInfo$SetID
+n_markers <- SSD.INFO$SetInfo$SetSize
 
-res_table_uc <- data.frame(
-  Gene      = burden_uc_results$results$SetID,
-  N_Markers = burden_uc_results$results$N.Marker.All,
-  P_Burden  = burden_uc_results$results$P.value,
-  P_SKATO   = skato_uc_results$results$P.value,
+p_burden <- rep(NA, n_genes)
+p_skato <- rep(NA, n_genes)
+uc_carriers <- rep(0, n_genes)
+control_carriers <- rep(0, n_genes)
+direction_vec <- rep(NA, n_genes)
+
+for (i in 1:n_genes) {
+  if (i %% 50 == 0) cat(sprintf("Processed %d of %d genes (%.1f%%)\n", 
+                                i, n_genes, 100 * i / n_genes))
+  
+  genotypes <- tryCatch({
+    Get_Genotypes_SSD(SSD.INFO, i)
+  }, error = function(e) NULL)
+  
+  if (is.null(genotypes)) next
+  
+  genotypes <- as.matrix(genotypes)
+  if (ncol(genotypes) == 0) next
+  
+  genotypes <- genotypes[samples_to_include, , drop = FALSE]
+  phenotypes <- metadata_sorted$Phenotype[samples_to_include]
+  
+  has_mut <- rowSums(genotypes > 0, na.rm = TRUE) > 0
+  if (sum(has_mut, na.rm = TRUE) < 2) next
+  
+  uc_carriers[i] <- sum(has_mut & phenotypes == 1, na.rm = TRUE)
+  control_carriers[i] <- sum(has_mut & phenotypes == 0, na.rm = TRUE)
+  
+  burden_score <- rowSums(genotypes > 0, na.rm = TRUE)
+  if (var(burden_score) > 0) {
+    model <- tryCatch({
+      glm(phenotypes ~ burden_score, family = binomial())
+    }, error = function(e) NULL)
+    
+    if (!is.null(model)) {
+      p_burden[i] <- summary(model)$coefficients[2, 4]
+      direction_vec[i] <- ifelse(coef(model)[2] > 0, "Risk", "Protective")
+    }
+  }
+  
+  tryCatch({
+    obj_skat <- SKAT_Null_Model(phenotypes ~ 1, out_type = "D")
+    skat_result <- SKAT(genotypes, obj_skat, method = "SKATO")
+    p_skato[i] <- skat_result$p.value
+  }, error = function(e) {})
+}
+
+Close_SSD()
+
+### 
+
+combined_results <- data.frame(
+  Gene = gene_names,
+  N_Variants = n_markers,
+  P_Burden = p_burden,
+  P_SKATO = p_skato,
+  UC_Carriers = uc_carriers,
+  UC_Total = n_uc,
+  Control_Carriers = control_carriers,
+  Control_Total = n_control,
+  Direction = direction_vec,
   stringsAsFactors = FALSE
 )
 
-#####
-res_table_uc$Cases_With_Mut    <- 0
-res_table_uc$Total_Cases       <- sum(metadata_sorted$Phenotype == 1, na.rm = TRUE)
-res_table_uc$Controls_With_Mut <- 0
-res_table_uc$Total_Controls    <- sum(metadata_sorted$Phenotype == 0, na.rm = TRUE)
-res_table_uc$P_Fisher          <- NA
+before <- nrow(combined_results)
+combined_results <- combined_results[!is.na(combined_results$P_SKATO), ]
+after <- nrow(combined_results)
+cat(sprintf("Genes removed due to NA in SKATO: %d\n", before - after))
+cat(sprintf("Genes remaining: %d\n", after))
 
-cat("Считаем частоты мутаций для группы UC...\n")
-for (i in 1:nrow(res_table_uc)) {
-  gene_name <- res_table_uc$Gene[i]
-  set_index <- match(gene_name, SSD.INFO$SetInfo$SetID)
-  
-  if (!is.na(set_index) && set_index > 0) {
-    genotypes <- Get_Genotypes_SSD(SSD.INFO, set_index)
-    genotypes <- genotypes[samples_to_include, , drop = FALSE]
-    phenotypes_subset <- metadata_sorted$Phenotype[samples_to_include]
-    
-    has_mut <- rowSums(genotypes > 0, na.rm = TRUE) > 0
-    tbl <- table(factor(has_mut, levels = c(TRUE, FALSE)), 
-                 factor(phenotypes_subset, levels = c(1, 0)))
-    
-    # Защита на случай, если таблица сопряженности пустая
-    if (nrow(tbl) == 2 && ncol(tbl) == 2) {
-      res_table_uc$Cases_With_Mut[i]    <- tbl[1, 1]
-      res_table_uc$Controls_With_Mut[i] <- tbl[1, 2]
-      res_table_uc$P_Fisher[i]          <- fisher.test(tbl)$p.value
+combined_results$Freq_UC <- combined_results$UC_Carriers / combined_results$UC_Total
+combined_results$Freq_Control <- combined_results$Control_Carriers / combined_results$Control_Total
+
+combined_results$FDR_Burden <- p.adjust(combined_results$P_Burden, method = "BH")
+combined_results$FDR_SKATO <- p.adjust(combined_results$P_SKATO, method = "BH")
+
+combined_results$Interpretation <- "NO_ASSOCIATION"
+for (i in 1:nrow(combined_results)) {
+  if (!is.na(combined_results$FDR_SKATO[i]) && !is.na(combined_results$FDR_Burden[i])) {
+    if (combined_results$FDR_SKATO[i] < 0.05 & combined_results$FDR_Burden[i] < 0.05) {
+      if (!is.na(combined_results$Direction[i])) {
+        combined_results$Interpretation[i] <- paste0("UNIDIRECTIONAL_", combined_results$Direction[i])
+      }
+    } else if (combined_results$FDR_SKATO[i] < 0.05 & combined_results$FDR_Burden[i] >= 0.05) {
+      combined_results$Interpretation[i] <- "HETEROGENEOUS"
+    } else if (combined_results$P_SKATO[i] < 0.05 & combined_results$P_Burden[i] < 0.05) {
+      combined_results$Interpretation[i] <- "NOMINAL_ONLY"
     }
   }
 }
 
-res_table_uc$FDR_Burden <- p.adjust(res_table_uc$P_Burden, method = "BH")
-res_table_uc$FDR_SKATO  <- p.adjust(res_table_uc$P_SKATO, method = "BH")
-res_table_uc$FDR_Fisher <- p.adjust(res_table_uc$P_Fisher, method = "BH")
+combined_results <- combined_results[order(combined_results$P_SKATO), ]
 
-res_table_uc <- res_table_uc[order(res_table_uc$P_SKATO), ]
-write.csv(res_table_uc, "./statistics_UC_vs_Control.csv", row.names = FALSE)
+write.table(combined_results, "./statistics_UC_vs_Control.txt", row.names = FALSE, sep ="\t")
 
-Close_SSD()
-
-######
-plot_data <- res_table_uc[!is.na(res_table_uc$P_SKATO), ]
-plot_data <- plot_data[order(plot_data$P_SKATO), ]
-
-n_genes <- nrow(plot_data)
-plot_data$Observed_logP <- -log10(plot_data$P_SKATO)
-plot_data$Expected_logP <- -log10((1:n_genes) / (n_genes + 1))
-plot_data$Index         <- 1:n_genes
-
-# QQ-plot
-qq_uc <- ggplot(plot_data, aes(x = Expected_logP, y = Observed_logP)) +
-  geom_point(color = "darkgreen", alpha = 0.6) +
-  geom_abline(intercept = 0, slope = 1, color = "red", linetype = "dashed") +
-  labs(title = "QQ-Plot (UC vs Control)", x = "Expected", y = "Observed") + theme_minimal()
-ggsave("./plot_QQ_UC_vs_Control.png", plot = qq_uc, width = 5, height = 5)
-
-# Manhattan-plot
-manhattan_uc <- ggplot(plot_data, aes(x = Index, y = Observed_logP)) +
-  geom_point(aes(color = Observed_logP > -log10(0.05)), alpha = 0.7) +
-  geom_hline(yintercept = -log10(0.05), color = "orange", linetype = "dotted") +
-  scale_color_manual(values = c("black", "red")) +
-  labs(title = "Manhattan Plot (UC vs Control)", x = "Gene Index", y = "-log10(P-value)") + 
-  theme_minimal() + theme(legend.position = "none")
-ggsave("./plot_Manhattan_UC_vs_Control.png", plot = manhattan_uc, width = 8, height = 4)
-
+###
 ```
