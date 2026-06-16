@@ -61,7 +61,13 @@
     --output-dir ./emu \
     --threads $2 \
     $1_porechop_chopper.fastq.gz (или $1_porechop_chopper_sub50k.fastq.gz)
-8) Запуск R программ (stats.R, alpha_diversity.R, beta_diversity.R, biomarkers.R, enterotype.R)
+8) Запуск R программ
+   -- stats.R
+   -- alpha_diversity.R
+   -- beta_diversity.R
+   -- biomarkers.R
+   -- enterotype.R
+   -- SCFA.R
 
 
 **Список литературы**
@@ -77,6 +83,7 @@
 9) https://gut.bmj.com/content/69/8/1510                                       #Drugs
 10) https://onlinelibrary.wiley.com/doi/10.1097/MPG.0000000000003017   #Exom 75 genes panel
 11) https://gut.bmj.com/content/72/1/180 # скорость прохождения еды
+12) https://pmc.ncbi.nlm.nih.gov/articles/PMC9403272/ #SCFA КЦЖК CPI
 
 **Сайты**
 
