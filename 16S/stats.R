@@ -13,7 +13,8 @@ library(dplyr)
 # ============================================================================
 
 # Specify the path to your input file
-input_file <- "Desktop/github/stats.tsv"  # <-- CHANGE THIS PATH
+input_file <- "Desktop/WORK/gut/1_stage/R/stats.tsv"  # <-- CHANGE THIS PATH
+
 
 # Expected structure of input file (TSV with headers):
 # SampleID | Reads_raw | Reads_filtered | Quality_raw | Quality_filtered | Length_raw | Length_filtered | SD_raw | SD_filtered
@@ -65,11 +66,11 @@ p1 <- ggplot(data) +
        color = "Stage") +
   scale_y_continuous(labels = scales::comma) +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 4),
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 3),
         legend.position = "bottom",
         plot.title = element_text(face = "bold", hjust = 0.5),
         axis.title   = element_text(size = 16),
-        axis.text    = element_text(size = 14))
+        axis.text    = element_text(size = 12))+ylim(0,400000)
 
 # 2.2 Read quality plot (Q-score)
 p2 <- ggplot(data) +
@@ -87,11 +88,11 @@ p2 <- ggplot(data) +
        x = "Sample", y = "Mean quality", 
        color = "Stage") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 4),
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 3),
         legend.position = "bottom",
         plot.title = element_text(face = "bold", hjust = 0.5),
         axis.title   = element_text(size = 16),
-        axis.text    = element_text(size = 14))
+        axis.text    = element_text(size = 12))
 
 # 2.3 Read length plot
 p3 <- ggplot(data) +
@@ -109,11 +110,11 @@ p3 <- ggplot(data) +
        x = "Sample", y = "Mean length (bp)",
        color = "Stage") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 4),
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 3),
         legend.position = "bottom",
         plot.title = element_text(face = "bold", hjust = 0.5),
         axis.title   = element_text(size = 16),
-        axis.text    = element_text(size = 14))
+        axis.text    = element_text(size = 12))
 
 # 2.4 Read length variability plot (standard deviation)
 p4 <- ggplot(data) +
@@ -131,11 +132,11 @@ p4 <- ggplot(data) +
        x = "Sample", y = "Standard deviation",
        color = "Stage") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 4),
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 3),
         legend.position = "bottom",
         plot.title = element_text(face = "bold", hjust = 0.5),
         axis.title   = element_text(size = 16),
-        axis.text    = element_text(size = 14))
+        axis.text    = element_text(size = 12))
 
 # ============================================================================
 # 3. Combine and save plots
@@ -145,13 +146,13 @@ p4 <- ggplot(data) +
 combined_plot <- grid.arrange(p1, p2, p3, p4, ncol = 2, nrow = 2)
 
 # Create output directory if it doesn't exist
-output_dir <- "Desktop/github"
+output_dir <- "Desktop/WORK/gut/1_stage/R/"
 if (!dir.exists(output_dir)) {
   dir.create(output_dir, recursive = TRUE)
 }
 
 # Save combined plot as PDF
-output_file <- file.path(output_dir, "149_files_reads_quality_length_SD.pdf")
+output_file <- file.path(output_dir, "192_files_reads_quality_length_SD.pdf")
 ggsave(output_file, combined_plot, width = 16, height = 10)
 
 cat("Plot saved to:", output_file, "\n")

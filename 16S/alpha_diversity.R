@@ -8,9 +8,9 @@ library(dplyr)
 library(patchwork)
 
 # 1. Data loading
-data_rel    <- read.table("Desktop/github/input.tsv", header = TRUE, sep = "\t", check.names = FALSE, fill = TRUE)
-data_counts <- read.table("Desktop/github/input_counts.tsv", header = TRUE, sep = "\t", check.names = FALSE, fill = TRUE)
-metadata    <- read.table("Desktop/github/metadata.tsv", header = TRUE, sep = "\t", check.names = FALSE, fill = TRUE)
+data_rel    <- read.table("Desktop/WORK/gut/1_stage/R/input.tsv", header = TRUE, sep = "\t", check.names = FALSE, fill = TRUE)
+data_counts <- read.table("Desktop/WORK/gut/1_stage/R/input_counts.tsv", header = TRUE, sep = "\t", check.names = FALSE, fill = TRUE)
+metadata    <- read.table("Desktop/WORK/gut/1_stage/R/metadata.tsv", header = TRUE, sep = "\t", check.names = FALSE, fill = TRUE)
 
 # 2. Extract Sample IDs and find common intersection
 ids_rel    <- as.character(data_rel[, 1])
@@ -131,7 +131,7 @@ plot_richness <- run_analysis_and_plot("richness", "Observed Species (Richness)"
 # 7. Combine plots side-by-side and save
 combined_plot <- plot_shannon + plot_richness
 
-pdf("Desktop/github/alpha_diversity.pdf", width = 8, height = 5.5) 
+pdf("Desktop/WORK/gut/1_stage/R/alpha_diversity.pdf", width = 8, height = 5.5) 
 print(combined_plot)
 dev.off()
 

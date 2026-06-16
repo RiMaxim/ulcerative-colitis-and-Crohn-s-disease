@@ -7,8 +7,8 @@ library(patchwork)
 set.seed(42)
 
 # 2. Data loading
-data_rel <- read.table("Desktop/github/input.tsv", header = TRUE, sep = "\t", check.names = FALSE, fill = TRUE)
-metadata <- read.table("Desktop/github/metadata.tsv", header = TRUE, sep = "\t", check.names = FALSE, fill = TRUE)
+data_rel <- read.table("Desktop/WORK/gut/1_stage/R/input.tsv", header = TRUE, sep = "\t", check.names = FALSE, fill = TRUE)
+metadata <- read.table("Desktop/WORK/gut/1_stage/R/metadata.tsv", header = TRUE, sep = "\t", check.names = FALSE, fill = TRUE)
 
 # 3. Sample alignment
 ids_rel  <- as.character(data_rel[, 1])
@@ -118,10 +118,10 @@ p_dist <- ggplot(plot_df, aes(x = diagnosis, fill = enterotype)) +
   axis.title   = element_text(size = 16),
   axis.text    = element_text(size = 14))
 # 10. Save plots as PDF
-pdf("Desktop/github/enterotypes_1.pdf", width = 8, height = 5.5)
+pdf("Desktop/WORK/gut/1_stage/R/enterotypes_1.pdf", width = 8, height = 5.5)
 print(p_et)
 dev.off()
-pdf("Desktop/github/enterotypes_2.pdf", width = 8, height = 5.5)
+pdf("Desktop/WORK/gut/1_stage/R/enterotypes_2.pdf", width = 8, height = 5.5)
 p_dist
 dev.off()
 # 11. Perform Fisher's exact test for 3x3 contingency table
@@ -130,3 +130,108 @@ print(fisher_res)
 
 # Print p-value to console
 cat(sprintf("\nStatistical significance of enterotype distribution (Fisher's Test): P = %.4f\n", fisher_res$p.value))
+
+
+
+
+
+
+
+
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(ggalluvial) # Если не установлен, запустите: install.packages("ggalluvial")
+
+# 1. Сборка лонгитюдного датафрейма (берем только пациентов с повторными визитами)
+trajectory_df <- metadata_cleaned %>%
+  select(patient, diagnosis, enterotype) %>%
+  filter(!is.na(diagnosis) & !is.na(patient) & enterotype %in% c("ET_1", "ET_2")) %>%
+  group_by(patient) %>%
+  # Фильтруем: оставляем только тех, кто пришел минимум 2 раза
+  filter(n() >= 2) %>%
+  # Автоматически нумеруем визиты хронологически по порядку строк
+  mutate(visit_order = paste0("Visit_", row_number())) %>%
+  ungroup()
+
+# Переводим визиты в фактор, чтобы зафиксировать их порядок на графике
+trajectory_df$visit_order <- factor(trajectory_df$visit_order, 
+                                    levels = paste0("Visit_", 1:max(as.numeric(gsub("Visit_", "", trajectory_df$visit_order)))))
+trajectory_df$diagnosis <- factor(trajectory_df$diagnosis, levels = c("Control", "CD", "UC"))
+
+# 2. Расчет парных переходов (Текущий шаг -> Следующий шаг)
+transition_pairs <- trajectory_df %>%
+  group_by(patient, diagnosis) %>%
+  mutate(
+    current_et = enterotype,
+    next_et    = lead(enterotype)
+  ) %>%
+  filter(!is.na(next_et)) %>% # Исключаем последний визит, у которого нет пары
+  ungroup()
+
+cat(sprintf("Всего успешно зафиксировано переходов во времени: %d\n", nrow(transition_pairs)))
+
+# 3. Функция генерации Матрицы Переходов (%) для конкретной группы
+get_transition_matrix <- function(df, group_name) {
+  sub_df <- df %>% filter(diagnosis == group_name)
+  
+  if(nrow(sub_df) == 0) {
+    return(matrix(NA, nrow=2, ncol=2, dimnames=list(c("ET_1","ET_2"), c("ET_1","ET_2"))))
+  }
+  
+  # Строим таблицу переходов и нормируем по строкам (margin = 1) для получения вероятностей
+  raw_table <- table(sub_df$current_et, sub_df$next_et)
+  prob_table <- prop.table(raw_table, margin = 1) * 100
+  return(round(prob_table, 1))
+}
+
+# Выводим матрицы в консоль
+cat("\n=== МАТРИЦА ПЕРЕХОДОВ ДЛЯ ГРУППЫ CONTROL (%) ===\n")
+print(get_transition_matrix(transition_pairs, "Control"))
+
+cat("\n=== МАТРИЦА ПЕРЕХОДОВ ДЛЯ ГРУППЫ CD (%) ===\n")
+print(get_transition_matrix(transition_pairs, "CD"))
+
+cat("\n=== МАТРИЦА ПЕРЕХОДОВ ДЛЯ ГРУППЫ UC (%) ===\n")
+print(get_transition_matrix(transition_pairs, "UC"))
+
+
+# 4. Визуализация: Отрисовка траекторий (Alluvial Diagram) по группам
+# Ограничим график первыми тремя визитами, чтобы он оставался читаемым
+plot_alluvial_df <- trajectory_df %>%
+  filter(visit_order %in% c("Visit_1", "Visit_2", "Visit_3")) %>%
+  group_by(diagnosis, visit_order, enterotype) %>%
+  summarise(Freq = n(), .groups = 'drop')
+
+p_alluvial <- ggplot(plot_alluvial_df,
+                     aes(x = visit_order, stratum = enterotype, alluvium = enterotype, y = Freq, fill = enterotype)) +
+  geom_flow(alpha = 0.4, color = "darkgrey", linewidth = 0.2) +
+  geom_stratum(alpha = 0.9, width = 0.4, color = "black") +
+  facet_wrap(~diagnosis, scales = "free_y") +
+  scale_fill_manual(values = c("ET_1" = "#D62828", "ET_2" = "blue")) +
+  labs(
+    title = "Longitudinal Dynamics of Enterotypes",
+    subtitle = "Tracking microbial community shifts across sequential patient visits",
+    x = "Timeline",
+    y = "Number of Samples",
+    fill = "Enterotype"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title    = element_text(face = "bold", hjust = 0.5, size = 16),
+    plot.subtitle = element_text(hjust = 0.5, size = 12, face = "italic"),
+    strip.text    = element_text(face = "bold", size = 14, color = "grey10"),
+    legend.position = "bottom",
+    panel.grid.major.x = element_blank()
+  ) +ylim(0,30)
+
+# Сохраняем аллювиальный график в PDF
+pdf("Desktop/WORK/gut/1_stage/R/enterotype_3.pdf", width = 8, height = 5.5)
+print(p_alluvial)
+dev.off()
+
+
+
+
+
+
