@@ -1,0 +1,33 @@
+A	HLA-A*32:01:01	HLA-A*24:115	HLA-A*32:01:01	HLA-A*24:02:01	HLA-A*32:01:01	HLA-A*24:02:33
+B	HLA-B*13:02:01	HLA-B*38:01:01
+C	HLA-C*06:02:01	HLA-C*06:76:02
+DRB1	HLA-DRB1*01:01:01	HLA-DRB1*07:01:01
+DQA1	HLA-DQA1*01:01:01	HLA-DQA1*02:01
+DQB1	HLA-DQB1*05:01:01	-
+DPA1	HLA-DPA1*02:01:01	HLA-DPA1*01:03:01
+DPB1	HLA-DPB1*23:01	HLA-DPB1*13:01:01
+DMA	HLA-DMA*01:01:01	-
+DMB	HLA-DMB*01:03:01	HLA-DMB*01:01:01
+DOA	HLA-DOA*01:01:02	-
+DOB	HLA-DOB*01:02:01	HLA-DOB*01:01:01
+DRA	HLA-DRA*01:01:01	-
+DRB2	Not typed	Not typed
+DRB3	Not typed	Not typed
+DRB4	HLA-DRB4*01:02	-
+DRB5	Not typed	Not typed
+DRB6	Not typed	Not typed
+DRB7	HLA-DRB7*01:01:01	-
+DRB8	HLA-DRB8*01:01	-
+DRB9	Not typed	Not typed
+Couldn't read result file.
+E	HLA-E*01:03:01	HLA-E*01:01:01
+Couldn't read result file.
+G	HLA-G*01:01:12	HLA-G*01:01:01	HLA-G*01:01:12	HLA-G*01:01:08
+H	HLA-H*02:03	-
+J	Not typed	Not typed
+K	Not typed	Not typed
+L	Not typed	Not typed
+Couldn't read result file.
+V	Not typed	Not typed
+Couldn't read result file.
+Couldn't read result file.
