@@ -1,1 +1,7 @@
+1) fastq_list.txt - список bam файлов
+
+2) Запустить пайплайн для подсчета HLA
+podman run --rm -v /home/rinatalia/test5/docker_simple/:/data:Z hla-typing:simpletest /data/results /data/fastq_list.txt
+
+
 
