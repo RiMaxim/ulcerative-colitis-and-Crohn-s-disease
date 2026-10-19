@@ -1,0 +1,953 @@
+sample	group	locus	allele1	allele2	allele3	allele4	status
+240125_new_exome_sample10	UC	A	A*24:02				one_allele
+240125_new_exome_sample10	UC	B	B*07:02				one_allele
+240125_new_exome_sample10	UC	C	C*07:02	C*07:51			full
+240125_new_exome_sample10	UC	DRB1	DRB1*15:01				one_allele
+240125_new_exome_sample10	UC	DQA1	DQA1*01:02				one_allele
+240125_new_exome_sample10	UC	DQB1	DQB1*06:02				one_allele
+240125_new_exome_sample10	UC	DPA1	DPA1*01:03				one_allele
+240125_new_exome_sample10	UC	DPB1	DPB1*03:01	DPB1*04:01			full
+240125_new_exome_sample11	UC	A	A*24:02	A*30:01			full
+240125_new_exome_sample11	UC	B	B*15:256	B*13:09			full
+240125_new_exome_sample11	UC	C	C*06:02	C*03:13	C*06:02	C*03:03	candidate
+240125_new_exome_sample11	UC	DRB1	DRB1*07:01	DRB1*13:01			full
+240125_new_exome_sample11	UC	DQA1	DQA1*02:01	DQA1*01:03			full
+240125_new_exome_sample11	UC	DQB1	DQB1*06:03	DQB1*02:02			full
+240125_new_exome_sample11	UC	DPA1	DPA1*02:01	DPA1*01:03			full
+240125_new_exome_sample11	UC	DPB1	DPB1*17:01	DPB1*03:01			full
+240125_new_exome_sample12	CD	A	A*03:01	A*02:01			full
+240125_new_exome_sample12	CD	B	B*07:02	B*13:02			full
+240125_new_exome_sample12	CD	C	C*07:02	C*06:17			full
+240125_new_exome_sample12	CD	DRB1	DRB1*15:01	DRB1*07:01			full
+240125_new_exome_sample12	CD	DQA1	DQA1*02:01	DQA1*01:02			full
+240125_new_exome_sample12	CD	DQB1	DQB1*06:02	DQB1*02:02			full
+240125_new_exome_sample12	CD	DPA1	DPA1*02:01	DPA1*01:03			full
+240125_new_exome_sample12	CD	DPB1	DPB1*17:01	DPB1*03:01			full
+240125_new_exome_sample13	Control	A	A*03:01	A*01:01			full
+240125_new_exome_sample13	Control	B	B*07:02	B*27:02			full
+240125_new_exome_sample13	Control	C	C*07:02	C*02:02			full
+240125_new_exome_sample13	Control	DRB1	DRB1*15:01	DRB1*11:03			full
+240125_new_exome_sample13	Control	DQA1	DQA1*05:05	DQA1*01:02			full
+240125_new_exome_sample13	Control	DQB1	DQB1*06:02	DQB1*03:01	DQB1*06:02	DQB1*03:01	candidate
+240125_new_exome_sample13	Control	DPA1	DPA1*01:03				one_allele
+240125_new_exome_sample13	Control	DPB1	DPB1*04:01	DPB1*02:01			full
+240125_new_exome_sample14	UC	A	A*32:01	A*24:115	A*32:01	A*24:02	candidate
+240125_new_exome_sample14	UC	B	B*13:02	B*38:01			full
+240125_new_exome_sample14	UC	C	C*06:02	C*06:76			full
+240125_new_exome_sample14	UC	DRB1	DRB1*01:01	DRB1*07:01			full
+240125_new_exome_sample14	UC	DQA1	DQA1*01:01	DQA1*02:01			full
+240125_new_exome_sample14	UC	DQB1	DQB1*05:01				one_allele
+240125_new_exome_sample14	UC	DPA1	DPA1*02:01	DPA1*01:03			full
+240125_new_exome_sample14	UC	DPB1	DPB1*23:01	DPB1*13:01			full
+240125_new_exome_sample15	UC	A	A*03:01				one_allele
+240125_new_exome_sample15	UC	B	B*07:02	B*51:143			full
+240125_new_exome_sample15	UC	C	C*07:02	C*15:62			full
+240125_new_exome_sample15	UC	DRB1	DRB1*15:01	DRB1*11:01			full
+240125_new_exome_sample15	UC	DQA1	DQA1*05:05	DQA1*01:02			full
+240125_new_exome_sample15	UC	DQB1	DQB1*06:02	DQB1*03:01			full
+240125_new_exome_sample15	UC	DPA1	DPA1*01:03				one_allele
+240125_new_exome_sample15	UC	DPB1	DPB1*04:01				one_allele
+240125_new_exome_sample16	CD	A	A*03:01	A*02:01			full
+240125_new_exome_sample16	CD	B	B*07:02	B*40:01			full
+240125_new_exome_sample16	CD	C	C*07:51	C*03:04	C*07:51	C*03:04	candidate
+240125_new_exome_sample16	CD	DRB1	DRB1*03:01	DRB1*14:07			full
+240125_new_exome_sample16	CD	DQA1	DQA1*05:01	DQA1*01:04			full
+240125_new_exome_sample16	CD	DQB1	DQB1*05:03	DQB1*02:01			full
+240125_new_exome_sample16	CD	DPA1	DPA1*01:03				one_allele
+240125_new_exome_sample16	CD	DPB1	DPB1*02:01	DPB1*04:01			full
+240125_new_exome_sample17	CD	A	A*30:44	A*02:07	A*30:44	A*02:17	candidate
+240125_new_exome_sample17	CD	B	B*27:05	B*13:02	B*27:05	B*13:01	candidate
+240125_new_exome_sample17	CD	C	C*02:05	C*02:43			full
+240125_new_exome_sample17	CD	DRB1	DRB1*08:02	DRB1*07:01	DRB1*08:01	DRB1*07:01	candidate
+240125_new_exome_sample17	CD	DQA1	DQA1*02:01	DQA1*04:01			full
+240125_new_exome_sample17	CD	DQB1	DQB1*02:02	DQB1*04:02			full
+240125_new_exome_sample17	CD	DPA1	DPA1*01:03				one_allele
+240125_new_exome_sample17	CD	DPB1	DPB1*03:01	DPB1*184:01	DPB1*03:01	DPB1*68:01	candidate
+240125_new_exome_sample18	Control	A	A*33:01	A*02:01			full
+240125_new_exome_sample18	Control	B	B*14:02	B*40:01			full
+240125_new_exome_sample18	Control	C	C*03:04	C*08:02			full
+240125_new_exome_sample18	Control	DRB1	DRB1*01:02	DRB1*13:01			full
+240125_new_exome_sample18	Control	DQA1	DQA1*01:01	DQA1*01:03			full
+240125_new_exome_sample18	Control	DQB1	DQB1*06:03	DQB1*05:01			full
+240125_new_exome_sample18	Control	DPA1	DPA1*01:03	DPA1*02:02			full
+240125_new_exome_sample18	Control	DPB1	DPB1*02:01	DPB1*05:01			full
+240125_new_exome_sample19	UC	A	A*01:01	A*32:01			full
+240125_new_exome_sample19	UC	B	B*08:01	B*07:02			full
+240125_new_exome_sample19	UC	C	C*07:01	C*07:51			full
+240125_new_exome_sample19	UC	DRB1	DRB1*15:01	DRB1*03:01			full
+240125_new_exome_sample19	UC	DQA1	DQA1*05:01	DQA1*01:02			full
+240125_new_exome_sample19	UC	DQB1	DQB1*06:02	DQB1*02:01			full
+240125_new_exome_sample19	UC	DPA1	DPA1*01:03				one_allele
+240125_new_exome_sample19	UC	DPB1	DPB1*04:01	DPB1*04:02			full
+240125_new_exome_sample1	CD	A	A*11:01	A*02:01			full
+240125_new_exome_sample1	CD	B	B*40:01	B*27:05			full
+240125_new_exome_sample1	CD	C	C*02:02	C*03:32			full
+240125_new_exome_sample1	CD	DRB1	DRB1*13:03	DRB1*11:01			full
+240125_new_exome_sample1	CD	DQA1	DQA1*05:05				one_allele
+240125_new_exome_sample1	CD	DQB1	DQB1*03:01				one_allele
+240125_new_exome_sample1	CD	DPA1	DPA1*01:03				one_allele
+240125_new_exome_sample1	CD	DPB1	DPB1*03:01	DPB1*104:01			full
+240125_new_exome_sample20	UC	A	A*11:01	A*74:13			full
+240125_new_exome_sample20	UC	B	B*45:01	B*51:57			full
+240125_new_exome_sample20	UC	C	C*15:75	C*16:40			full
+240125_new_exome_sample20	UC	DRB1	DRB1*03:01	DRB1*04:03			full
+240125_new_exome_sample20	UC	DQA1	DQA1*05:01	DQA1*03:01			full
+240125_new_exome_sample20	UC	DQB1	DQB1*03:02	DQB1*02:01			full
+240125_new_exome_sample20	UC	DPA1	DPA1*01:03				one_allele
+240125_new_exome_sample20	UC	DPB1	DPB1*04:01	DPB1*02:01			full
+240125_new_exome_sample21	Control	A	A*24:02	A*02:01			full
+240125_new_exome_sample21	Control	B	B*44:02	B*13:02			full
+240125_new_exome_sample21	Control	C	C*05:01	C*06:02			full
+240125_new_exome_sample21	Control	DRB1	DRB1*12:01	DRB1*07:01			full
+240125_new_exome_sample21	Control	DQA1	DQA1*02:01	DQA1*05:05			full
+240125_new_exome_sample21	Control	DQB1	DQB1*03:01	DQB1*02:02			full
+240125_new_exome_sample21	Control	DPA1	DPA1*01:03				one_allele
+240125_new_exome_sample21	Control	DPB1	DPB1*02:01				one_allele
+240125_new_exome_sample2	Control	A	A*03:01	A*02:327			full
+240125_new_exome_sample2	Control	B	B*07:04	B*49:01			full
+240125_new_exome_sample2	Control	C	C*07:19	C*07:27			full
+240125_new_exome_sample2	Control	DRB1	DRB1*01:01	DRB1*13:02			full
+240125_new_exome_sample2	Control	DQA1	DQA1*01:02				one_allele
+240125_new_exome_sample2	Control	DQB1	DQB1*06:04	DQB1*05:52			full
+240125_new_exome_sample2	Control	DPA1	DPA1*01:03				one_allele
+240125_new_exome_sample2	Control	DPB1	DPB1*04:01	DPB1*104:01			full
+240125_new_exome_sample3	UC	A	A*02:01	A*02:07			full
+240125_new_exome_sample3	UC	B	B*46:01	B*18:17N	B*46:01	B*18:01	candidate
+240125_new_exome_sample3	UC	C	C*07:01	C*01:03			full
+240125_new_exome_sample3	UC	DRB1	DRB1*07:01	DRB1*12:01			full
+240125_new_exome_sample3	UC	DQA1	DQA1*01:03	DQA1*02:01			full
+240125_new_exome_sample3	UC	DQB1	DQB1*06:01	DQB1*02:02			full
+240125_new_exome_sample3	UC	DPA1	DPA1*02:01				one_allele
+240125_new_exome_sample3	UC	DPB1	DPB1*17:01	DPB1*14:01			full
+240125_new_exome_sample4	UC	A	A*33:01	A*02:05			full
+240125_new_exome_sample4	UC	B	B*14:02	B*44:02			full
+240125_new_exome_sample4	UC	C	C*08:02	C*05:01			full
+240125_new_exome_sample4	UC	DRB1	DRB1*13:01	DRB1*01:02			full
+240125_new_exome_sample4	UC	DQA1	DQA1*01:01	DQA1*01:03			full
+240125_new_exome_sample4	UC	DQB1	DQB1*06:03	DQB1*05:01			full
+240125_new_exome_sample4	UC	DPA1	DPA1*01:03				one_allele
+240125_new_exome_sample4	UC	DPB1	DPB1*04:01				one_allele
+240125_new_exome_sample5	CD	A	A*01:01	A*02:01			full
+240125_new_exome_sample5	CD	B	B*08:01	B*40:01			full
+240125_new_exome_sample5	CD	C	C*07:01	C*03:04			full
+240125_new_exome_sample5	CD	DRB1	DRB1*16:15	DRB1*03:01			full
+240125_new_exome_sample5	CD	DQA1	DQA1*05:01	DQA1*01:02			full
+240125_new_exome_sample5	CD	DQB1	DQB1*02:01	DQB1*05:02			full
+240125_new_exome_sample5	CD	DPA1	DPA1*01:03	DPA1*02:01			full
+240125_new_exome_sample5	CD	DPB1	DPB1*04:01	DPB1*01:01			full
+240125_new_exome_sample6	CD	A	A*24:03	A*02:242	A*24:03	A*02:110	candidate
+240125_new_exome_sample6	CD	B	B*27:05	B*27:15	B*27:13	B*27:15	candidate
+240125_new_exome_sample6	CD	C	C*01:02	C*01:22			full
+240125_new_exome_sample6	CD	DRB1	DRB1*15:01	DRB1*01:01			full
+240125_new_exome_sample6	CD	DQA1	DQA1*01:02	DQA1*01:01			full
+240125_new_exome_sample6	CD	DQB1	DQB1*06:02	DQB1*05:01			full
+240125_new_exome_sample6	CD	DPA1	DPA1*01:03				one_allele
+240125_new_exome_sample6	CD	DPB1	DPB1*02:01	DPB1*04:01			full
+240125_new_exome_sample7	UC	A	A*03:01	A*02:01	A*03:01	A*02:11	candidate
+240125_new_exome_sample7	UC	B	B*07:02	B*48:03			full
+240125_new_exome_sample7	UC	C	C*07:02	C*03:04			full
+240125_new_exome_sample7	UC	DRB1	DRB1*16:01	DRB1*01:01			full
+240125_new_exome_sample7	UC	DQA1	DQA1*01:02	DQA1*01:01			full
+240125_new_exome_sample7	UC	DQB1	DQB1*05:01	DQB1*05:02			full
+240125_new_exome_sample7	UC	DPA1	DPA1*01:03	DPA1*02:01			full
+240125_new_exome_sample7	UC	DPB1	DPB1*04:02	DPB1*01:01			full
+240125_new_exome_sample8	UC	A	A*11:01	A*23:01			full
+240125_new_exome_sample8	UC	B	B*49:01	B*52:11			full
+240125_new_exome_sample8	UC	C	C*07:01	C*12:08			full
+240125_new_exome_sample8	UC	DRB1	DRB1*01:01	DRB1*11:01			full
+240125_new_exome_sample8	UC	DQA1	DQA1*01:01	DQA1*05:05			full
+240125_new_exome_sample8	UC	DQB1	DQB1*05:01	DQB1*03:01			full
+240125_new_exome_sample8	UC	DPA1	DPA1*01:03				one_allele
+240125_new_exome_sample8	UC	DPB1	DPB1*04:02	DPB1*03:01			full
+240125_new_exome_sample9	CD	A	A*24:03	A*25:01			full
+240125_new_exome_sample9	CD	B	B*15:17	B*18:04	B*15:17	B*18:25	candidate
+240125_new_exome_sample9	CD	C	C*07:01	C*12:03			full
+240125_new_exome_sample9	CD	DRB1	DRB1*04:01	DRB1*13:02			full
+240125_new_exome_sample9	CD	DQA1	DQA1*01:02				one_allele
+240125_new_exome_sample9	CD	DQB1	DQB1*06:04	DQB1*03:02	DQB1*06:04	DQB1*03:02	candidate
+240125_new_exome_sample9	CD	DPA1	DPA1*01:03	DPA1*02:02			full
+240125_new_exome_sample9	CD	DPB1	DPB1*02:01	DPB1*04:01			full
+barcode_13	UC	A	A*02:01				one_allele
+barcode_13	UC	B	B*15:01	B*18:01			full
+barcode_13	UC	C	C*07:01	C*03:03			full
+barcode_13	UC	DRB1	DRB1*11:04	DRB1*12:01			full
+barcode_13	UC	DQA1	DQA1*05:05				one_allele
+barcode_13	UC	DQB1	DQB1*03:01				one_allele
+barcode_13	UC	DPA1	DPA1*01:03				one_allele
+barcode_13	UC	DPB1	DPB1*04:01	DPB1*04:02			full
+barcode13	CD	A	A*11:01	A*02:01			full
+barcode13	CD	B	B*52:01	B*57:01			full
+barcode13	CD	C	C*12:02	C*06:02			full
+barcode13	CD	DRB1	DRB1*15:02	DRB1*07:01			full
+barcode13	CD	DQA1	DQA1*02:01	DQA1*01:03			full
+barcode13	CD	DQB1	DQB1*06:01	DQB1*03:03			full
+barcode13	CD	DPA1	DPA1*01:03				one_allele
+barcode13	CD	DPB1	DPB1*02:01	DPB1*03:01			full
+barcode_14	CD	A	A*01:01	A*02:01			full
+barcode_14	CD	B	B*07:02	B*08:01			full
+barcode_14	CD	C	C*07:01	C*07:02			full
+barcode_14	CD	DRB1	DRB1*15:01	DRB1*03:01			full
+barcode_14	CD	DQA1	DQA1*05:01	DQA1*01:02			full
+barcode_14	CD	DQB1	DQB1*06:02	DQB1*02:01			full
+barcode_14	CD	DPA1	DPA1*01:03	DPA1*02:01			full
+barcode_14	CD	DPB1	DPB1*04:01	DPB1*01:01			full
+barcode14	Control	A	A*26:01	A*02:01			full
+barcode14	Control	B	B*56:01	B*13:02			full
+barcode14	Control	C	C*01:02	C*06:02			full
+barcode14	Control	DRB1	DRB1*07:01	DRB1*08:01			full
+barcode14	Control	DQA1	DQA1*02:01	DQA1*04:01			full
+barcode14	Control	DQB1	DQB1*02:02	DQB1*04:02			full
+barcode14	Control	DPA1	DPA1*01:03				one_allele
+barcode14	Control	DPB1	DPB1*02:01	DPB1*36:01			full
+barcode_15	UC	A	A*01:01	A*02:01			full
+barcode_15	UC	B	B*08:01	B*13:02			full
+barcode_15	UC	C	C*07:01	C*06:02			full
+barcode_15	UC	DRB1	DRB1*13:01	DRB1*03:01			full
+barcode_15	UC	DQA1	DQA1*01:03	DQA1*05:01			full
+barcode_15	UC	DQB1	DQB1*06:03	DQB1*02:01			full
+barcode_15	UC	DPA1	DPA1*01:03				one_allele
+barcode_15	UC	DPB1	DPB1*04:01				one_allele
+barcode15	CD	A	A*02:01				one_allele
+barcode15	CD	B	B*08:01	B*57:01			full
+barcode15	CD	C	C*07:01	C*06:02			full
+barcode15	CD	DRB1	DRB1*07:01	DRB1*03:01			full
+barcode15	CD	DQA1	DQA1*02:01	DQA1*05:01			full
+barcode15	CD	DQB1	DQB1*03:03	DQB1*02:01			full
+barcode15	CD	DPA1	DPA1*01:03	DPA1*02:01			full
+barcode15	CD	DPB1	DPB1*04:01	DPB1*01:01			full
+barcode_16	CD	A	A*03:89				one_allele
+barcode_16	CD	B	B*55:35				one_allele
+barcode_16	CD	C	C*06:02				one_allele
+barcode_16	CD	DRB1	DRB1*03:07	DRB1*11:04			full
+barcode_16	CD	DQA1	DQA1*05:05				one_allele
+barcode_16	CD	DQB1					not_typed
+barcode_16	CD	DPA1	DPA1*02:01				one_allele
+barcode_16	CD	DPB1	DPB1*03:01				one_allele
+barcode16	CD	A	A*01:01	A*23:01			full
+barcode16	CD	B	B*35:03	B*35:02			full
+barcode16	CD	C	C*06:02	C*04:01			full
+barcode16	CD	DRB1	DRB1*11:04	DRB1*08:01			full
+barcode16	CD	DQA1	DQA1*04:01	DQA1*05:05			full
+barcode16	CD	DQB1	DQB1*03:01	DQB1*04:02			full
+barcode16	CD	DPA1	DPA1*01:03				one_allele
+barcode16	CD	DPB1	DPB1*04:01	DPB1*104:01			full
+barcode_1	Control	A	A*03:01	A*01:01			full
+barcode_1	Control	B	B*07:02	B*27:14			full
+barcode_1	Control	C	C*01:02	C*03:04			full
+barcode_1	Control	DRB1	DRB1*13:01	DRB1*01:01			full
+barcode_1	Control	DQA1	DQA1*01:01	DQA1*03:02			full
+barcode_1	Control	DQB1	DQB1*05:01	DQB1*03:03			full
+barcode_1	Control	DPA1	DPA1*02:01	DPA1*01:03			full
+barcode_1	Control	DPB1	DPB1*03:01	DPB1*14:01			full
+barcode1	Control	A	A*03:01	A*11:01			full
+barcode1	Control	B	B*07:02				one_allele
+barcode1	Control	C	C*07:02				one_allele
+barcode1	Control	DRB1	DRB1*15:01	DRB1*01:01			full
+barcode1	Control	DQA1	DQA1*01:02	DQA1*01:01			full
+barcode1	Control	DQB1	DQB1*06:02	DQB1*05:01			full
+barcode1	Control	DPA1	DPA1*01:03				one_allele
+barcode1	Control	DPB1	DPB1*04:01	DPB1*02:01			full
+barcode_2	CD	A	A*30:01	A*02:01			full
+barcode_2	CD	B	B*15:01	B*13:02			full
+barcode_2	CD	C	C*06:02	C*03:04			full
+barcode_2	CD	DRB1	DRB1*07:01	DRB1*13:01			full
+barcode_2	CD	DQA1	DQA1*02:01	DQA1*01:03			full
+barcode_2	CD	DQB1	DQB1*06:03	DQB1*02:02			full
+barcode_2	CD	DPA1	DPA1*01:03				one_allele
+barcode_2	CD	DPB1	DPB1*04:01	DPB1*23:01			full
+barcode2	CD	A	A*03:01	A*02:01			full
+barcode2	CD	B	B*07:02	B*27:05			full
+barcode2	CD	C	C*07:02	C*02:02			full
+barcode2	CD	DRB1	DRB1*15:01	DRB1*09:01			full
+barcode2	CD	DQA1	DQA1*01:02	DQA1*03:02			full
+barcode2	CD	DQB1	DQB1*06:02	DQB1*03:03			full
+barcode2	CD	DPA1	DPA1*02:01	DPA1*01:03			full
+barcode2	CD	DPB1	DPB1*04:01	DPB1*10:01			full
+barcode_3	UC	A	A*24:02	A*68:01			full
+barcode_3	UC	B	B*51:01	B*18:01			full
+barcode_3	UC	C	C*12:03	C*15:02			full
+barcode_3	UC	DRB1	DRB1*15:01	DRB1*11:03			full
+barcode_3	UC	DQA1	DQA1*05:05	DQA1*01:02			full
+barcode_3	UC	DQB1	DQB1*06:02	DQB1*03:01			full
+barcode_3	UC	DPA1	DPA1*01:03				one_allele
+barcode_3	UC	DPB1	DPB1*04:02	DPB1*23:01			full
+barcode3	CD	A	A*30:01	A*68:24			full
+barcode3	CD	B	B*13:02				one_allele
+barcode3	CD	C	C*06:02				one_allele
+barcode3	CD	DRB1	DRB1*07:01	DRB1*15:01			full
+barcode3	CD	DQA1	DQA1*02:01				one_allele
+barcode3	CD	DQB1	DQB1*02:02				one_allele
+barcode3	CD	DPA1	DPA1*02:01	DPA1*01:03			full
+barcode3	CD	DPB1	DPB1*04:02	DPB1*17:01			full
+barcode_41	CD	A	A*24:02	A*24:20	A*24:02	A*24:132N	candidate
+barcode_41	CD	B	B*41:01	B*35:63	B*41:02	B*35:63	candidate
+barcode_41	CD	C	C*04:161	C*04:01			full
+barcode_41	CD	DRB1	DRB1*13:03				one_allele
+barcode_41	CD	DQA1					not_typed
+barcode_41	CD	DQB1	DQB1*03:10				one_allele
+barcode_41	CD	DPA1	DPA1*01:03				one_allele
+barcode_41	CD	DPB1	DPB1*104:01				one_allele
+barcode41	UC	A	A*03:01	A*02:01			full
+barcode41	UC	B	B*56:01	B*51:01			full
+barcode41	UC	C	C*01:02	C*04:01			full
+barcode41	UC	DRB1	DRB1*15:01	DRB1*08:01			full
+barcode41	UC	DQA1	DQA1*04:01	DQA1*01:02			full
+barcode41	UC	DQB1	DQB1*06:02	DQB1*04:02			full
+barcode41	UC	DPA1	DPA1*02:01	DPA1*01:03			full
+barcode41	UC	DPB1	DPB1*03:01	DPB1*13:01			full
+barcode_42	UC	A	A*23:01	A*11:01			full
+barcode_42	UC	B	B*50:01	B*55:01			full
+barcode_42	UC	C	C*03:03	C*06:04			full
+barcode_42	UC	DRB1	DRB1*01:01	DRB1*03:01			full
+barcode_42	UC	DQA1	DQA1*05:01	DQA1*01:01			full
+barcode_42	UC	DQB1	DQB1*05:01	DQB1*02:01			full
+barcode_42	UC	DPA1	DPA1*02:01	DPA1*01:03			full
+barcode_42	UC	DPB1	DPB1*04:01				one_allele
+barcode42	CD	A	A*02:01	A*26:01			full
+barcode42	CD	B	B*27:05	B*57:01			full
+barcode42	CD	C	C*07:01	C*02:02			full
+barcode42	CD	DRB1	DRB1*01:01	DRB1*07:01			full
+barcode42	CD	DQA1	DQA1*02:01	DQA1*01:01			full
+barcode42	CD	DQB1	DQB1*05:01	DQB1*03:03			full
+barcode42	CD	DPA1	DPA1*02:01	DPA1*01:03			full
+barcode42	CD	DPB1	DPB1*04:01	DPB1*17:01			full
+barcode_43	CD	A	A*01:01	A*68:01			full
+barcode_43	CD	B	B*44:02	B*57:01			full
+barcode_43	CD	C	C*07:04	C*06:02			full
+barcode_43	CD	DRB1	DRB1*07:01	DRB1*11:01			full
+barcode_43	CD	DQA1	DQA1*02:01	DQA1*05:05			full
+barcode_43	CD	DQB1	DQB1*03:01	DQB1*03:03			full
+barcode_43	CD	DPA1	DPA1*01:03				one_allele
+barcode_43	CD	DPB1	DPB1*02:01	DPB1*04:02			full
+barcode43	UC	A	A*03:01	A*02:01			full
+barcode43	UC	B	B*07:02	B*39:01			full
+barcode43	UC	C	C*07:02	C*03:04			full
+barcode43	UC	DRB1	DRB1*15:01	DRB1*04:04			full
+barcode43	UC	DQA1	DQA1*01:02	DQA1*03:01			full
+barcode43	UC	DQB1	DQB1*06:02	DQB1*03:02			full
+barcode43	UC	DPA1	DPA1*01:03				one_allele
+barcode43	UC	DPB1	DPB1*02:01	DPB1*04:01			full
+barcode_44	CD	A					not_typed
+barcode_44	CD	B					not_typed
+barcode_44	CD	C					not_typed
+barcode_44	CD	DRB1					not_typed
+barcode_44	CD	DQA1	DQA1*01:02				one_allele
+barcode_44	CD	DQB1					not_typed
+barcode_44	CD	DPA1	DPA1*01:03	DPA1*02:02			full
+barcode_44	CD	DPB1	DPB1*04:01				one_allele
+barcode44	UC	A	A*03:01	A*02:01			full
+barcode44	UC	B	B*07:02	B*35:01			full
+barcode44	UC	C	C*07:02	C*04:01			full
+barcode44	UC	DRB1	DRB1*15:01	DRB1*01:01			full
+barcode44	UC	DQA1	DQA1*01:02	DQA1*01:01			full
+barcode44	UC	DQB1	DQB1*06:02	DQB1*05:01			full
+barcode44	UC	DPA1	DPA1*01:03				one_allele
+barcode44	UC	DPB1	DPB1*04:02	DPB1*04:01			full
+barcode_45	UC	A	A*69:01	A*26:01			full
+barcode_45	UC	B	B*15:24	B*55:01			full
+barcode_45	UC	C	C*03:03				one_allele
+barcode_45	UC	DRB1	DRB1*15:01				one_allele
+barcode_45	UC	DQA1	DQA1*01:02				one_allele
+barcode_45	UC	DQB1	DQB1*06:02	DQB1*06:03			full
+barcode_45	UC	DPA1	DPA1*01:03				one_allele
+barcode_45	UC	DPB1	DPB1*04:01	DPB1*02:01			full
+barcode45	Control	A	A*29:01	A*26:01			full
+barcode45	Control	B	B*40:02	B*15:01			full
+barcode45	Control	C	C*03:03	C*03:04			full
+barcode45	Control	DRB1	DRB1*15:01	DRB1*04:01			full
+barcode45	Control	DQA1	DQA1*01:02	DQA1*01:02			full
+barcode45	Control	DQB1	DQB1*06:02	DQB1*03:02			full
+barcode45	Control	DPA1	DPA1*01:03				one_allele
+barcode45	Control	DPB1	DPB1*04:01	DPB1*03:01			full
+barcode_46	UC	A	A*32:01	A*02:07			full
+barcode_46	UC	B	B*50:01	B*46:01			full
+barcode_46	UC	C	C*01:02	C*06:02			full
+barcode_46	UC	DRB1	DRB1*07:01	DRB1*08:03			full
+barcode_46	UC	DQA1	DQA1*02:01	DQA1*01:03			full
+barcode_46	UC	DQB1	DQB1*06:01	DQB1*02:02			full
+barcode_46	UC	DPA1	DPA1*01:03				one_allele
+barcode_46	UC	DPB1	DPB1*04:01	DPB1*104:01			full
+barcode46	UC	A	A*03:01	A*01:01			full
+barcode46	UC	B	B*57:01	B*44:27			full
+barcode46	UC	C	C*07:04	C*06:02			full
+barcode46	UC	DRB1	DRB1*16:01	DRB1*07:01			full
+barcode46	UC	DQA1	DQA1*02:01	DQA1*01:02			full
+barcode46	UC	DQB1	DQB1*05:02	DQB1*03:03			full
+barcode46	UC	DPA1	DPA1*01:03				one_allele
+barcode46	UC	DPB1	DPB1*04:01	DPB1*02:01			full
+barcode_47	CD	A	A*26:01	A*26:04	A*26:08	A*26:50	candidate
+barcode_47	CD	B					not_typed
+barcode_47	CD	C					not_typed
+barcode_47	CD	DRB1	DRB1*15:01				one_allele
+barcode_47	CD	DQA1	DQA1*02:01				one_allele
+barcode_47	CD	DQB1	DQB1*03:96	DQB1*03:23			full
+barcode_47	CD	DPA1	DPA1*01:03				one_allele
+barcode_47	CD	DPB1	DPB1*04:01				one_allele
+barcode47	UC	A	A*03:01	A*66:01			full
+barcode47	UC	B	B*07:02	B*41:02			full
+barcode47	UC	C	C*07:02	C*17:03			full
+barcode47	UC	DRB1	DRB1*15:01	DRB1*13:03			full
+barcode47	UC	DQA1	DQA1*05:05	DQA1*01:02			full
+barcode47	UC	DQB1	DQB1*06:02	DQB1*03:01			full
+barcode47	UC	DPA1	DPA1*01:03				one_allele
+barcode47	UC	DPB1	DPB1*04:01	DPB1*04:02			full
+barcode_48	CD	A	A*03:01	A*01:01			full
+barcode_48	CD	B	B*15:01	B*52:01			full
+barcode_48	CD	C	C*03:03	C*12:02			full
+barcode_48	CD	DRB1	DRB1*04:01	DRB1*15:02			full
+barcode_48	CD	DQA1	DQA1*01:03	DQA1*03:01			full
+barcode_48	CD	DQB1	DQB1*06:01	DQB1*03:02			full
+barcode_48	CD	DPA1	DPA1*01:03				one_allele
+barcode_48	CD	DPB1	DPB1*02:01				one_allele
+barcode48	CD	A	A*11:01	A*02:01			full
+barcode48	CD	B	B*07:02	B*15:01			full
+barcode48	CD	C	C*07:02	C*04:01			full
+barcode48	CD	DRB1	DRB1*13:01	DRB1*08:01			full
+barcode48	CD	DQA1	DQA1*04:01	DQA1*01:03			full
+barcode48	CD	DQB1	DQB1*06:03	DQB1*04:02			full
+barcode48	CD	DPA1	DPA1*01:03				one_allele
+barcode48	CD	DPB1	DPB1*04:01	DPB1*03:01			full
+barcode_4	UC	A	A*11:01	A*02:01			full
+barcode_4	UC	B	B*40:01	B*44:02			full
+barcode_4	UC	C	C*05:01	C*03:04			full
+barcode_4	UC	DRB1	DRB1*04:08	DRB1*04:01			full
+barcode_4	UC	DQA1	DQA1*03:03	DQA1*03:01			full
+barcode_4	UC	DQB1	DQB1*03:01	DQB1*03:04			full
+barcode_4	UC	DPA1	DPA1*01:03	DPA1*01:04			full
+barcode_4	UC	DPB1	DPB1*04:01	DPB1*15:01			full
+barcode4	UC	A	A*24:02	A*02:05			full
+barcode4	UC	B	B*35:02	B*52:01			full
+barcode4	UC	C	C*12:02	C*04:01			full
+barcode4	UC	DRB1	DRB1*11:04	DRB1*03:01			full
+barcode4	UC	DQA1	DQA1*01:02	DQA1*05:05	DQA1*01:02	DQA1*05:05	candidate
+barcode4	UC	DQB1	DQB1*02:01	DQB1*03:01			full
+barcode4	UC	DPA1	DPA1*01:03				one_allele
+barcode4	UC	DPB1	DPB1*04:01				one_allele
+barcode_57	CD	A	A*01:01	A*24:104	A*01:37	A*24:104	candidate
+barcode_57	CD	B					not_typed
+barcode_57	CD	C	C*12:03	C*12:28			full
+barcode_57	CD	DRB1	DRB1*07:01	DRB1*11:01			full
+barcode_57	CD	DQA1	DQA1*02:01	DQA1*05:05			full
+barcode_57	CD	DQB1	DQB1*03:03	DQB1*03:10			full
+barcode_57	CD	DPA1	DPA1*01:03				one_allele
+barcode_57	CD	DPB1	DPB1*105:01				one_allele
+barcode57	UC	A	A*24:02	A*66:01			full
+barcode57	UC	B	B*41:02	B*15:01			full
+barcode57	UC	C	C*03:04	C*17:03			full
+barcode57	UC	DRB1	DRB1*03:01	DRB1*13:03			full
+barcode57	UC	DQA1	DQA1*05:05	DQA1*05:01			full
+barcode57	UC	DQB1	DQB1*02:01	DQB1*03:01			full
+barcode57	UC	DPA1	DPA1*02:01	DPA1*01:03			full
+barcode57	UC	DPB1	DPB1*06:01	DPB1*26:01			full
+barcode_58	Control	A	A*24:02	A*33:01			full
+barcode_58	Control	B	B*14:02	B*07:02			full
+barcode_58	Control	C	C*08:02	C*07:02			full
+barcode_58	Control	DRB1	DRB1*13:02	DRB1*01:02			full
+barcode_58	Control	DQA1	DQA1*01:01	DQA1*03:03			full
+barcode_58	Control	DQB1	DQB1*05:01	DQB1*03:01			full
+barcode_58	Control	DPA1	DPA1*01:03				one_allele
+barcode_58	Control	DPB1	DPB1*04:01				one_allele
+barcode58	CD	A	A*02:01	A*24:28			full
+barcode58	CD	B	B*35:01				one_allele
+barcode58	CD	C	C*04:01				one_allele
+barcode58	CD	DRB1	DRB1*04:03	DRB1*01:01	DRB1*04:03	DRB1*01:02	candidate
+barcode58	CD	DQA1	DQA1*01:01	DQA1*02:01			full
+barcode58	CD	DQB1	DQB1*03:02	DQB1*05:01			full
+barcode58	CD	DPA1	DPA1*01:03				one_allele
+barcode58	CD	DPB1	DPB1*04:01				one_allele
+barcode_59	UC	A					not_typed
+barcode_59	UC	B	B*56:33				one_allele
+barcode_59	UC	C	C*17:01	C*17:03			full
+barcode_59	UC	DRB1	DRB1*11:91	DRB1*13:12	DRB1*11:91	DRB1*11:01	candidate
+barcode_59	UC	DQA1	DQA1*01:01	DQA1*01:03	DQA1*01:01	DQA1*01:03	candidate
+barcode_59	UC	DQB1	DQB1*03:94	DQB1*03:01			full
+barcode_59	UC	DPA1	DPA1*01:03				one_allele
+barcode_59	UC	DPB1	DPB1*104:01				one_allele
+barcode59	UC	A	A*02:455	A*02:05	A*02:43N	A*02:05	candidate
+barcode59	UC	B	B*35:03	B*50:01			full
+barcode59	UC	C	C*04:01	C*06:02			full
+barcode59	UC	DRB1	DRB1*15:01	DRB1*08:01			full
+barcode59	UC	DQA1	DQA1*01:05	DQA1*01:02	DQA1*01:01	DQA1*01:02	candidate
+barcode59	UC	DQB1	DQB1*06:02	DQB1*05:45	DQB1*06:02	DQB1*05:01	candidate
+barcode59	UC	DPA1	DPA1*01:03				one_allele
+barcode59	UC	DPB1	DPB1*04:02	DPB1*04:01			full
+barcode_60	UC	A	A*24:02	A*24:02			full
+barcode_60	UC	B	B*35:02	B*50:01			full
+barcode_60	UC	C	C*04:01	C*06:02			full
+barcode_60	UC	DRB1	DRB1*07:01	DRB1*03:01			full
+barcode_60	UC	DQA1	DQA1*02:01				one_allele
+barcode_60	UC	DQB1	DQB1*02:01				one_allele
+barcode_60	UC	DPA1	DPA1*01:03				one_allele
+barcode_60	UC	DPB1	DPB1*04:01	DPB1*04:02			full
+barcode60	UC	A	A*03:01	A*11:01			full
+barcode60	UC	B	B*18:01	B*44:02			full
+barcode60	UC	C	C*12:03	C*05:01			full
+barcode60	UC	DRB1	DRB1*15:01	DRB1*12:01			full
+barcode60	UC	DQA1	DQA1*05:05	DQA1*01:02			full
+barcode60	UC	DQB1	DQB1*06:02	DQB1*03:01			full
+barcode60	UC	DPA1	DPA1*01:03				one_allele
+barcode60	UC	DPB1	DPB1*04:01				one_allele
+barcode_61	Control	A	A*32:01	A*11:01			full
+barcode_61	Control	B	B*15:01	B*49:01			full
+barcode_61	Control	C	C*03:04	C*07:01			full
+barcode_61	Control	DRB1	DRB1*01:01	DRB1*11:04			full
+barcode_61	Control	DQA1	DQA1*05:05	DQA1*01:01			full
+barcode_61	Control	DQB1	DQB1*05:01	DQB1*03:01			full
+barcode_61	Control	DPA1	DPA1*01:03				one_allele
+barcode_61	Control	DPB1	DPB1*04:01				one_allele
+barcode61	CD	A	A*02:01	A*68:01			full
+barcode61	CD	B	B*07:02	B*15:01			full
+barcode61	CD	C	C*07:02	C*03:03			full
+barcode61	CD	DRB1	DRB1*07:01	DRB1*13:01			full
+barcode61	CD	DQA1	DQA1*02:01	DQA1*01:03			full
+barcode61	CD	DQB1	DQB1*02:02	DQB1*06:03			full
+barcode61	CD	DPA1	DPA1*01:03				one_allele
+barcode61	CD	DPB1	DPB1*04:01	DPB1*191:01			full
+barcode_62	Control	A					not_typed
+barcode_62	Control	B					not_typed
+barcode_62	Control	C					not_typed
+barcode_62	Control	DRB1	DRB1*01:01	DRB1*13:02			full
+barcode_62	Control	DQA1					not_typed
+barcode_62	Control	DQB1	DQB1*05:01				one_allele
+barcode_62	Control	DPA1					not_typed
+barcode_62	Control	DPB1					not_typed
+barcode62	CD	A	A*02:01				one_allele
+barcode62	CD	B	B*07:02	B*15:01			full
+barcode62	CD	C	C*07:02	C*03:03			full
+barcode62	CD	DRB1	DRB1*13:01	DRB1*07:01			full
+barcode62	CD	DQA1	DQA1*02:01	DQA1*01:03			full
+barcode62	CD	DQB1	DQB1*06:03	DQB1*02:02			full
+barcode62	CD	DPA1	DPA1*01:03				one_allele
+barcode62	CD	DPB1	DPB1*04:01	DPB1*191:01			full
+barcode_63	Control	A	A*03:01	A*11:01			full
+barcode_63	Control	B	B*15:01	B*18:01			full
+barcode_63	Control	C	C*07:01	C*03:04			full
+barcode_63	Control	DRB1	DRB1*01:01				one_allele
+barcode_63	Control	DQA1	DQA1*01:01				one_allele
+barcode_63	Control	DQB1	DQB1*05:01				one_allele
+barcode_63	Control	DPA1	DPA1*01:03				one_allele
+barcode_63	Control	DPB1	DPB1*02:01	DPB1*04:01			full
+barcode63	CD	A	A*02:01	A*68:02			full
+barcode63	CD	B	B*14:02	B*13:02			full
+barcode63	CD	C	C*06:02	C*08:02			full
+barcode63	CD	DRB1	DRB1*07:01	DRB1*13:03			full
+barcode63	CD	DQA1	DQA1*02:01	DQA1*05:05			full
+barcode63	CD	DQB1	DQB1*02:02	DQB1*03:01			full
+barcode63	CD	DPA1	DPA1*01:03				one_allele
+barcode63	CD	DPB1	DPB1*02:01	DPB1*03:01			full
+barcode_64	Control	A	A*03:01	A*11:01			full
+barcode_64	Control	B	B*15:01	B*18:01			full
+barcode_64	Control	C	C*03:04	C*07:01			full
+barcode_64	Control	DRB1	DRB1*01:01				one_allele
+barcode_64	Control	DQA1	DQA1*01:01				one_allele
+barcode_64	Control	DQB1	DQB1*05:01				one_allele
+barcode_64	Control	DPA1	DPA1*01:03				one_allele
+barcode_64	Control	DPB1	DPB1*04:01	DPB1*02:01			full
+barcode64	CD	A	A*01:01				one_allele
+barcode64	CD	B	B*08:01	B*57:01			full
+barcode64	CD	C	C*07:01	C*06:02			full
+barcode64	CD	DRB1	DRB1*03:01	DRB1*04:02			full
+barcode64	CD	DQA1	DQA1*05:01	DQA1*03:01			full
+barcode64	CD	DQB1	DQB1*02:01	DQB1*03:02			full
+barcode64	CD	DPA1	DPA1*01:03				one_allele
+barcode64	CD	DPB1	DPB1*04:01				one_allele
+barcode_65	UC	A	A*02:11	A*11:01			full
+barcode_65	UC	B	B*52:01	B*35:01			full
+barcode_65	UC	C	C*04:01	C*12:02			full
+barcode_65	UC	DRB1	DRB1*15:02	DRB1*01:01			full
+barcode_65	UC	DQA1	DQA1*01:01	DQA1*01:03			full
+barcode_65	UC	DQB1	DQB1*05:03	DQB1*05:01			full
+barcode_65	UC	DPA1	DPA1*01:03				one_allele
+barcode_65	UC	DPB1	DPB1*02:01	DPB1*04:01			full
+barcode65	UC	A	A*03:01	A*24:02			full
+barcode65	UC	B	B*39:01	B*07:02			full
+barcode65	UC	C	C*07:02				one_allele
+barcode65	UC	DRB1	DRB1*08:01	DRB1*04:03			full
+barcode65	UC	DQA1	DQA1*04:01				one_allele
+barcode65	UC	DQB1	DQB1*03:02	DQB1*04:02			full
+barcode65	UC	DPA1	DPA1*01:03				one_allele
+barcode65	UC	DPB1	DPB1*04:02	DPB1*02:01			full
+barcode_66	CD	A	A*01:13	A*03:56	A*01:28	A*03:56	candidate
+barcode_66	CD	B	B*58:36				one_allele
+barcode_66	CD	C	C*06:02				one_allele
+barcode_66	CD	DRB1	DRB1*07:01				one_allele
+barcode_66	CD	DQA1	DQA1*02:01				one_allele
+barcode_66	CD	DQB1	DQB1*05:01				one_allele
+barcode_66	CD	DPA1	DPA1*01:03	DPA1*02:01			full
+barcode_66	CD	DPB1	DPB1*13:01	DPB1*04:01			full
+barcode66	UC	A	A*03:01	A*26:01			full
+barcode66	UC	B	B*07:02	B*56:01			full
+barcode66	UC	C	C*07:02	C*01:02			full
+barcode66	UC	DRB1	DRB1*15:01	DRB1*08:01			full
+barcode66	UC	DQA1	DQA1*04:01	DQA1*01:02			full
+barcode66	UC	DQB1	DQB1*06:02	DQB1*04:02			full
+barcode66	UC	DPA1	DPA1*01:03				one_allele
+barcode66	UC	DPB1	DPB1*04:01				one_allele
+barcode_67	UC	A	A*23:01	A*02:01			full
+barcode_67	UC	B	B*56:01	B*44:27			full
+barcode_67	UC	C	C*01:02	C*07:04			full
+barcode_67	UC	DRB1	DRB1*14:54	DRB1*12:01			full
+barcode_67	UC	DQA1	DQA1*05:05	DQA1*01:04			full
+barcode_67	UC	DQB1	DQB1*05:03	DQB1*03:01			full
+barcode_67	UC	DPA1	DPA1*01:03				one_allele
+barcode_67	UC	DPB1	DPB1*04:01				one_allele
+barcode67	CD	A	A*29:02	A*33:03			full
+barcode67	CD	B	B*58:01	B*44:03			full
+barcode67	CD	C	C*16:01	C*03:02			full
+barcode67	CD	DRB1	DRB1*13:02	DRB1*14:54			full
+barcode67	CD	DQA1	DQA1*01:02	DQA1*01:04			full
+barcode67	CD	DQB1	DQB1*05:03	DQB1*06:09			full
+barcode67	CD	DPA1	DPA1*01:03				one_allele
+barcode67	CD	DPB1	DPB1*02:01	DPB1*06:01			full
+barcode_68	UC	A	A*02:01				one_allele
+barcode_68	UC	B	B*40:02	B*52:01			full
+barcode_68	UC	C	C*03:04	C*12:02			full
+barcode_68	UC	DRB1	DRB1*15:01	DRB1*07:01			full
+barcode_68	UC	DQA1	DQA1*02:01	DQA1*01:02			full
+barcode_68	UC	DQB1	DQB1*02:02	DQB1*06:02			full
+barcode_68	UC	DPA1	DPA1*01:03				one_allele
+barcode_68	UC	DPB1	DPB1*04:01				one_allele
+barcode68	CD	A	A*24:02	A*26:01			full
+barcode68	CD	B	B*35:01	B*52:01			full
+barcode68	CD	C	C*12:02	C*04:01			full
+barcode68	CD	DRB1	DRB1*15:02	DRB1*04:02			full
+barcode68	CD	DQA1	DQA1*01:03				one_allele
+barcode68	CD	DQB1	DQB1*06:01	DQB1*03:02			full
+barcode68	CD	DPA1	DPA1*01:03				one_allele
+barcode68	CD	DPB1	DPB1*04:01				one_allele
+barcode_69	CD	A	A*01:01	A*26:01			full
+barcode_69	CD	B	B*56:01	B*49:01			full
+barcode_69	CD	C	C*07:01	C*01:02			full
+barcode_69	CD	DRB1	DRB1*16:02	DRB1*07:01			full
+barcode_69	CD	DQA1	DQA1*02:01	DQA1*01:02			full
+barcode_69	CD	DQB1	DQB1*05:02	DQB1*02:02			full
+barcode_69	CD	DPA1	DPA1*02:01	DPA1*01:03			full
+barcode_69	CD	DPB1	DPB1*03:01	DPB1*17:01			full
+barcode69	CD	A	A*03:01	A*01:01			full
+barcode69	CD	B	B*07:02	B*45:01			full
+barcode69	CD	C	C*07:02	C*06:02			full
+barcode69	CD	DRB1	DRB1*16:01	DRB1*07:01			full
+barcode69	CD	DQA1	DQA1*02:01	DQA1*01:02			full
+barcode69	CD	DQB1	DQB1*02:02	DQB1*05:02			full
+barcode69	CD	DPA1	DPA1*01:03				one_allele
+barcode69	CD	DPB1	DPB1*04:02	DPB1*04:01			full
+barcode_70	CD	A	A*01:01				one_allele
+barcode_70	CD	B	B*08:01	B*44:03			full
+barcode_70	CD	C	C*07:01	C*04:01			full
+barcode_70	CD	DRB1	DRB1*03:01	DRB1*07:01			full
+barcode_70	CD	DQA1	DQA1*02:01	DQA1*05:01			full
+barcode_70	CD	DQB1	DQB1*02:02	DQB1*02:01			full
+barcode_70	CD	DPA1	DPA1*01:03	DPA1*02:01			full
+barcode_70	CD	DPB1	DPB1*04:01	DPB1*01:01			full
+barcode70	CD	A	A*26:01	A*02:01			full
+barcode70	CD	B	B*40:01	B*38:01			full
+barcode70	CD	C	C*12:03	C*03:04			full
+barcode70	CD	DRB1	DRB1*13:01	DRB1*04:04			full
+barcode70	CD	DQA1	DQA1*01:03				one_allele
+barcode70	CD	DQB1	DQB1*06:03	DQB1*03:02			full
+barcode70	CD	DPA1	DPA1*01:03	DPA1*02:02			full
+barcode70	CD	DPB1	DPB1*05:01	DPB1*06:01			full
+barcode_71	CD	A	A*24:02	A*23:01			full
+barcode_71	CD	B	B*39:01	B*07:02			full
+barcode_71	CD	C	C*07:02	C*12:03			full
+barcode_71	CD	DRB1	DRB1*04:04	DRB1*07:01			full
+barcode_71	CD	DQA1	DQA1*02:01	DQA1*03:01			full
+barcode_71	CD	DQB1	DQB1*03:02	DQB1*02:02			full
+barcode_71	CD	DPA1	DPA1*01:03	DPA1*02:01			full
+barcode_71	CD	DPB1	DPB1*02:01	DPB1*01:01			full
+barcode71	CD	A	A*11:01	A*24:02			full
+barcode71	CD	B	B*15:01	B*35:08			full
+barcode71	CD	C	C*04:01	C*03:03			full
+barcode71	CD	DRB1	DRB1*01:01	DRB1*07:01			full
+barcode71	CD	DQA1	DQA1*02:01	DQA1*01:01			full
+barcode71	CD	DQB1	DQB1*05:01	DQB1*02:02			full
+barcode71	CD	DPA1	DPA1*01:03				one_allele
+barcode71	CD	DPB1	DPB1*04:01				one_allele
+barcode_72	CD	A	A*02:01	A*68:01			full
+barcode_72	CD	B	B*15:01	B*13:02			full
+barcode_72	CD	C	C*03:04	C*06:02			full
+barcode_72	CD	DRB1	DRB1*01:01	DRB1*07:01			full
+barcode_72	CD	DQA1	DQA1*02:01	DQA1*01:01			full
+barcode_72	CD	DQB1	DQB1*05:01	DQB1*02:02			full
+barcode_72	CD	DPA1	DPA1*01:03				one_allele
+barcode_72	CD	DPB1	DPB1*04:01				one_allele
+barcode72	CD	A	A*33:01	A*02:01			full
+barcode72	CD	B	B*14:02	B*51:01			full
+barcode72	CD	C	C*08:02	C*04:01			full
+barcode72	CD	DRB1	DRB1*04:07	DRB1*13:03			full
+barcode72	CD	DQA1	DQA1*05:05	DQA1*02:01			full
+barcode72	CD	DQB1	DQB1*03:01				one_allele
+barcode72	CD	DPA1	DPA1*01:03				one_allele
+barcode72	CD	DPB1	DPB1*02:01	DPB1*04:02			full
+barcode_73	UC	A	A*03:01	A*25:01			full
+barcode_73	UC	B	B*15:01	B*18:01			full
+barcode_73	UC	C	C*07:01	C*03:03			full
+barcode_73	UC	DRB1	DRB1*11:03	DRB1*11:01			full
+barcode_73	UC	DQA1	DQA1*05:05				one_allele
+barcode_73	UC	DQB1	DQB1*03:01				one_allele
+barcode_73	UC	DPA1	DPA1*01:03				one_allele
+barcode_73	UC	DPB1	DPB1*02:01	DPB1*04:02			full
+barcode73	CD	A	A*03:01	A*02:01			full
+barcode73	CD	B	B*38:01	B*27:05			full
+barcode73	CD	C	C*01:02	C*12:03			full
+barcode73	CD	DRB1	DRB1*13:01	DRB1*11:01			full
+barcode73	CD	DQA1	DQA1*05:05	DQA1*01:03			full
+barcode73	CD	DQB1	DQB1*06:03	DQB1*03:01			full
+barcode73	CD	DPA1	DPA1*01:03				one_allele
+barcode73	CD	DPB1	DPB1*04:01	DPB1*03:01			full
+barcode_74	UC	A	A*02:01	A*25:01			full
+barcode_74	UC	B	B*15:01	B*18:01			full
+barcode_74	UC	C	C*12:03	C*03:03			full
+barcode_74	UC	DRB1	DRB1*01:01	DRB1*13:01			full
+barcode_74	UC	DQA1	DQA1*01:01	DQA1*01:03			full
+barcode_74	UC	DQB1	DQB1*05:01	DQB1*06:03			full
+barcode_74	UC	DPA1	DPA1*01:03				one_allele
+barcode_74	UC	DPB1	DPB1*04:01	DPB1*23:01			full
+barcode74	UC	A	A*03:01	A*24:02			full
+barcode74	UC	B	B*07:02	B*39:06			full
+barcode74	UC	C	C*07:02				one_allele
+barcode74	UC	DRB1	DRB1*15:01	DRB1*13:03			full
+barcode74	UC	DQA1	DQA1*05:05	DQA1*01:02			full
+barcode74	UC	DQB1	DQB1*06:02	DQB1*03:01			full
+barcode74	UC	DPA1	DPA1*01:03				one_allele
+barcode74	UC	DPB1	DPB1*04:01	DPB1*02:01			full
+barcode_75	CD	A	A*03:02	A*01:01			full
+barcode_75	CD	B	B*08:01				one_allele
+barcode_75	CD	C	C*07:01				one_allele
+barcode_75	CD	DRB1	DRB1*03:01				one_allele
+barcode_75	CD	DQA1	DQA1*05:01				one_allele
+barcode_75	CD	DQB1	DQB1*02:01				one_allele
+barcode_75	CD	DPA1	DPA1*01:03	DPA1*02:01			full
+barcode_75	CD	DPB1	DPB1*04:01	DPB1*01:01			full
+barcode75	CD	A	A*30:01	A*02:01			full
+barcode75	CD	B	B*07:02	B*13:02			full
+barcode75	CD	C	C*07:02	C*06:02			full
+barcode75	CD	DRB1	DRB1*13:01	DRB1*03:01			full
+barcode75	CD	DQA1	DQA1*05:01	DQA1*01:03			full
+barcode75	CD	DQB1	DQB1*06:03	DQB1*02:01			full
+barcode75	CD	DPA1	DPA1*01:03				one_allele
+barcode75	CD	DPB1	DPB1*04:01				one_allele
+barcode_76	CD	A	A*11:01	A*25:01			full
+barcode_76	CD	B	B*41:02	B*07:02			full
+barcode_76	CD	C	C*07:02	C*17:03			full
+barcode_76	CD	DRB1	DRB1*07:01	DRB1*13:03			full
+barcode_76	CD	DQA1	DQA1*02:01	DQA1*05:05			full
+barcode_76	CD	DQB1	DQB1*02:02	DQB1*03:01			full
+barcode_76	CD	DPA1	DPA1*01:03				one_allele
+barcode_76	CD	DPB1	DPB1*04:02	DPB1*104:01			full
+barcode76	UC	A	A*11:01	A*31:01			full
+barcode76	UC	B	B*07:02	B*49:01			full
+barcode76	UC	C	C*07:01	C*07:02			full
+barcode76	UC	DRB1	DRB1*15:01	DRB1*01:01			full
+barcode76	UC	DQA1	DQA1*01:02				one_allele
+barcode76	UC	DQB1	DQB1*06:02	DQB1*05:52			full
+barcode76	UC	DPA1	DPA1*01:03				one_allele
+barcode76	UC	DPB1	DPB1*02:01	DPB1*16:01			full
+barcode_77	UC	A	A*01:01	A*26:01			full
+barcode_77	UC	B	B*57:01	B*27:05			full
+barcode_77	UC	C	C*06:02	C*02:02			full
+barcode_77	UC	DRB1	DRB1*13:03	DRB1*12:01			full
+barcode_77	UC	DQA1	DQA1*05:05				one_allele
+barcode_77	UC	DQB1	DQB1*03:01				one_allele
+barcode_77	UC	DPA1	DPA1*02:01	DPA1*01:03			full
+barcode_77	UC	DPB1	DPB1*10:01	DPB1*04:01			full
+barcode77	CD	A	A*02:01				one_allele
+barcode77	CD	B	B*14:02	B*27:02			full
+barcode77	CD	C	C*02:02	C*08:02			full
+barcode77	CD	DRB1	DRB1*01:02	DRB1*11:01			full
+barcode77	CD	DQA1	DQA1*05:05	DQA1*01:01			full
+barcode77	CD	DQB1	DQB1*05:01	DQB1*03:01			full
+barcode77	CD	DPA1	DPA1*01:03				one_allele
+barcode77	CD	DPB1	DPB1*04:01				one_allele
+barcode_78	UC	A	A*30:01	A*24:02			full
+barcode_78	UC	B	B*15:01	B*35:02			full
+barcode_78	UC	C	C*03:03	C*04:01			full
+barcode_78	UC	DRB1	DRB1*13:01	DRB1*11:04			full
+barcode_78	UC	DQA1	DQA1*05:05	DQA1*01:03			full
+barcode_78	UC	DQB1	DQB1*06:03	DQB1*03:01			full
+barcode_78	UC	DPA1	DPA1*01:03				one_allele
+barcode_78	UC	DPB1	DPB1*04:01	DPB1*02:01			full
+barcode78	Control	A	A*24:02	A*24:81			full
+barcode78	Control	B	B*07:02	B*40:02			full
+barcode78	Control	C	C*07:02	C*02:02			full
+barcode78	Control	DRB1	DRB1*01:01	DRB1*11:01			full
+barcode78	Control	DQA1	DQA1*05:05	DQA1*01:01			full
+barcode78	Control	DQB1	DQB1*05:01				one_allele
+barcode78	Control	DPA1	DPA1*01:03				one_allele
+barcode78	Control	DPB1	DPB1*04:01	DPB1*04:02			full
+barcode_79	UC	A	A*03:01	A*02:01			full
+barcode_79	UC	B	B*45:01	B*35:01			full
+barcode_79	UC	C	C*16:01	C*04:01			full
+barcode_79	UC	DRB1	DRB1*15:01	DRB1*01:01			full
+barcode_79	UC	DQA1	DQA1*01:01	DQA1*01:02			full
+barcode_79	UC	DQB1	DQB1*05:01	DQB1*06:02			full
+barcode_79	UC	DPA1	DPA1*01:03				one_allele
+barcode_79	UC	DPB1	DPB1*04:02	DPB1*04:01			full
+barcode79	UC	A	A*24:02	A*02:01			full
+barcode79	UC	B	B*07:02	B*13:02			full
+barcode79	UC	C	C*07:02	C*06:02			full
+barcode79	UC	DRB1	DRB1*15:01	DRB1*07:01			full
+barcode79	UC	DQA1	DQA1*02:01	DQA1*01:02			full
+barcode79	UC	DQB1	DQB1*06:02	DQB1*02:02			full
+barcode79	UC	DPA1	DPA1*01:03				one_allele
+barcode79	UC	DPB1	DPB1*04:01	DPB1*03:01			full
+barcode80	CD	A	A*03:01	A*26:01			full
+barcode80	CD	B	B*44:02	B*38:01			full
+barcode80	CD	C	C*12:03	C*16:04			full
+barcode80	CD	DRB1	DRB1*13:01	DRB1*13:02			full
+barcode80	CD	DQA1	DQA1*01:02	DQA1*01:03			full
+barcode80	CD	DQB1	DQB1*06:03	DQB1*06:04	DQB1*06:39	DQB1*06:41	candidate
+barcode80	CD	DPA1	DPA1*01:03				one_allele
+barcode80	CD	DPB1	DPB1*02:01	DPB1*04:01			full
+barcode81	UC	A	A*11:01	A*02:11			full
+barcode81	UC	B	B*35:01	B*52:01			full
+barcode81	UC	C	C*12:02	C*04:01			full
+barcode81	UC	DRB1	DRB1*15:02	DRB1*01:01			full
+barcode81	UC	DQA1	DQA1*01:01	DQA1*01:03			full
+barcode81	UC	DQB1	DQB1*05:03	DQB1*05:01			full
+barcode81	UC	DPA1	DPA1*01:03				one_allele
+barcode81	UC	DPB1	DPB1*02:01	DPB1*04:01			full
+barcode82	CD	A	A*03:01	A*02:01			full
+barcode82	CD	B	B*07:02	B*83:01			full
+barcode82	CD	C	C*05:01	C*07:02			full
+barcode82	CD	DRB1	DRB1*15:01	DRB1*11:04			full
+barcode82	CD	DQA1	DQA1*05:05	DQA1*01:02			full
+barcode82	CD	DQB1	DQB1*06:02	DQB1*03:01			full
+barcode82	CD	DPA1	DPA1*01:03				one_allele
+barcode82	CD	DPB1	DPB1*04:01	DPB1*23:01			full
+barcode83	UC	A	A*03:01	A*11:01			full
+barcode83	UC	B	B*14:02	B*07:02			full
+barcode83	UC	C	C*07:02	C*08:02			full
+barcode83	UC	DRB1	DRB1*01:02	DRB1*16:01			full
+barcode83	UC	DQA1	DQA1*01:02	DQA1*01:01			full
+barcode83	UC	DQB1	DQB1*05:01	DQB1*05:02			full
+barcode83	UC	DPA1	DPA1*01:03				one_allele
+barcode83	UC	DPB1	DPB1*04:01	DPB1*03:01			full
+barcode84	CD	A	A*68:01				one_allele
+barcode84	CD	B	B*27:05	B*15:18			full
+barcode84	CD	C	C*07:04	C*01:02			full
+barcode84	CD	DRB1	DRB1*11:03	DRB1*14:54			full
+barcode84	CD	DQA1	DQA1*05:05	DQA1*01:04			full
+barcode84	CD	DQB1	DQB1*05:03	DQB1*03:01			full
+barcode84	CD	DPA1	DPA1*01:03				one_allele
+barcode84	CD	DPB1	DPB1*04:01				one_allele
+barcode85	CD	A	A*03:02	A*01:01			full
+barcode85	CD	B	B*08:01				one_allele
+barcode85	CD	C	C*07:01				one_allele
+barcode85	CD	DRB1	DRB1*03:01	DRB1*11:03			full
+barcode85	CD	DQA1	DQA1*05:01				one_allele
+barcode85	CD	DQB1	DQB1*05:45	DQB1*02:01	DQB1*05:01	DQB1*02:01	candidate
+barcode85	CD	DPA1	DPA1*01:03	DPA1*02:01			full
+barcode85	CD	DPB1	DPB1*01:01	DPB1*04:01			full
+barcode86	CD	A	A*11:01	A*02:01			full
+barcode86	CD	B	B*13:02	B*35:01			full
+barcode86	CD	C	C*06:02	C*04:01			full
+barcode86	CD	DRB1	DRB1*01:01	DRB1*07:01			full
+barcode86	CD	DQA1	DQA1*02:01	DQA1*01:01			full
+barcode86	CD	DQB1	DQB1*05:01	DQB1*02:02			full
+barcode86	CD	DPA1	DPA1*02:01				one_allele
+barcode86	CD	DPB1	DPB1*17:01	DPB1*10:01			full
+barcode87	UC	A	A*01:01	A*02:01			full
+barcode87	UC	B	B*56:01	B*57:01			full
+barcode87	UC	C	C*01:02	C*06:02			full
+barcode87	UC	DRB1	DRB1*14:54	DRB1*07:01			full
+barcode87	UC	DQA1	DQA1*02:01	DQA1*01:04			full
+barcode87	UC	DQB1	DQB1*05:03	DQB1*03:03			full
+barcode87	UC	DPA1	DPA1*02:01	DPA1*01:03			full
+barcode87	UC	DPB1	DPB1*04:01	DPB1*13:01			full
+barcode88	UC	A	A*03:01				one_allele
+barcode88	UC	B	B*39:01	B*35:35			full
+barcode88	UC	C	C*12:03	C*04:01			full
+barcode88	UC	DRB1	DRB1*14:54				one_allele
+barcode88	UC	DQA1	DQA1*01:01	DQA1*01:04			full
+barcode88	UC	DQB1	DQB1*05:03	DQB1*05:01			full
+barcode88	UC	DPA1	DPA1*01:03				one_allele
+barcode88	UC	DPB1	DPB1*02:01	DPB1*10:01	DPB1*02:01	DPB1*37:01	candidate
+barcode_89	CD	A	A*02:01				one_allele
+barcode_89	CD	B	B*27:05	B*07:02			full
+barcode_89	CD	C	C*07:02	C*02:02			full
+barcode_89	CD	DRB1	DRB1*01:01	DRB1*11:01			full
+barcode_89	CD	DQA1	DQA1*05:05	DQA1*01:01			full
+barcode_89	CD	DQB1	DQB1*05:01	DQB1*03:01			full
+barcode_89	CD	DPA1	DPA1*01:03				one_allele
+barcode_89	CD	DPB1	DPB1*03:01	DPB1*23:01			full
+barcode89	Control	A					not_typed
+barcode89	Control	B					not_typed
+barcode89	Control	C					not_typed
+barcode89	Control	DRB1					not_typed
+barcode89	Control	DQA1					not_typed
+barcode89	Control	DQB1					not_typed
+barcode89	Control	DPA1					not_typed
+barcode89	Control	DPB1					not_typed
+barcode_90	CD	A	A*03:01	A*01:01			full
+barcode_90	CD	B	B*07:02	B*08:01			full
+barcode_90	CD	C	C*07:01	C*07:02			full
+barcode_90	CD	DRB1	DRB1*15:01	DRB1*03:01			full
+barcode_90	CD	DQA1	DQA1*05:01	DQA1*01:02			full
+barcode_90	CD	DQB1	DQB1*06:02	DQB1*02:01			full
+barcode_90	CD	DPA1	DPA1*01:03				one_allele
+barcode_90	CD	DPB1	DPB1*04:02	DPB1*04:01			full
+barcode90	CD	A	A*03:01	A*25:01			full
+barcode90	CD	B	B*56:01	B*18:01			full
+barcode90	CD	C	C*01:02	C*12:03			full
+barcode90	CD	DRB1	DRB1*13:01	DRB1*04:01			full
+barcode90	CD	DQA1	DQA1*01:03				one_allele
+barcode90	CD	DQB1	DQB1*06:03	DQB1*03:02			full
+barcode90	CD	DPA1	DPA1*01:03				one_allele
+barcode90	CD	DPB1	DPB1*02:01	DPB1*04:02			full
+barcode_91	UC	A	A*11:01	A*66:01			full
+barcode_91	UC	B	B*41:02	B*56:01			full
+barcode_91	UC	C	C*01:02	C*17:03			full
+barcode_91	UC	DRB1	DRB1*01:01	DRB1*11:01			full
+barcode_91	UC	DQA1	DQA1*05:05	DQA1*01:01			full
+barcode_91	UC	DQB1	DQB1*05:01	DQB1*03:01			full
+barcode_91	UC	DPA1	DPA1*01:03				one_allele
+barcode_91	UC	DPB1	DPB1*113:01	DPB1*104:01			full
+barcode91	CD	A	A*03:01	A*01:01			full
+barcode91	CD	B	B*08:01	B*52:01			full
+barcode91	CD	C	C*07:01	C*12:02			full
+barcode91	CD	DRB1	DRB1*15:02	DRB1*03:01			full
+barcode91	CD	DQA1	DQA1*01:03	DQA1*05:01			full
+barcode91	CD	DQB1	DQB1*06:01	DQB1*02:01			full
+barcode91	CD	DPA1	DPA1*01:03				one_allele
+barcode91	CD	DPB1	DPB1*04:01	DPB1*04:02			full
+barcode_92	UC	A	A*26:01	A*02:01			full
+barcode_92	UC	B	B*27:05	B*35:01			full
+barcode_92	UC	C	C*02:02	C*04:01			full
+barcode_92	UC	DRB1	DRB1*01:01	DRB1*11:01			full
+barcode_92	UC	DQA1	DQA1*05:05	DQA1*01:01			full
+barcode_92	UC	DQB1	DQB1*05:01	DQB1*03:01			full
+barcode_92	UC	DPA1	DPA1*02:01	DPA1*01:03			full
+barcode_92	UC	DPB1	DPB1*06:01	DPB1*14:01			full
+barcode92	CD	A	A*03:01	A*26:01			full
+barcode92	CD	B	B*38:01	B*15:01			full
+barcode92	CD	C	C*03:03	C*12:03			full
+barcode92	CD	DRB1	DRB1*04:01	DRB1*09:01			full
+barcode92	CD	DQA1	DQA1*03:01	DQA1*03:02			full
+barcode92	CD	DQB1	DQB1*03:03	DQB1*03:02			full
+barcode92	CD	DPA1	DPA1*01:03				one_allele
+barcode92	CD	DPB1	DPB1*02:01	DPB1*15:01			full
+barcode_93	CD	A	A*11:01	A*02:01			full
+barcode_93	CD	B	B*35:01	B*44:03			full
+barcode_93	CD	C	C*04:01	C*06:02			full
+barcode_93	CD	DRB1	DRB1*07:01	DRB1*04:01			full
+barcode_93	CD	DQA1	DQA1*02:01	DQA1*05:01	DQA1*02:01	DQA1*05:03	candidate
+barcode_93	CD	DQB1	DQB1*03:01	DQB1*02:02			full
+barcode_93	CD	DPA1	DPA1*02:01	DPA1*01:03			full
+barcode_93	CD	DPB1	DPB1*04:01	DPB1*17:01			full
+barcode_94	CD	A	A*01:01	A*68:01			full
+barcode_94	CD	B	B*57:01	B*41:02			full
+barcode_94	CD	C	C*06:02	C*17:03			full
+barcode_94	CD	DRB1	DRB1*07:01	DRB1*13:03			full
+barcode_94	CD	DQA1	DQA1*02:01	DQA1*05:05			full
+barcode_94	CD	DQB1	DQB1*03:01	DQB1*03:03			full
+barcode_94	CD	DPA1	DPA1*01:03	DPA1*01:04			full
+barcode_94	CD	DPB1	DPB1*15:01	DPB1*104:01			full
+barcode_95	UC	A	A*01:120	A*01:100	A*01:120	A*01:07	candidate
+barcode_95	UC	B	B*08:01				one_allele
+barcode_95	UC	C	C*07:07	C*12:14	C*07:16	C*12:14	candidate
+barcode_95	UC	DRB1	DRB1*03:01	DRB1*03:01			full
+barcode_95	UC	DQA1	DQA1*01:02	DQA1*05:03	DQA1*01:02	DQA1*05:01	candidate
+barcode_95	UC	DQB1	DQB1*05:02	DQB1*02:01			full
+barcode_95	UC	DPA1	DPA1*01:03	DPA1*02:01			full
+barcode_95	UC	DPB1	DPB1*04:01	DPB1*01:01			full
