@@ -499,7 +499,7 @@ barcode74	UC	M	35
 barcode75	CD	F	19
 barcode76	UC	F	51
 barcode77	CD	M	38
-barcode78	Control	M	47
+barcode78	CD	M	47
 barcode79	UC	M	60
 barcode80	CD	F	31
 barcode81	UC	M	58
