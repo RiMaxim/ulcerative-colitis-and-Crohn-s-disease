@@ -87,6 +87,9 @@ class BlockTransformer(BaseEstimator, TransformerMixin):
             self.keep_[np.where(keep)[0][~var_ok]] = False
             self.med_ = self.med_[var_ok]
             Z = Z[:, var_ok]
+        # все признаки постоянны в этой обучающей выборке (например, нет ни одного носителя
+        # редкого аллеля) — блок даёт постоянную шкалу, т.е. «информации нет»
+        self.empty_ = Z.shape[1] == 0
         self.mu_, self.sd_ = Z.mean(0), Z.std(0)
         self.sd_[self.sd_ == 0] = 1.0
         return self
@@ -102,6 +105,8 @@ class BlockTransformer(BaseEstimator, TransformerMixin):
             Z = self._clr(np.nan_to_num(Xk, nan=0.0))
         else:
             Z = np.where(np.isnan(Xk), self.med_, Xk)
+        if self.empty_:
+            return np.zeros((X.shape[0], 1))
         return (Z - self.mu_) / self.sd_
 
 

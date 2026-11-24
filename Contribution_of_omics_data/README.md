@@ -11,6 +11,12 @@
 | `run_increment.py` | Конечные точки × блоки, параллельный расчёт → `results/increment_results.{csv,json}` |
 | `report.py` | HTML-отчёт с графиком ΔAUC → `results/increment_report.html` |
 | `test_synthetic.py` | Проверка метода: шумовой блок даёт ΔAUC≈0, блок с сигналом — прирост |
+| `associations.py` | Связь каждого признака с конечными точками (поправки на возраст, пол, тип ВЗК; чувствительность к терапии) → `results/associations.csv` |
+| `genotype_omics.py`, `genotype_permanova.R` | FUT2, NOD2, ATG16L1 × микробиом, КЦЖК, метаболом кала; PERMANOVA → `results/genotype_*.csv` |
+| `algorithm.py` | Итоговая базовая модель: AUC, сравнение с кальпротектином, калибровка, ОШ → `results/algorithm_*.csv` |
+| `integrate.py` | Все блоки сразу в одной модели (пропущенный блок = нейтральная шкала) → `results/integration_results.csv` |
+| `power.py` | Минимальный обнаружимый ΔAUC по перестановочному распределению → `results/power.csv` |
+| `figures.R`, `figures2.R` | Рисунки 1–6 отчёта (запуск: `LC_ALL=en_US.UTF-8 Rscript figures.R`) |
 
 ## Запуск
 ```

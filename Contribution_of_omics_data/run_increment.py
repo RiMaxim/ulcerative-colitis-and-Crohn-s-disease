@@ -51,6 +51,24 @@ def endpoints(clin):
         (atr >= 1).astype(int),
         CLINIC_IBD + LABS, ["Гистология"],  # исход взят из гистологии — блок исключён
         "Атрофия слизистой подвздошной кишки у ВЗК (гистология ТОПК ≥1)")
+    cd = clin.diagnosis == "CD"
+    loc = clin.endo_location[cd].dropna()
+    e["CD_ileal"] = (
+        loc.isin(["L1", "L3"]).astype(int),
+        ["age", "sex_male", "extraintestinal"] + LABS, [],
+        "Фенотип болезни Крона: поражение подвздошной кишки L1/L3 (1) против толстокишечной L2 (0)")
+    uc = clin.diagnosis == "UC"
+    ext = clin.endo_location[uc].dropna()
+    ext = ext[ext.str.startswith("E")]
+    e["UC_extensive"] = (
+        (ext == "E3").astype(int),
+        ["age", "sex_male", "extraintestinal"] + LABS, [],
+        "Распространённость язвенного колита: тотальный E3 (1) против E1–E2 (0)")
+    adv = clin["advanced_therapy"][ibd].dropna()
+    e["Advanced_therapy"] = (
+        adv.astype(int),
+        CLINIC_IBD + LABS, [],
+        "Тяжесть течения: биологическая терапия или ингибиторы JAK на визите 1 (1) против нет (0)")
     return e
 
 
@@ -59,6 +77,9 @@ def prepare_clin(clin):
     c["log_calprotectin"] = np.log1p(c.calprotectin)
     c["log_crp"] = np.log1p(c.crp)
     c["is_CD"] = (c.diagnosis == "CD").astype(float)
+    dr = load_drugs().reindex(c.index)
+    adv = dr[["генно-инженерная конструкция", "ингибиторы JAK-киназ"]]
+    c["advanced_therapy"] = adv.max(axis=1).where(adv.notna().all(axis=1))
     return c
 
 
@@ -86,6 +107,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--quick", action="store_true")
     ap.add_argument("--jobs", type=int, default=-1)
+    ap.add_argument("--endpoints", nargs="*", help="считать только эти конечные точки и дописать к прежним результатам")
     a = ap.parse_args()
     cfg = dict(n_repeats=3, n_perm=10, perm_repeats=1, n_boot=300) if a.quick else \
         dict(n_repeats=20, n_perm=100, perm_repeats=3, n_boot=2000)
@@ -93,6 +115,9 @@ def main():
     clin, blocks = load_all()
     clin = prepare_clin(clin)
     jobs, skipped = build_jobs(clin, blocks)
+    if a.endpoints:
+        jobs = [j for j in jobs if j["endpoint"] in a.endpoints]
+        skipped = [s for s in skipped if s[0] in a.endpoints]
     print(f"Пар «конечная точка × блок»: {len(jobs)}, пропущено: {len(skipped)}")
     for s in skipped:
         print("  пропуск:", *s)
@@ -103,6 +128,10 @@ def main():
     OUT.mkdir(exist_ok=True)
     rows = [asdict(r) for r in res]
     meta = {ep: d for ep, (_, _, _, d) in endpoints(clin).items()}
+    if a.endpoints and (OUT / "increment_results.json").exists():
+        old = json.load(open(OUT / "increment_results.json"))
+        rows = [r for r in old["results"] if r["endpoint"] not in a.endpoints] + rows
+        skipped = [s for s in old["skipped"] if s[0] not in a.endpoints] + skipped
     json.dump({"config": cfg, "endpoints": meta, "skipped": skipped, "results": rows},
               open(OUT / "increment_results.json", "w"), ensure_ascii=False, indent=1)
     df = pd.DataFrame(rows).drop(columns=["delta_repeats", "null_deltas"])

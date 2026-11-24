@@ -102,10 +102,93 @@ OMICS = {
 COMPOSITIONAL = set(OMICS)
 
 
+WES_VCF = ROOT / "WES_known_sites" / "known_pt_qc.vcf.gz"
+# Признаки по известным вариантам: (имя, [rsID], как считать)
+#   alt — число ALT-аллелей; ref — число REF-аллелей; homalt — 1, если ALT/ALT.
+# Редкие варианты (<5 носителей), фармакогенетика TPMT/NUDT15 и плохо покрытые сайты не входят.
+WES_FEATURES = [
+    ("NOD2_risk_alleles", ["rs2066844", "rs2066845", "rs2066847"], "alt"),
+    ("IL23R_protective_alleles", ["rs41313262", "rs11209026"], "alt"),
+    ("PTPN22_W620_alleles", ["rs2476601"], "ref"),
+    ("ATG16L1_T300A", ["rs2241880"], "alt"),
+    ("MST1_R689C", ["rs3197999"], "alt"),
+    ("CARD9_S12N", ["rs4077515"], "alt"),
+    ("FCGR2A_H131R", ["rs1801274"], "alt"),
+    ("GPR65_I231L", ["rs3742704"], "alt"),
+    ("SLC39A8_A391T", ["rs13107325"], "alt"),
+    ("FUT2_nonsecretor", ["rs601338"], "homalt"),
+]
+
+
+def load_wes_genotypes(min_dp=10, min_gq=20):
+    """Матрица генотипов (число ALT-аллелей 0/1/2) по rsID из VCF; ненадёжные генотипы -> NaN."""
+    import gzip
+    samples, rows = None, {}
+    with gzip.open(WES_VCF, "rt") as f:
+        for line in f:
+            if line.startswith("##"):
+                continue
+            t = line.rstrip("\n").split("\t")
+            if line.startswith("#"):
+                samples = [int(x) for x in t[9:]]
+                continue
+            fmt = t[8].split(":")
+            iGT, iDP, iGQ = fmt.index("GT"), fmt.index("DP") if "DP" in fmt else None, fmt.index("GQ") if "GQ" in fmt else None
+            g = []
+            for x in t[9:]:
+                v = x.split(":")
+                gt = v[iGT].replace("|", "/")
+                dp = float(v[iDP]) if iDP is not None and len(v) > iDP and v[iDP] not in (".", "") else np.nan
+                gq = float(v[iGQ]) if iGQ is not None and len(v) > iGQ and v[iGQ] not in (".", "") else np.nan
+                if "." in gt or not dp >= min_dp or (gt != "0/0" and not gq >= min_gq):
+                    g.append(np.nan)
+                else:
+                    g.append(sum(int(a) > 0 for a in gt.split("/")))
+            rows[t[2]] = g
+    G = pd.DataFrame(rows, index=pd.Index(samples, name="Patient"))
+    return G
+
+
+def load_wes_block():
+    G = load_wes_genotypes()
+    out = pd.DataFrame(index=G.index)
+    for name, ids, how in WES_FEATURES:
+        x = G[ids]
+        if how == "ref":
+            x = 2 - x
+        elif how == "homalt":
+            x = (x == 2).astype(float).where(x.notna())
+        out[name] = x.sum(axis=1, min_count=len(ids))  # NaN, если хоть один сайт не определён
+    return out
+
+
+def load_hla_block(min_carriers=10):
+    """HLA (2 поля): носительство аллеля 0/1 для аллелей, у которых ≥ min_carriers носителей."""
+    h = pd.read_excel(ROOT / "HLA.xlsx", na_values="ND")
+    h = h[(h["Visit number"] == VISIT) & h.status.isin(["full", "one_allele", "candidate"])]
+    h = h.melt(id_vars=["Patient", "locus"], value_vars=["allele1", "allele2"], value_name="allele").dropna()
+    h["allele"] = h.allele.str.extract(r"^([A-Z0-9]+\*\d+:\d+)")[0]
+    h = h.dropna().drop_duplicates(["Patient", "allele"])
+    M = pd.crosstab(h.Patient, h.allele).clip(upper=1).astype(float)
+    typed = h.groupby(["Patient"]).locus.unique()
+    # аллель локуса, который у пациента не типирован, — неизвестен, а не 0
+    for a in M.columns:
+        loc = a.split("*")[0]
+        M.loc[[p for p in M.index if loc not in typed[p]], a] = np.nan
+    M = M.loc[:, M.sum() >= min_carriers]
+    M.index = M.index.astype(int)
+    return M
+
+
 def load_all():
     clin, blocks = load_inventory()
     for name, f in OMICS.items():
         blocks[name] = load_omics(f)
+    if WES_VCF.exists():
+        wes = load_wes_block()
+        blocks["Генетика_WES"] = wes
+        blocks["NOD2"] = wes[["NOD2_risk_alleles"]].dropna()
+    blocks["HLA"] = load_hla_block()
     return clin, blocks
 
 

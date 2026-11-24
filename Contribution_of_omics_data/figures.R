@@ -17,14 +17,21 @@ task_lab <- c(
   IBD_vs_Control    = "ВЗК против контроля",
   Exacerbation      = "Клиническое обострение",
   Endoscopic_A2plus = "Эндоскопическая активность A2–A3",
-  Ileal_atrophy     = "Атрофия подвздошной кишки"
+  Ileal_atrophy     = "Атрофия подвздошной кишки",
+  CD_ileal          = "Болезнь Крона: поражение подвздошной кишки (L1/L3)",
+  UC_extensive      = "Язвенный колит: тотальный (E3)",
+  Advanced_therapy  = "Биологическая или JAK-терапия"
 )
 block_lab <- c(
   "Серология" = "Серология", "Гистология" = "Гистология",
   "КЦЖК_кал" = "КЦЖК кала", "16S" = "Микробиом 16S",
   "Метаболом_кал" = "Метаболом кала", "Метаболом_сыворотка" = "Метаболом сыворотки",
-  "Липидом" = "Липидом"
+  "Липидом" = "Липидом",
+  "Генетика_WES" = "Генетика (WES, 10 признаков)", "NOD2" = "NOD2 (аллели риска)", "HLA" = "HLA-аллели"
 )
+n_cmp <- nrow(d); min_q <- min(p.adjust(d$p_perm, method = "BH"))
+fmt2 <- function(x) formatC(x, format = "f", digits = 2, decimal.mark = ",")
+fig_h <- 2.5 + 0.17 * n_cmp
 
 d <- d %>%
   mutate(
@@ -67,19 +74,20 @@ f1 <- ggplot(d, aes(y = label, x = delta, colour = status)) +
   scale_x_continuous(labels = label_number(accuracy = 0.01, decimal.mark = ",", style_positive = "plus"),
                      breaks = seq(-0.1, 0.15, 0.05)) +
   labs(
-    title = "Омиксные данные почти не улучшают предсказание по сравнению с рутинными анализами",
+    title = "Ни омиксы, ни генетика не улучшают достоверно предсказание по сравнению с рутинными анализами",
     subtitle = "Прирост AUC (ΔAUC) при добавлении блока к базовой модели (клиника + рутинные анализы); точка — среднее, линия — 95% ДИ",
     x = "ΔAUC = AUC(база + блок) − AUC(база)", y = NULL,
-    caption = "Визит 1. 20 повторов 5-кратной кросс-валидации; ДИ — бутстреп 2000 выборок; p — перестановочный тест (100 перестановок).\nПосле поправки Бенджамини–Хохберга на 29 сравнений ни один прирост не достоверен (минимальное q = 0,29)."
+    caption = paste0("Визит 1. 20 повторов 5-кратной кросс-валидации; ДИ — бутстреп 2000 выборок; p — перестановочный тест (100 перестановок).\n", sprintf("После поправки Бенджамини–Хохберга на %d сравнений минимальное q = %s.", n_cmp, fmt2(min_q)))
   ) +
   theme_report +
   theme(strip.placement = "outside", strip.text.y.left = element_text(angle = 0, vjust = 1))
 
-ggsave("results/fig1_delta_auc.png", f1, width = 10, height = 9.5, dpi = 300, device = ragg::agg_png, bg = "white")
-ggsave("results/fig1_delta_auc.pdf", f1, width = 10, height = 9.5, device = cairo_pdf)
+ggsave("results/fig1_delta_auc.png", f1, width = 10, height = fig_h, dpi = 300, device = ragg::agg_png, bg = "white")
+ggsave("results/fig1_delta_auc.pdf", f1, width = 10, height = fig_h, device = cairo_pdf)
 
 # --- Рисунок 2: AUC базовой и расширенной модели ----------------------------
 d2 <- d %>% mutate(label = fct_reorder(label, auc_m0))
+x2_lo <- min(0.4, floor(min(c(d$auc_m0, d$auc_m1)) * 10) / 10)
 f2 <- ggplot(d2, aes(y = label)) +
   geom_vline(xintercept = 0.5, linetype = "dotted", colour = "grey50") +
   geom_segment(aes(x = auc_m0, xend = auc_m1, yend = label), colour = "grey70", linewidth = 1) +
@@ -90,7 +98,7 @@ f2 <- ggplot(d2, aes(y = label)) +
   facet_grid(task ~ ., scales = "free_y", space = "free_y", switch = "y",
              labeller = label_wrap_gen(width = 22)) +
   scale_shape_manual(values = c("База: клиника + рутинные анализы" = 16, "База + блок" = 17), breaks = c("База: клиника + рутинные анализы", "База + блок")) +
-  scale_x_continuous(limits = c(0.4, 1), breaks = seq(0.4, 1, 0.1),
+  scale_x_continuous(limits = c(x2_lo, 1), breaks = seq(x2_lo, 1, 0.1),
                      labels = label_number(accuracy = 0.1, decimal.mark = ",")) +
   labs(
     title = "Базовая модель уже достигает почти того же качества, что и расширенная",
@@ -101,7 +109,7 @@ f2 <- ggplot(d2, aes(y = label)) +
   theme_report +
   theme(strip.placement = "outside", strip.text.y.left = element_text(angle = 0, vjust = 1))
 
-ggsave("results/fig2_auc_base_vs_extended.png", f2, width = 10, height = 9.5, dpi = 300, device = ragg::agg_png, bg = "white")
-ggsave("results/fig2_auc_base_vs_extended.pdf", f2, width = 10, height = 9.5, device = cairo_pdf)
+ggsave("results/fig2_auc_base_vs_extended.png", f2, width = 10, height = fig_h, dpi = 300, device = ragg::agg_png, bg = "white")
+ggsave("results/fig2_auc_base_vs_extended.pdf", f2, width = 10, height = fig_h, device = cairo_pdf)
 
 cat("Готово: results/fig1_delta_auc.png, results/fig2_auc_base_vs_extended.png (+ PDF)\n")
